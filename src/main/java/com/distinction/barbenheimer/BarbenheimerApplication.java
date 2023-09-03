@@ -1,4 +1,4 @@
-package com.distinction.barbenheimer.application;
+package com.distinction.barbenheimer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
