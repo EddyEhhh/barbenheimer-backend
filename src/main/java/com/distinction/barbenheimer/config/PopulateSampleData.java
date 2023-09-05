@@ -28,11 +28,12 @@ public class PopulateSampleData {
         movie1.setTitle("Barbie");
         movie1.setDescription("To live in Barbie Land is to be a perfect being in a perfect place. Unless you have a full-on existential crisis. Or you’re a Ken.");
         movie1.setRuntimeInMinute(114);
-        movie1.setDirectors("Greta Gerwig");
+        movie1.setDirector("Greta Gerwig");
+        movie1.setCast("Margot Robbie, Ryan Gosling, Will Ferrell, Kate McKinnon, America Ferrera, Ariana Greenblatt, Emma Mackey, Alexandra Shipp, Issa Rae, Simu Liu");
         movie1.setGenre("Comedy");
         movie1.setReleaseDate(LocalDate.of(2023, 7, 20));
         movie1.setLanguage("English(Sub:Chinese)");
-        movie1.setAgeRestriction("PG13");
+        movie1.setAgeRestriction(1);
 
         movieRepository.save(movie1);
 

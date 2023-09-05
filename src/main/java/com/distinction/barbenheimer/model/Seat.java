@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -25,4 +27,7 @@ public class Seat {
     private int number;
 
     private int state;
+
+    @OneToMany(mappedBy = "seat")
+    private List<PurchaseSeats> purchaseSeats;
 }

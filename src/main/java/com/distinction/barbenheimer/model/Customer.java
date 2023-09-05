@@ -1,13 +1,11 @@
 package com.distinction.barbenheimer.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,6 +32,9 @@ public class Customer {
     private LocalDate birthDate;
 
     private boolean isDeleted;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Purchase> purchases;
 
 
 

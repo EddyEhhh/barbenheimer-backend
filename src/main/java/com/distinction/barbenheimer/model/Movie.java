@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -28,7 +29,10 @@ public class Movie {
     private int runtimeInMinute;
 
     @NotEmpty
-    private String directors;
+    private String director;
+
+    @NotEmpty
+    private String cast;
 
 
     @NotEmpty
@@ -41,10 +45,15 @@ public class Movie {
 
     @NotEmpty
     private String language;
+    
+    private int ageRestriction;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<MovieSchedule> movieSchedules;
 
-    @NotEmpty
-    private String ageRestriction;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    private List<MovieImages> movieImages;
+
 
 
 }
