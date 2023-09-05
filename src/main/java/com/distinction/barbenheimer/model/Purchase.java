@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -38,6 +39,12 @@ public class Purchase {
 
     @NotEmpty
     private float ticketPrice;
+
+    @OneToMany(mappedBy = "purchase")
+    private List<PurchaseSeats> purchaseSeats;
+
+    @OneToOne(mappedBy = "purchase")
+    private PurchaseTotal purchaseTotal;
 
 
 }
