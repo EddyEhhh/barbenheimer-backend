@@ -24,7 +24,7 @@ public class Movie {
 
 
     @NotEmpty
-    @Column(length = 512)
+    @Column(length = 1024)
     private String description;
 
     private int runtimeInMinute;
