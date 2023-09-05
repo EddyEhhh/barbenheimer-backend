@@ -22,7 +22,7 @@ public class Customer {
 
 
     @NotEmpty
-    private String name;
+    private String username;
 
     @NotEmpty
     private String email;

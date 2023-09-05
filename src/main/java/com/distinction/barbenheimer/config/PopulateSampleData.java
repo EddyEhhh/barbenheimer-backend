@@ -28,7 +28,7 @@ public class PopulateSampleData {
         movie1.setTitle("Barbie");
         movie1.setDescription("To live in Barbie Land is to be a perfect being in a perfect place. Unless you have a full-on existential crisis. Or you’re a Ken.");
         movie1.setRuntimeInMinute(114);
-        movie1.setDirectors("Greta Gerwig");
+        movie1.setDirector("Greta Gerwig");
         movie1.setGenre("Comedy");
         movie1.setReleaseDate(LocalDate.of(2023, 7, 20));
         movie1.setLanguage("English(Sub:Chinese)");

@@ -23,12 +23,13 @@ public class Movie {
 
 
     @NotEmpty
+    @Column(length = 512)
     private String description;
 
     private int runtimeInMinute;
 
     @NotEmpty
-    private String directors;
+    private String director;
 
 
     @NotEmpty
