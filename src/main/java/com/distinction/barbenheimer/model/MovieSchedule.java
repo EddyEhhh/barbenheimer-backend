@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -31,4 +32,7 @@ public class MovieSchedule {
 
     @NotEmpty
     private float pricing;
+
+    @OneToMany(mappedBy = "movieSchedule")
+    private List<Purchase> purchases;
 }
