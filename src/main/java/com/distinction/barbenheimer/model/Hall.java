@@ -28,4 +28,7 @@ public class Hall {
 
     @OneToMany(mappedBy = "hall")
     private List<MovieSchedule> movieSchedules;
+
+    @OneToMany(mappedBy = "hall")
+    private List<Seat> seats;
 }

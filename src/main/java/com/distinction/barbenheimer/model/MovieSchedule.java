@@ -22,7 +22,6 @@ public class MovieSchedule {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hall_id")
     private Hall hall;

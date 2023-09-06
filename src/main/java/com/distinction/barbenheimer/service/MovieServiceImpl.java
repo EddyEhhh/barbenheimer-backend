@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.repository.MovieRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MovieServiceImpl implements MovieService{
 
     @Autowired

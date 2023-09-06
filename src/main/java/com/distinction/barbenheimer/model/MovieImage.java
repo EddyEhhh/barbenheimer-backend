@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieImages {
+public class MovieImage {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)

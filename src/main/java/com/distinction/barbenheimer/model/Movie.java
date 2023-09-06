@@ -36,10 +36,6 @@ public class Movie {
     private String cast;
 
     @NotEmpty
-    private String cast;
-
-
-    @NotEmpty
     private String genre;
 
 
@@ -56,7 +52,7 @@ public class Movie {
     private List<MovieSchedule> movieSchedules;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<MovieImages> movieImages;
+    private List<MovieImage> movieImages;
 
 
 

@@ -21,13 +21,11 @@ public class Seat {
     private Hall hall;
 
     @Id
-    private char seatRow;
+    private String seatRow;
 
     @Id
     private int number;
 
-    private int state;
-
     @OneToMany(mappedBy = "seat")
-    private List<PurchaseSeats> purchaseSeats;
+    private List<PurchaseSeat> purchaseSeats;
 }

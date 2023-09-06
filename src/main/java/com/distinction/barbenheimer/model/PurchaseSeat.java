@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PurchaseSeats {
+public class PurchaseSeat {
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="purchase_id")

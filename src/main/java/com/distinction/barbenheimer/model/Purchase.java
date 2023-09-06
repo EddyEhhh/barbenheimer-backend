@@ -41,7 +41,7 @@ public class Purchase {
     private float ticketPrice;
 
     @OneToMany(mappedBy = "purchase")
-    private List<PurchaseSeats> purchaseSeats;
+    private List<PurchaseSeat> purchaseSeats;
 
     @OneToOne(mappedBy = "purchase")
     private PurchaseTotal purchaseTotal;
