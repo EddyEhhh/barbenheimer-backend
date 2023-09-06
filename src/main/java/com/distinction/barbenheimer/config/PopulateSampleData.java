@@ -17,6 +17,10 @@ public class PopulateSampleData {
     @Autowired
     private MovieRepository movieRepository;
 
+    
+    /** 
+     * @param event
+     */
     @EventListener
     public void onApplicationEvent(ApplicationReadyEvent event) {
         autoGenerateMovie();
