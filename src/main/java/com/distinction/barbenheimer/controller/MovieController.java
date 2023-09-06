@@ -1,5 +1,6 @@
 package com.distinction.barbenheimer.controller;
 
+import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.service.MovieServiceImpl;
 
@@ -27,23 +28,8 @@ public class MovieController {
      * @return ResponseEntity<List<Movie>>
      */
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
+    public ResponseEntity<List<MovieDetailsDTO>> getAllMovies() {
         return ResponseEntity.ok(movieServiceImpl.getAllMovies());
-    }
-
-    
-    
-    /** 
-     * method is a GET request handler
-     * it returns the specific movie selected by user
-     * 
-     * @param movieTitle
-     * @return ResponseEntity<Movie>
-     */
-    @GetMapping
-
-    public ResponseEntity<Movie> getMovieByTitle(@PathVariable("movieTitle") String movieTitle){
-        return ResponseEntity.ok(movieServiceImpl.getMovieByTitle(movieTitle));
     }
 
     
@@ -56,11 +42,21 @@ public class MovieController {
      * @param movieTitle 
      * @return A response entity containing the list of all filtered movies matching input in search bar
      */
-    @GetMapping
-    public ResponseEntity<List<Movie>> getMovies(@PathVariable("movieTitle") String movieTitle) {
-        return ResponseEntity.ok(movieServiceImpl.getMovies(movieTitle));
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieDetailsDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
+        return ResponseEntity.ok(movieServiceImpl.getMoviesBySearch(movieTitle));
     }
 
     
+    /** 
+     * method returns everything related to movie selevted by user
+     * 
+     * @param movieId
+     * @return ResponseEntity<MovieDetailsDTO>
+     */
+    @GetMapping("/{movieId}")
+    public ResponseEntity<MovieDetailsDTO> getMovieDetails(@PathVariable("movieId") long movieId ) {
+        return ResponseEntity.ok(movieServiceImpl.getMovieDetails(movieId));
+    }
 
 }
