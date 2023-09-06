@@ -44,7 +44,7 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<Movie> getMovies(String movieName) {
+    public List<Movie> getMoviesBySearch(String movieName) {
         List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieName);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");

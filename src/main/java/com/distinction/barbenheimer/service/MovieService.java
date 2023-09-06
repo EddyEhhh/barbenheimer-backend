@@ -13,7 +13,7 @@ interface MovieService {
 
     public Movie getMovieByTitle(String movieTitle);
     
-    public List<Movie> getMovies(String movieName);
+    public List<Movie> getMoviesBySearch(String movieName);
 
     public Movie getMovieDetails(Movie movie);
 
