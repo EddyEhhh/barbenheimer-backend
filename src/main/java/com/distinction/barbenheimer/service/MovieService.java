@@ -1,4 +1,5 @@
 package com.distinction.barbenheimer.service;
+import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
 import com.distinction.barbenheimer.model.Movie;
 
 import java.time.LocalDateTime;
@@ -9,13 +10,11 @@ import com.distinction.barbenheimer.model.Movie;
 
 interface MovieService {
 
-    public List<Movie> getAllMovies();
+    public List<MovieDetailsDTO> getAllMovies();
 
-    public Movie getMovieByTitle(String movieTitle);
-    
-    public List<Movie> getMoviesBySearch(String movieName);
+    public List<MovieDetailsDTO> getMoviesBySearch(String movieTitle);
 
-    public Movie getMovieDetails(Movie movie);
+    public MovieDetailsDTO getMovieDetails(Long movieId);
 
     public List<LocalDateTime> getMovieShowtimes(Movie movie);
 

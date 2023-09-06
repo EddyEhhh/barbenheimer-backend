@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.repository.MovieRepository;
 
@@ -19,23 +20,28 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public List<MovieDetailsDTO> getAllMovies() {
+        List<Movie> movieList = movieRepository.findAll();
+        List<MovieDetailsDTO> movieDTOList = new ArrayList<>();
+        for (Movie movie : movieList) {
+            movieDTOList.add(MovieDetailsDTO.builder().id(movie.getId())
+                                        .title(movie.getTitle())
+                                        .description(movie.getDescription())
+                                        .runtimeInMinute(movie.getRuntimeInMinute())
+                                        .director(movie.getDirector())
+                                        .cast(movie.getCast())
+                                        .genre(movie.getGenre())
+                                        .releaseDate(movie.getReleaseDate())
+                                        .language(movie.getLanguage())
+                                        .ageRestriction(movie.getAgeRestriction())
+                                        .movieSchedules(movie.getMovieSchedules())
+                                        .movieImages(movie.getMovieImages())
+                                        .build()
+                            );
+        }
+        return movieDTOList;
     }
     
-    /** 
-     * method returns the movie object when user selects the specific movie on the website
-     * 
-     * @param movieTitle
-     * @return Movie
-     */
-    public Movie getMovieByTitle(String movieTitle) {
-        Movie movie = movieRepository.findByTitle(movieTitle);
-        if (movie == null){
-            throw new RuntimeException("Movie does not exists");
-        }
-        return movie;
-}
     
     /** 
      * method returns all movies with names matching that of user input
@@ -44,25 +50,55 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<Movie> getMoviesBySearch(String movieName) {
+    public List<MovieDetailsDTO> getMoviesBySearch(String movieName) {
         List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieName);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");
         } 
-        return matchingMovies;
+        List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
+        for (Movie movie : matchingMovies) {
+            matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
+                                        .title(movie.getTitle())
+                                        .description(movie.getDescription())
+                                        .runtimeInMinute(movie.getRuntimeInMinute())
+                                        .director(movie.getDirector())
+                                        .cast(movie.getCast())
+                                        .genre(movie.getGenre())
+                                        .releaseDate(movie.getReleaseDate())
+                                        .language(movie.getLanguage())
+                                        .ageRestriction(movie.getAgeRestriction())
+                                        .movieSchedules(movie.getMovieSchedules())
+                                        .movieImages(movie.getMovieImages())
+                                        .build()
+                            );
+        }
+        return matchingDTOs;
     
     }
 
 
     /** 
-     * 
+     * returns details of movie when user selects it
      * @param movie
-     * @return Movie
+     * @return MovieDetailsDTO
      */
     @Override
-    public Movie getMovieDetails(Movie movie) {
-        // TODO Auto-generated method stub
-        return null;
+    public MovieDetailsDTO getMovieDetails(Long movieId) {
+        Movie movie = movieRepository.findById(movieId).get();
+        
+        return MovieDetailsDTO.builder().id(movie.getId())
+                                        .title(movie.getTitle())
+                                        .description(movie.getDescription())
+                                        .runtimeInMinute(movie.getRuntimeInMinute())
+                                        .director(movie.getDirector())
+                                        .cast(movie.getCast())
+                                        .genre(movie.getGenre())
+                                        .releaseDate(movie.getReleaseDate())
+                                        .language(movie.getLanguage())
+                                        .ageRestriction(movie.getAgeRestriction())
+                                        .movieSchedules(movie.getMovieSchedules())
+                                        .movieImages(movie.getMovieImages())
+                                        .build();
     }
 
     
