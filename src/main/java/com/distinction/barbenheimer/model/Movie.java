@@ -30,6 +30,9 @@ public class Movie {
     @NotEmpty
     private String directors;
 
+    @NotEmpty
+    private String cast;
+
 
     @NotEmpty
     private String genre;

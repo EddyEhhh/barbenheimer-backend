@@ -2,6 +2,8 @@ package com.distinction.barbenheimer.service;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import com.distinction.barbenheimer.model.Movie;
+
 
 interface MovieService {
     
