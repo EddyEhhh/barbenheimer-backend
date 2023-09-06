@@ -1,19 +1,19 @@
 package com.distinction.barbenheimer.DTO;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import com.distinction.barbenheimer.model.MovieImages;
+import com.distinction.barbenheimer.model.MovieImage;
 import com.distinction.barbenheimer.model.MovieSchedule;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
 @AllArgsConstructor
 @Data
 @Builder
-public class MovieDetailsDTO {
+public class MovieDetailDTO {
 
     private Long id;
 
@@ -29,7 +29,7 @@ public class MovieDetailsDTO {
 
     private String genre;
 
-    private LocalDate releaseDate;
+    private LocalDateTime releaseDate;
 
     private String language;
 
@@ -37,5 +37,5 @@ public class MovieDetailsDTO {
 
     private List<MovieSchedule> movieSchedules;
 
-    private List<MovieImages> movieImages;
+    private List<MovieImage> movieImages;
 }

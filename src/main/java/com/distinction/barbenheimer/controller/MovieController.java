@@ -1,7 +1,6 @@
 package com.distinction.barbenheimer.controller;
 
-import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
-import com.distinction.barbenheimer.model.Movie;
+import com.distinction.barbenheimer.DTO.MovieDetailDTO;
 import com.distinction.barbenheimer.service.MovieServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,7 @@ public class MovieController {
      * @return ResponseEntity<List<Movie>>
      */
     @GetMapping
-    public ResponseEntity<List<MovieDetailsDTO>> getAllMovies() {
+    public ResponseEntity<List<MovieDetailDTO>> getAllMovies() {
         return ResponseEntity.ok(movieServiceImpl.getAllMovies());
     }
 
@@ -43,7 +42,7 @@ public class MovieController {
      * @return A response entity containing the list of all filtered movies matching input in search bar
      */
     @GetMapping("/search")
-    public ResponseEntity<List<MovieDetailsDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
+    public ResponseEntity<List<MovieDetailDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
         return ResponseEntity.ok(movieServiceImpl.getMoviesBySearch(movieTitle));
     }
 
@@ -55,7 +54,7 @@ public class MovieController {
      * @return ResponseEntity<MovieDetailsDTO>
      */
     @GetMapping("/{movieId}")
-    public ResponseEntity<MovieDetailsDTO> getMovieDetails(@PathVariable("movieId") long movieId ) {
+    public ResponseEntity<MovieDetailDTO> getMovieDetails(@PathVariable("movieId") long movieId ) {
         return ResponseEntity.ok(movieServiceImpl.getMovieDetails(movieId));
     }
 

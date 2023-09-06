@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -27,7 +29,10 @@ public class MovieSchedule {
     private Hall hall;
 
     @Id
-    private LocalDateTime showTime;
+    private LocalDate showDate;
+
+    @Id
+    private LocalTime showTime;
 
     @NotEmpty
     private float pricing;

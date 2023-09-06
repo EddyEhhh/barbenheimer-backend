@@ -42,9 +42,8 @@ public class Movie {
 
     private LocalDateTime ticketSaleDate;
 
-
 //    @NotEmpty
-    private LocalDate releaseDate;
+    private LocalDateTime releaseDate;
 
     @NotEmpty
     private String language;

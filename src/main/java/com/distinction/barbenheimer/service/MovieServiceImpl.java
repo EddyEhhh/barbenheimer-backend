@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
+import com.distinction.barbenheimer.DTO.MovieDetailDTO;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.repository.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -22,11 +22,11 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<MovieDetailsDTO> getAllMovies() {
+    public List<MovieDetailDTO> getAllMovies() {
         List<Movie> movieList = movieRepository.findAll();
-        List<MovieDetailsDTO> movieDTOList = new ArrayList<>();
+        List<MovieDetailDTO> movieDTOList = new ArrayList<>();
         for (Movie movie : movieList) {
-            movieDTOList.add(MovieDetailsDTO.builder().id(movie.getId())
+            movieDTOList.add(MovieDetailDTO.builder().id(movie.getId())
                                         .title(movie.getTitle())
                                         .description(movie.getDescription())
                                         .runtimeInMinute(movie.getRuntimeInMinute())
@@ -52,14 +52,14 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<MovieDetailsDTO> getMoviesBySearch(String movieName) {
+    public List<MovieDetailDTO> getMoviesBySearch(String movieName) {
         List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieName);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");
         } 
-        List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
+        List<MovieDetailDTO> matchingDTOs = new ArrayList<>();
         for (Movie movie : matchingMovies) {
-            matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
+            matchingDTOs.add(MovieDetailDTO.builder().id(movie.getId())
                                         .title(movie.getTitle())
                                         .description(movie.getDescription())
                                         .runtimeInMinute(movie.getRuntimeInMinute())
@@ -85,10 +85,10 @@ public class MovieServiceImpl implements MovieService{
      * @return MovieDetailsDTO
      */
     @Override
-    public MovieDetailsDTO getMovieDetails(Long movieId) {
+    public MovieDetailDTO getMovieDetails(Long movieId) {
         Movie movie = movieRepository.findById(movieId).get();
         
-        return MovieDetailsDTO.builder().id(movie.getId())
+        return MovieDetailDTO.builder().id(movie.getId())
                                         .title(movie.getTitle())
                                         .description(movie.getDescription())
                                         .runtimeInMinute(movie.getRuntimeInMinute())
