@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -39,22 +40,24 @@ public class Movie {
     @NotEmpty
     private String genre;
 
+    private LocalDateTime ticketSaleDate;
+
 
 //    @NotEmpty
     private LocalDate releaseDate;
-
 
     @NotEmpty
     private String language;
 
     private int ageRestriction;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieSchedule> movieSchedules;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private List<MovieImages> movieImages;
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MovieImage> movieImages;
 
-
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 
 }

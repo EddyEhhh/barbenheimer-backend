@@ -28,4 +28,10 @@ public class Seat {
 
     @OneToMany(mappedBy = "seat")
     private List<PurchaseSeat> purchaseSeats;
+
+    @OneToMany(mappedBy = "seat")
+    private List<SeatPurchase> seatPurchases;
+
+    @OneToMany(mappedBy = "seat")
+    private List<SeatStatus> seatStatuses;
 }

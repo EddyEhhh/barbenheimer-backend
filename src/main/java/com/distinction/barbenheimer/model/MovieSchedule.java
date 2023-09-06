@@ -34,4 +34,12 @@ public class MovieSchedule {
 
     @OneToMany(mappedBy = "movieSchedule")
     private List<Purchase> purchases;
+
+    @OneToMany(mappedBy = "seat")
+    private List<SeatStatus> seatStatuses;
+
+    @OneToMany(mappedBy = "seat")
+    private List<SeatPurchase> seatPurchases;
+
+
 }

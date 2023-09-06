@@ -18,6 +18,8 @@ public class Customer {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
+    private int type;
+
 
     @NotEmpty
     private String username;
@@ -36,6 +38,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Purchase> purchases;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Review> reviews;
 
 
 }
