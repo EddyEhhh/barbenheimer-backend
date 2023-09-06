@@ -41,6 +41,7 @@ public class MovieController {
      * @return ResponseEntity<Movie>
      */
     @GetMapping
+
     public ResponseEntity<Movie> getMovieByTitle(@PathVariable("movieTitle") String movieTitle){
         return ResponseEntity.ok(movieServiceImpl.getMovieByTitle(movieTitle));
     }

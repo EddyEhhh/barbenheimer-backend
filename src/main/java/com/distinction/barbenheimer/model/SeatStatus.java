@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeatState {
+public class SeatStatus {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)

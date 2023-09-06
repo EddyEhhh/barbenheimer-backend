@@ -23,7 +23,6 @@ public class Purchase {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns( {
             @JoinColumn(name="movie_id", referencedColumnName="movie_id"),
-            @JoinColumn(name="hall_id", referencedColumnName="hall_id"),
             @JoinColumn(name="show_time", referencedColumnName="showTime")
     } )
     private MovieSchedule movieSchedule;
