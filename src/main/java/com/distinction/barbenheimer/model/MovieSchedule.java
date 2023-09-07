@@ -35,10 +35,10 @@ public class MovieSchedule {
     @OneToMany(mappedBy = "movieSchedule")
     private List<Purchase> purchases;
 
-    @OneToMany(mappedBy = "seat")
+    @OneToMany(mappedBy = "movieSchedule")
     private List<SeatStatus> seatStatuses;
 
-    @OneToMany(mappedBy = "seat")
+    @OneToMany(mappedBy = "movieSchedule")
     private List<SeatPurchase> seatPurchases;
 
 
