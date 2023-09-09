@@ -31,25 +31,23 @@ public class Movie {
     private int runtimeInMinute;
 
     @NotEmpty
+    private String genre;
+
+    @NotEmpty
     private String director;
 
     @NotEmpty
     private String cast;
 
-
-    @NotEmpty
-    private String genre;
-
-    private LocalDateTime ticketSaleDate;
-
-
-//    @NotEmpty
-    private LocalDate releaseDate;
-
     @NotEmpty
     private String language;
 
     private int ageRestriction;
+
+    private LocalDateTime releaseDate;
+    private LocalDateTime ticketSaleDate;
+
+    private float basePrice;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieSchedule> movieSchedules;
@@ -57,7 +55,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieImage> movieImages;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
+//    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Review> reviews;
 
 }

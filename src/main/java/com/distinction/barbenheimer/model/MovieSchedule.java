@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -18,28 +20,24 @@ import java.util.List;
 public class MovieSchedule {
 
     @Id
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
+
+    @Id
+    private LocalDate showDate;
+
+    @Id
+    private LocalTime showTime;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @Id
-    private LocalDateTime showTime;
-
-    @NotEmpty
-    private float pricing;
-
-    @OneToMany(mappedBy = "movieSchedule")
-    private List<Purchase> purchases;
 
     @OneToMany(mappedBy = "movieSchedule")
     private List<SeatStatus> seatStatuses;
 
-    @OneToMany(mappedBy = "movieSchedule")
-    private List<SeatPurchase> seatPurchases;
 
 
 }

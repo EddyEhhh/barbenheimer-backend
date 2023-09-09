@@ -20,30 +20,21 @@ public class Purchase {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns( {
-            @JoinColumn(name="movie_id", referencedColumnName="movie_id"),
-            @JoinColumn(name="show_time", referencedColumnName="showTime")
-    } )
-    private MovieSchedule movieSchedule;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name="customer_id")
+//    private Customer customer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="customer_id")
-    private Customer customer;
+    @OneToOne
+    private CustomerDetail customerDetail;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<SeatStatus> seatStatuses;
 
     private LocalDateTime dateTime;
 
-    @NotEmpty
-    private int ticketQty;
 
-    @NotEmpty
-    private float ticketPrice;
 
-    @OneToMany(mappedBy = "purchase")
-    private List<PurchaseSeat> purchaseSeats;
 
-    @OneToOne(mappedBy = "purchase")
-    private PurchaseTotal purchaseTotal;
 
 
 }

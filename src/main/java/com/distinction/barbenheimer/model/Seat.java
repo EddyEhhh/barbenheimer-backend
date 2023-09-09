@@ -27,9 +27,6 @@ public class Seat {
     private int number;
 
     @OneToMany(mappedBy = "seat")
-    private List<PurchaseSeat> purchaseSeats;
-
-    @OneToMany(mappedBy = "seat")
     private List<SeatPurchase> seatPurchases;
 
     @OneToMany(mappedBy = "seat")
