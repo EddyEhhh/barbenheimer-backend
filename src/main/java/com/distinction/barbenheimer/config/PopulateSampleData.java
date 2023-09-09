@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 @Slf4j
@@ -35,7 +36,7 @@ public class PopulateSampleData {
         movie1.setDirector("Greta Gerwig");
         movie1.setCast("Margot Robbie, Ryan Gosling, Will Ferrell, Kate McKinnon, America Ferrera, Ariana Greenblatt, Emma Mackey, Alexandra Shipp, Issa Rae, Simu Liu");
         movie1.setGenre("Comedy");
-        movie1.setReleaseDate(LocalDate.of(2023, 7, 20));
+        movie1.setReleaseDate(LocalDateTime.of(2023, 7, 20,0,0,0));
         movie1.setLanguage("English(Sub:Chinese)");
         movie1.setAgeRestriction(1);
 
@@ -46,7 +47,7 @@ public class PopulateSampleData {
         movie2.setDirector("Da Peng");
         movie2.setCast("Wang Yibo, Huang Bo");
         movie2.setGenre("Comedy/Drama");
-        movie2.setReleaseDate(LocalDate.of(2023, 8, 24));
+        movie2.setReleaseDate(LocalDateTime.of(2023, 8, 24,0,0,0));
         movie2.setLanguage("Mandarin(Sub:English,Chinese)");
         movie2.setAgeRestriction(0);
 
@@ -57,7 +58,7 @@ public class PopulateSampleData {
         movie3.setDirector("Christopher Nolan");
         movie3.setCast("Cillian Murphy, Emily Blunt, Robert Downey Jr., Matt Damon, Rami Malek, Florence Pugh, Benny Safdie, Michael Angarano, Josh Hartnett, Kenneth Branagh");
         movie3.setGenre("Thriller");
-        movie3.setReleaseDate(LocalDate.of(2023, 7, 20));
+        movie3.setReleaseDate(LocalDateTime.of(2023, 7, 20,0,0,0));
         movie3.setLanguage("English(Sub:Chinese)");
         movie3.setAgeRestriction(3);
 
@@ -68,7 +69,7 @@ public class PopulateSampleData {
         movie4.setDirector("Christopher McQuarrie");
         movie4.setCast("Tom Cruise, Ving Rhames, Simon Pegg, Rebecca Ferguson, Vanessa Kirby, Hayley Atwell, Shea Whigham, Pom Klementieff, Esai Morales, Henry Czerny");
         movie4.setGenre("Action/Adventure");
-        movie4.setReleaseDate(LocalDate.of(2023, 7, 13));
+        movie4.setReleaseDate(LocalDateTime.of(2023, 7, 13,0,0,0));
         movie4.setLanguage("English(Sub:Chinese)");
         movie4.setAgeRestriction(1);
 
@@ -79,7 +80,7 @@ public class PopulateSampleData {
         movie5.setDirector("Jeff Rowe, Kyler Spears");
         movie5.setCast("Paul Rudd, Maya Rudolph, Hannibal Buress, Rose Byrne, John Cena, Jackie Chan, Ice Cube");
         movie5.setGenre("Action/Adventure/Animation");
-        movie5.setReleaseDate(LocalDate.of(2023, 8, 31));
+        movie5.setReleaseDate(LocalDateTime.of(2023, 8, 31,0,0,0));
         movie5.setLanguage("English(Sub:Chinese)");
         movie5.setAgeRestriction(0);
 
@@ -90,7 +91,7 @@ public class PopulateSampleData {
         movie6.setDirector("Herman Yau 邱礼涛");
         movie6.setCast("Sean Lau 刘青云, Louis Koo 古天乐, Aaron Kwok 郭富城");
         movie6.setGenre("Action/Thriller");
-        movie6.setReleaseDate(LocalDate.of(2023, 7, 20));
+        movie6.setReleaseDate(LocalDateTime.of(2023, 7, 20,0,0,0));
         movie6.setLanguage("Mandarin(Sub:English,Chinese)");
         movie6.setAgeRestriction(2);
 
@@ -101,7 +102,7 @@ public class PopulateSampleData {
         movie7.setDirector("Uhm Tae-Hwa");
         movie7.setCast("Lee Byung-hun, Park Seo-joon, Park Bo-young");
         movie7.setGenre("Action/Drama/Thriller");
-        movie7.setReleaseDate(LocalDate.of(2023, 8, 24));
+        movie7.setReleaseDate(LocalDateTime.of(2023, 8, 24,0,0,0));
         movie7.setLanguage("Korean(Sub:English,Chinese)");
         movie7.setAgeRestriction(1);
 
@@ -112,7 +113,7 @@ public class PopulateSampleData {
         movie8.setDirector("Antoine Fuqua");
         movie8.setCast("Denzel Washington, Dakota Fanning, David Denman");
         movie8.setGenre("Action/Thriller");
-        movie8.setReleaseDate(LocalDate.of(2023, 8, 31));
+        movie8.setReleaseDate(LocalDateTime.of(2023, 8, 31,0,0,0));
         movie8.setLanguage("English(Sub:Chinese)");
         movie8.setAgeRestriction(2);
 
@@ -123,7 +124,7 @@ public class PopulateSampleData {
         movie9.setDirector("Celine Song");
         movie9.setCast("Greta Lee, Teo Yoo, John Magaro");
         movie9.setGenre("Drama/Romance");
-        movie9.setReleaseDate(LocalDate.of(2023, 8, 24));
+        movie9.setReleaseDate(LocalDateTime.of(2023, 8, 24,0,0,0));
         movie9.setLanguage("English,Korean(Sub:English,Chinese)");
         movie9.setAgeRestriction(1);
 
@@ -134,7 +135,7 @@ public class PopulateSampleData {
         movie10.setDirector("Peter Sohn");
         movie10.setCast("Leah Lewis, Mamoudou Athie");
         movie10.setGenre("Animation");
-        movie10.setReleaseDate(LocalDate.of(2023, 6, 15));
+        movie10.setReleaseDate(LocalDateTime.of(2023, 6, 15,0,0,0));
         movie10.setLanguage("English(Sub:Chinese)");
         movie10.setAgeRestriction(1);
 
