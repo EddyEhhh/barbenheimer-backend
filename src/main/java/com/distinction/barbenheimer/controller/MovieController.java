@@ -2,7 +2,7 @@ package com.distinction.barbenheimer.controller;
 
 import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
 import com.distinction.barbenheimer.model.Movie;
-import com.distinction.barbenheimer.service.MovieServiceImpl;
+import com.distinction.barbenheimer.service.MovieService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,14 @@ import java.util.*;
 @Slf4j
 public class MovieController {
 
-    @Autowired
-    private MovieServiceImpl movieServiceImpl;
 
-    
+    private MovieService movieService;
+
+    @Autowired
+    public MovieController(MovieService movieService){
+        this.movieService = movieService;
+    }
+
     
     /** 
      * method returns all movies stored
@@ -29,7 +33,7 @@ public class MovieController {
      */
     @GetMapping
     public ResponseEntity<List<MovieDetailsDTO>> getAllMovies() {
-        return ResponseEntity.ok(movieServiceImpl.getAllMovies());
+        return ResponseEntity.ok(movieService.getAllMovies());
     }
 
     
@@ -44,7 +48,7 @@ public class MovieController {
      */
     @GetMapping("/search")
     public ResponseEntity<List<MovieDetailsDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
-        return ResponseEntity.ok(movieServiceImpl.getMoviesBySearch(movieTitle));
+        return ResponseEntity.ok(movieService.getMoviesBySearch(movieTitle));
     }
 
     
@@ -56,7 +60,7 @@ public class MovieController {
      */
     @GetMapping("/{movieId}")
     public ResponseEntity<MovieDetailsDTO> getMovieDetails(@PathVariable("movieId") long movieId ) {
-        return ResponseEntity.ok(movieServiceImpl.getMovieDetails(movieId));
+        return ResponseEntity.ok(movieService.getMovieDetails(movieId));
     }
 
 }
