@@ -8,7 +8,7 @@ import java.util.*;
 import com.distinction.barbenheimer.model.Movie;
 
 
-interface MovieService {
+public interface MovieService {
 
     public List<MovieDetailsDTO> getAllMovies();
 
