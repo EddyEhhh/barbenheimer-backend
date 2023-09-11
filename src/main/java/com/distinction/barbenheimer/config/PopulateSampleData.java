@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -29,6 +31,10 @@ public class PopulateSampleData {
     }
 
     public void autoGenerateMovie(){
+
+        List<Movie> movieToCreate = new ArrayList<>();
+
+        //Show now
         Movie movie1 = new Movie();
         movie1.setTitle("Barbie");
         movie1.setDescription("To live in Barbie Land is to be a perfect being in a perfect place. Unless you have a full-on existential crisis. Or you’re a Ken.");
@@ -36,9 +42,14 @@ public class PopulateSampleData {
         movie1.setDirector("Greta Gerwig");
         movie1.setCast("Margot Robbie, Ryan Gosling, Will Ferrell, Kate McKinnon, America Ferrera, Ariana Greenblatt, Emma Mackey, Alexandra Shipp, Issa Rae, Simu Liu");
         movie1.setGenre("Comedy");
-        movie1.setReleaseDate(LocalDateTime.of(2023, 7, 20,0,0,0));
+        movie1.setReleaseDate(LocalDateTime.now().minusDays(14));
+        movie1.setShowingDate(LocalDateTime.now().minusDays(7));
+        movie1.setTicketSaleDate(LocalDateTime.now().minusDays(14));
+        movie1.setLastShowingDate(LocalDateTime.now().plusMonths(2));
+        movie1.setBasePrice(8);
         movie1.setLanguage("English(Sub:Chinese)");
         movie1.setAgeRestriction(1);
+        movieToCreate.add(movie1);
 
         Movie movie2 = new Movie();
         movie2.setTitle("One and Only");
@@ -47,9 +58,14 @@ public class PopulateSampleData {
         movie2.setDirector("Da Peng");
         movie2.setCast("Wang Yibo, Huang Bo");
         movie2.setGenre("Comedy/Drama");
-        movie2.setReleaseDate(LocalDateTime.of(2023, 8, 24,0,0,0));
+        movie2.setReleaseDate(LocalDateTime.now().minusDays(12));
+        movie2.setShowingDate(LocalDateTime.now().minusDays(5));
+        movie2.setTicketSaleDate(LocalDateTime.now().minusDays(12));
+        movie2.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie2.setBasePrice(8);
         movie2.setLanguage("Mandarin(Sub:English,Chinese)");
         movie2.setAgeRestriction(0);
+        movieToCreate.add(movie2);
 
         Movie movie3 = new Movie();
         movie3.setTitle("Oppenheimer");
@@ -58,9 +74,14 @@ public class PopulateSampleData {
         movie3.setDirector("Christopher Nolan");
         movie3.setCast("Cillian Murphy, Emily Blunt, Robert Downey Jr., Matt Damon, Rami Malek, Florence Pugh, Benny Safdie, Michael Angarano, Josh Hartnett, Kenneth Branagh");
         movie3.setGenre("Thriller");
-        movie3.setReleaseDate(LocalDateTime.of(2023, 7, 20,0,0,0));
+        movie3.setReleaseDate(LocalDateTime.now().minusDays(14));
+        movie3.setShowingDate(LocalDateTime.now().minusDays(7));
+        movie3.setTicketSaleDate(LocalDateTime.now().minusDays(14));
+        movie3.setLastShowingDate(LocalDateTime.now().plusMonths(2));
+        movie3.setBasePrice(8);
         movie3.setLanguage("English(Sub:Chinese)");
         movie3.setAgeRestriction(3);
+        movieToCreate.add(movie3);
 
         Movie movie4 = new Movie();
         movie4.setTitle("Mission: Impossible - Dead Reckoning Part One");
@@ -69,9 +90,14 @@ public class PopulateSampleData {
         movie4.setDirector("Christopher McQuarrie");
         movie4.setCast("Tom Cruise, Ving Rhames, Simon Pegg, Rebecca Ferguson, Vanessa Kirby, Hayley Atwell, Shea Whigham, Pom Klementieff, Esai Morales, Henry Czerny");
         movie4.setGenre("Action/Adventure");
-        movie4.setReleaseDate(LocalDateTime.of(2023, 7, 13,0,0,0));
+        movie4.setReleaseDate(LocalDateTime.now().minusDays(3));
+        movie4.setShowingDate(LocalDateTime.now().plusDays(5));
+        movie4.setTicketSaleDate(LocalDateTime.now());
+        movie4.setLastShowingDate(LocalDateTime.now().plusMonths(2));
+        movie4.setBasePrice(8);
         movie4.setLanguage("English(Sub:Chinese)");
         movie4.setAgeRestriction(1);
+        movieToCreate.add(movie4);
 
         Movie movie5 = new Movie();
         movie5.setTitle("Teenage Mutant Ninja Turtles: Mutant Mayhem");
@@ -80,9 +106,14 @@ public class PopulateSampleData {
         movie5.setDirector("Jeff Rowe, Kyler Spears");
         movie5.setCast("Paul Rudd, Maya Rudolph, Hannibal Buress, Rose Byrne, John Cena, Jackie Chan, Ice Cube");
         movie5.setGenre("Action/Adventure/Animation");
-        movie5.setReleaseDate(LocalDateTime.of(2023, 8, 31,0,0,0));
+        movie5.setReleaseDate(LocalDateTime.now().minusDays(5));
+        movie5.setShowingDate(LocalDateTime.now().minusDays(2));
+        movie5.setTicketSaleDate(LocalDateTime.now().minusDays(5));
+        movie5.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie5.setBasePrice(8);
         movie5.setLanguage("English(Sub:Chinese)");
         movie5.setAgeRestriction(0);
+        movieToCreate.add(movie5);
 
         Movie movie6 = new Movie();
         movie6.setTitle("The White Storm 3: Heaven Or Hell 扫毒3：人在天涯");
@@ -91,9 +122,14 @@ public class PopulateSampleData {
         movie6.setDirector("Herman Yau 邱礼涛");
         movie6.setCast("Sean Lau 刘青云, Louis Koo 古天乐, Aaron Kwok 郭富城");
         movie6.setGenre("Action/Thriller");
-        movie6.setReleaseDate(LocalDateTime.of(2023, 7, 20,0,0,0));
+        movie6.setReleaseDate(LocalDateTime.now().minusDays(8));
+        movie6.setShowingDate(LocalDateTime.now().minusDays(5));
+        movie6.setTicketSaleDate(LocalDateTime.now().minusDays(8));
+        movie6.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie6.setBasePrice(8);
         movie6.setLanguage("Mandarin(Sub:English,Chinese)");
         movie6.setAgeRestriction(2);
+        movieToCreate.add(movie6);
 
         Movie movie7 = new Movie();
         movie7.setTitle("Concrete Utopia");
@@ -102,9 +138,14 @@ public class PopulateSampleData {
         movie7.setDirector("Uhm Tae-Hwa");
         movie7.setCast("Lee Byung-hun, Park Seo-joon, Park Bo-young");
         movie7.setGenre("Action/Drama/Thriller");
-        movie7.setReleaseDate(LocalDateTime.of(2023, 8, 24,0,0,0));
+        movie7.setReleaseDate(LocalDateTime.now().minusDays(12));
+        movie7.setShowingDate(LocalDateTime.now().minusDays(5));
+        movie7.setTicketSaleDate(LocalDateTime.now().minusDays(8));
+        movie7.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie7.setBasePrice(8);
         movie7.setLanguage("Korean(Sub:English,Chinese)");
         movie7.setAgeRestriction(1);
+        movieToCreate.add(movie7);
 
         Movie movie8 = new Movie();
         movie8.setTitle("The Equalizer 3");
@@ -113,9 +154,14 @@ public class PopulateSampleData {
         movie8.setDirector("Antoine Fuqua");
         movie8.setCast("Denzel Washington, Dakota Fanning, David Denman");
         movie8.setGenre("Action/Thriller");
-        movie8.setReleaseDate(LocalDateTime.of(2023, 8, 31,0,0,0));
+        movie8.setReleaseDate(LocalDateTime.now().minusDays(5));
+        movie8.setShowingDate(LocalDateTime.now().minusDays(5));
+        movie8.setTicketSaleDate(LocalDateTime.now().minusDays(8));
+        movie8.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie8.setBasePrice(8);
         movie8.setLanguage("English(Sub:Chinese)");
         movie8.setAgeRestriction(2);
+        movieToCreate.add(movie8);
 
         Movie movie9 = new Movie();
         movie9.setTitle("Past Lives");
@@ -124,9 +170,14 @@ public class PopulateSampleData {
         movie9.setDirector("Celine Song");
         movie9.setCast("Greta Lee, Teo Yoo, John Magaro");
         movie9.setGenre("Drama/Romance");
-        movie9.setReleaseDate(LocalDateTime.of(2023, 8, 24,0,0,0));
+        movie9.setReleaseDate(LocalDateTime.now().minusDays(11));
+        movie9.setShowingDate(LocalDateTime.now().minusDays(7));
+        movie9.setTicketSaleDate(LocalDateTime.now().minusDays(9));
+        movie9.setLastShowingDate(LocalDateTime.now().plusMonths(2));
+        movie9.setBasePrice(8);
         movie9.setLanguage("English,Korean(Sub:English,Chinese)");
         movie9.setAgeRestriction(1);
+        movieToCreate.add(movie9);
 
         Movie movie10 = new Movie();
         movie10.setTitle("Disney And Pixar's Elemental");
@@ -135,20 +186,32 @@ public class PopulateSampleData {
         movie10.setDirector("Peter Sohn");
         movie10.setCast("Leah Lewis, Mamoudou Athie");
         movie10.setGenre("Animation");
-        movie10.setReleaseDate(LocalDateTime.of(2023, 6, 15,0,0,0));
+        movie10.setReleaseDate(LocalDateTime.now().minusDays(8));
+        movie10.setShowingDate(LocalDateTime.now().minusDays(5));
+        movie10.setTicketSaleDate(LocalDateTime.now().minusDays(8));
+        movie10.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie10.setBasePrice(8);
         movie10.setLanguage("English(Sub:Chinese)");
         movie10.setAgeRestriction(1);
+        movieToCreate.add(movie10);
 
-        movieRepository.save(movie1);
-        movieRepository.save(movie2);
-        movieRepository.save(movie3);
-        movieRepository.save(movie4);
-        movieRepository.save(movie5);
-        movieRepository.save(movie6);
-        movieRepository.save(movie7);
-        movieRepository.save(movie8);
-        movieRepository.save(movie9);
-        movieRepository.save(movie10);
+        Movie movie11 = new Movie();
+        movie11.setTitle("YOU SHOULD NOT SEE THIS MOVIE");
+        movie11.setDescription("THIS MOVIE SHOULD NOT BE SEEN");
+        movie11.setRuntimeInMinute(300);
+        movie11.setDirector("No One");
+        movie11.setCast("No One");
+        movie11.setGenre("Action");
+        movie11.setReleaseDate(LocalDateTime.now().minusMonths(2));
+        movie11.setShowingDate(LocalDateTime.now().minusDays(50));
+        movie11.setTicketSaleDate(LocalDateTime.now().minusDays(48));
+        movie11.setLastShowingDate(LocalDateTime.now().minusMonths(1));
+        movie11.setBasePrice(8);
+        movie11.setLanguage("English(Sub:Chinese)");
+        movie11.setAgeRestriction(1);
+        movieToCreate.add(movie11);
+
+        movieRepository.saveAll(movieToCreate);
 
 
 //        Movie movie6 = new Movie();
