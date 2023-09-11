@@ -29,12 +29,12 @@ spring:
 #          enable: ${mail.properties.mail.smtp.auth.starttls.enable}
 #
 #
-#aws:
-#  region: ${aws.region}
-#  s3:
-#    buckets:
-#      account: ${aws.ip.account}
-#
+aws:
+  region: ${AWS_DEFAULT_REGION}
+  s3:
+    buckets:
+      account: ${AWS_BUCKET}
+
 ##cloud:
 ##  aws:
 ##    credentials:

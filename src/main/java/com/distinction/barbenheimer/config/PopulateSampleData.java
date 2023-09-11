@@ -213,17 +213,21 @@ public class PopulateSampleData {
 
         movieRepository.saveAll(movieToCreate);
 
-
+//        This is a template.
 //        Movie movie6 = new Movie();
-//        movie6.setTitle("The White Storm 3: Heaven Or Hell");
+//        movie6.setTitle("");
 //        movie6.setDescription("");
-//        movie6.setRuntimeInMinute(163);
-//        movie6.setDirector("Christopher McQuarrie");
+//        movie6.setRuntimeInMinute();
+//        movie6.setDirector("");
 //        movie6.setCast("");
-//        movie6.setGenre("Action/Adventure");
-//        movie6.setReleaseDate(LocalDate.of(2023, 7, 13));
-//        movie6.setLanguage("English(Sub:Chinese)");
-//        movie6.setAgeRestriction(1);
+//        movie6.setGenre("");
+//        movie6.setReleaseDate();
+//        movie6.setShowingDate();
+//        movie6.setTicketSaleDate();
+//        movie6.setLastShowingDate();
+//        movie6.setBasePrice();
+//        movie6.setLanguage("");
+//        movie6.setAgeRestriction();
 
 
     }

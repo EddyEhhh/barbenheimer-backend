@@ -7,6 +7,8 @@ import com.distinction.barbenheimer.DTO.MovieImageDetailDTO;
 import com.distinction.barbenheimer.DTO.MovieScheduleShowtimeDTO;
 import com.distinction.barbenheimer.model.MovieImage;
 import com.distinction.barbenheimer.model.MovieSchedule;
+import com.distinction.barbenheimer.s3.S3Buckets;
+import com.distinction.barbenheimer.s3.S3Service;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MovieServiceImpl implements MovieService{
 
+    @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private S3Service s3Service;
+
+    @Autowired
+    private S3Buckets s3Buckets;
 
     private ModelMapper modelMapper;
 
@@ -130,6 +139,7 @@ public class MovieServiceImpl implements MovieService{
         // TODO Auto-generated method stub
         return null;
     }
+
 
 
 
