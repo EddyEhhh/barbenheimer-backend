@@ -33,7 +33,7 @@ public class MovieController {
      */
     @GetMapping
     public ResponseEntity<List<MovieDetailsDTO>> getAllMovies() {
-        return ResponseEntity.ok(movieService.getAllMovies());
+        return ResponseEntity.ok(movieService.getAllCurrent());
     }
 
     

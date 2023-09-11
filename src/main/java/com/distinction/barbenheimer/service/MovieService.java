@@ -10,7 +10,7 @@ import com.distinction.barbenheimer.model.Movie;
 
 public interface MovieService {
 
-    public List<MovieDetailsDTO> getAllMovies();
+    public List<MovieDetailsDTO> getAllCurrent();
 
     public List<MovieDetailsDTO> getMoviesBySearch(String movieTitle);
 

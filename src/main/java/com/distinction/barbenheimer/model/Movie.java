@@ -44,8 +44,18 @@ public class Movie {
 
     private int ageRestriction;
 
+    //must be before all(lastShowingDate, showingDate, ticketSaleDate)
     private LocalDateTime releaseDate;
+
+    //Showing Date must be equals or after release date
+    private LocalDateTime showingDate;
+
+    //Ticket Sale Date must be before showingDate
     private LocalDateTime ticketSaleDate;
+
+
+    //Last Showing Date must be after all(releaseDate, showingDate, ticketSaleDate)
+    private LocalDateTime lastShowingDate;
 
     private float basePrice;
 
