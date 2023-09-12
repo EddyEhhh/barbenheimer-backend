@@ -4,11 +4,16 @@ import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.service.MovieService;
 
+import com.distinction.barbenheimer.service.MovieServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -19,6 +24,7 @@ public class MovieController {
 
 
     private MovieService movieService;
+
 
     @Autowired
     public MovieController(MovieService movieService){
@@ -61,6 +67,26 @@ public class MovieController {
     @GetMapping("/{movieId}")
     public ResponseEntity<MovieDetailsDTO> getMovieDetails(@PathVariable("movieId") long movieId ) {
         return ResponseEntity.ok(movieService.getMovieDetails(movieId));
+    }
+
+
+    /**
+     * method is for website administrators to upload images for the movies
+     *
+     * @param movieId
+     * @param file
+     * @return ResponseEntity<?> defining the response message upon uploading image
+     * @throws IOException
+     */
+
+    @PostMapping(value = "/{movieId}/imageUpload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<?> uploadMovieImage(@PathVariable("movieId") Long movieId,
+                                                @RequestParam("image") MultipartFile file) throws IOException {
+        String uploadImageResponse = movieService.uploadMovieImage(movieId, file);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadImageResponse);
     }
 
 }
