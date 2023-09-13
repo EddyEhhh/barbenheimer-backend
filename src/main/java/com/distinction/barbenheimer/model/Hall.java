@@ -26,8 +26,8 @@ public class Hall {
     @NotEmpty
     private int seatCapacity;
 
-    @OneToMany(mappedBy = "hall")
-    private List<MovieSchedule> movieSchedules;
+//    @OneToMany(mappedBy = "hall")
+//    private List<MovieScheduleDate> movieScheduleDates;
 
     @OneToMany(mappedBy = "hall")
     private List<Seat> seats;

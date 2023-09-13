@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.NaturalId;
 
 import java.time.LocalDateTime;
 
@@ -28,11 +27,7 @@ public class SeatPurchase {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns( {
-            @JoinColumn(name="movie_id", referencedColumnName="movie_id"),
-            @JoinColumn(name="show_time", referencedColumnName="showTime")
-    } )
-    private MovieSchedule movieSchedule;
+    private MovieScheduleDate movieScheduleDate;
 
     @NotEmpty
     private String purchaseToken;
