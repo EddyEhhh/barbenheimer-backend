@@ -30,10 +30,10 @@ spring:
 #
 #
 aws:
-  region: ${AWS_DEFAULT_REGION}
+  region: ${aws.default.region}
   s3:
     buckets:
-      account: ${AWS_BUCKET}
+      account: ${aws.bucket}
 
 ##cloud:
 ##  aws:

@@ -49,5 +49,5 @@ public class MovieDetailsDTO {
 
     private List<MovieScheduleShowtimeDTO> movieScheduleShowtimeDTOs;
 
-    private List<MovieImageDetailDTO> movieImageDetailDTOs;
+    private List<MovieImageDetailDTO> movieImages;
 }
