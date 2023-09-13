@@ -1,6 +1,7 @@
 package com.distinction.barbenheimer.controller;
 
 import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
+import com.distinction.barbenheimer.DTO.MovieShortDTO;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.service.MovieService;
 
@@ -32,7 +33,7 @@ public class MovieController {
      * @return ResponseEntity<List<Movie>>
      */
     @GetMapping
-    public ResponseEntity<List<MovieDetailsDTO>> getAllMovies() {
+    public ResponseEntity<List<MovieShortDTO>> getAllMovies() {
         return ResponseEntity.ok(movieService.getAllCurrent());
     }
 
@@ -60,7 +61,7 @@ public class MovieController {
      */
     @GetMapping("/{movieId}")
     public ResponseEntity<MovieDetailsDTO> getMovieDetails(@PathVariable("movieId") long movieId ) {
-        return ResponseEntity.ok(movieService.getMovieDetails(movieId));
+        return ResponseEntity.ok(movieService.getDetails(movieId));
     }
 
 }
