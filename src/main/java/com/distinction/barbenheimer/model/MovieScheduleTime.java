@@ -1,14 +1,12 @@
 package com.distinction.barbenheimer.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -17,15 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieSchedule {
+public class MovieScheduleTime {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
-
-    @Id
-    private LocalDate showDate;
+    private MovieScheduleDate movieScheduleDate;
 
     @Id
     private LocalTime showTime;
@@ -35,7 +29,7 @@ public class MovieSchedule {
     private Hall hall;
 
 
-    @OneToMany(mappedBy = "movieSchedule")
+    @OneToMany(mappedBy = "movieScheduleTime")
     private List<SeatStatus> seatStatuses;
 
 
