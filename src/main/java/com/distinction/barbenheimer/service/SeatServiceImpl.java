@@ -8,11 +8,11 @@ import com.distinction.barbenheimer.model.Seat;
 
 public class SeatServiceImpl implements SeatService{
 
-    @Override
-    public int seatSelected(Hall hall, String seatRow, int number, CustomerDetail customerDetail) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'seatSelected'");
-    }
+//    @Override
+//    public int seatSelected(Hall hall, String seatRow, int number, CustomerDetail customerDetail) {
+//        // TODO Auto-generated method stub
+//        throw new UnsupportedOperationException("Unimplemented method 'seatSelected'");
+//    }
 
     @Override
     public List<Seat> selectedBy(CustomerDetail customerDetail) {
