@@ -1,6 +1,7 @@
 package com.distinction.barbenheimer.config;
 
 import com.distinction.barbenheimer.model.Movie;
+import com.distinction.barbenheimer.model.MovieImage;
 import com.distinction.barbenheimer.repository.MovieRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class PopulateSampleData {
 
         List<Movie> movieToCreate = new ArrayList<>();
 
+
         //Show now
         Movie movie1 = new Movie();
         movie1.setTitle("Barbie");
@@ -49,6 +51,12 @@ public class PopulateSampleData {
         movie1.setBasePrice(8);
         movie1.setLanguage("English(Sub:Chinese)");
         movie1.setAgeRestriction(1);
+        MovieImage movie1Image = new MovieImage();
+        movie1Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Barbie/img1");
+        movie1Image.setMovie(movie1);
+        List<MovieImage> movie1Images = new ArrayList<>();
+        movie1Images.add(movie1Image);
+        movie1.setMovieImages(movie1Images);
         movieToCreate.add(movie1);
 
         Movie movie2 = new Movie();
@@ -65,7 +73,14 @@ public class PopulateSampleData {
         movie2.setBasePrice(8);
         movie2.setLanguage("Mandarin(Sub:English,Chinese)");
         movie2.setAgeRestriction(0);
+        MovieImage movie2Image = new MovieImage();
+        movie2Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/One+and+Only/img2");
+        movie2Image.setMovie(movie2);
+        List<MovieImage> movie2Images = new ArrayList<>();
+        movie2Images.add(movie2Image);
+        movie2.setMovieImages(movie2Images);
         movieToCreate.add(movie2);
+
 
         Movie movie3 = new Movie();
         movie3.setTitle("Oppenheimer");
@@ -81,6 +96,12 @@ public class PopulateSampleData {
         movie3.setBasePrice(8);
         movie3.setLanguage("English(Sub:Chinese)");
         movie3.setAgeRestriction(3);
+        MovieImage movie3Image = new MovieImage();
+        movie3Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Oppenheimer/img3");
+        movie3Image.setMovie(movie3);
+        List<MovieImage> movie3Images = new ArrayList<>();
+        movie3Images.add(movie3Image);
+        movie3.setMovieImages(movie3Images);
         movieToCreate.add(movie3);
 
         Movie movie4 = new Movie();
@@ -97,6 +118,12 @@ public class PopulateSampleData {
         movie4.setBasePrice(8);
         movie4.setLanguage("English(Sub:Chinese)");
         movie4.setAgeRestriction(1);
+        MovieImage movie4Image = new MovieImage();
+        movie4Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Mission%3A+Impossible+-+Dead+Reckoning+Part+One/img4");
+        movie4Image.setMovie(movie4);
+        List<MovieImage> movie4Images = new ArrayList<>();
+        movie4Images.add(movie4Image);
+        movie4.setMovieImages(movie4Images);
         movieToCreate.add(movie4);
 
         Movie movie5 = new Movie();
@@ -113,6 +140,12 @@ public class PopulateSampleData {
         movie5.setBasePrice(8);
         movie5.setLanguage("English(Sub:Chinese)");
         movie5.setAgeRestriction(0);
+        MovieImage movie5Image = new MovieImage();
+        movie5Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Teenage+Mutant+Ninja+Turtles%3A+Mutant+Mayhem/img5");
+        movie5Image.setMovie(movie5);
+        List<MovieImage> movie5Images = new ArrayList<>();
+        movie5Images.add(movie5Image);
+        movie5.setMovieImages(movie5Images);
         movieToCreate.add(movie5);
 
         Movie movie6 = new Movie();
@@ -129,6 +162,12 @@ public class PopulateSampleData {
         movie6.setBasePrice(8);
         movie6.setLanguage("Mandarin(Sub:English,Chinese)");
         movie6.setAgeRestriction(2);
+        MovieImage movie6Image = new MovieImage();
+        movie6Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/The+White+Storm+3%3A+Heaven+Or+Hell+%E6%89%AB%E6%AF%923%EF%BC%9A%E4%BA%BA%E5%9C%A8%E5%A4%A9%E6%B6%AF/img6");
+        movie6Image.setMovie(movie6);
+        List<MovieImage> movie6Images = new ArrayList<>();
+        movie6Images.add(movie6Image);
+        movie6.setMovieImages(movie6Images);
         movieToCreate.add(movie6);
 
         Movie movie7 = new Movie();
@@ -145,6 +184,12 @@ public class PopulateSampleData {
         movie7.setBasePrice(8);
         movie7.setLanguage("Korean(Sub:English,Chinese)");
         movie7.setAgeRestriction(1);
+        MovieImage movie7Image = new MovieImage();
+        movie7Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Concrete+Utopia/img7");
+        movie7Image.setMovie(movie7);
+        List<MovieImage> movie7Images = new ArrayList<>();
+        movie7Images.add(movie7Image);
+        movie7.setMovieImages(movie7Images);
         movieToCreate.add(movie7);
 
         Movie movie8 = new Movie();
@@ -161,6 +206,12 @@ public class PopulateSampleData {
         movie8.setBasePrice(8);
         movie8.setLanguage("English(Sub:Chinese)");
         movie8.setAgeRestriction(2);
+        MovieImage movie8Image = new MovieImage();
+        movie8Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/The+Equalizer+3/img8");
+        movie8Image.setMovie(movie8);
+        List<MovieImage> movie8Images = new ArrayList<>();
+        movie8Images.add(movie8Image);
+        movie8.setMovieImages(movie8Images);
         movieToCreate.add(movie8);
 
         Movie movie9 = new Movie();
@@ -177,6 +228,12 @@ public class PopulateSampleData {
         movie9.setBasePrice(8);
         movie9.setLanguage("English,Korean(Sub:English,Chinese)");
         movie9.setAgeRestriction(1);
+        MovieImage movie9Image = new MovieImage();
+        movie9Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Past+Lives/img9");
+        movie9Image.setMovie(movie9);
+        List<MovieImage> movie9Images = new ArrayList<>();
+        movie9Images.add(movie9Image);
+        movie9.setMovieImages(movie9Images);
         movieToCreate.add(movie9);
 
         Movie movie10 = new Movie();
@@ -193,6 +250,12 @@ public class PopulateSampleData {
         movie10.setBasePrice(8);
         movie10.setLanguage("English(Sub:Chinese)");
         movie10.setAgeRestriction(1);
+        MovieImage movie10Image = new MovieImage();
+        movie10Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Disney+And+Pixar's+Elemental/img10");
+        movie10Image.setMovie(movie10);
+        List<MovieImage> movie10Images = new ArrayList<>();
+        movie10Images.add(movie10Image);
+        movie10.setMovieImages(movie10Images);
         movieToCreate.add(movie10);
 
         Movie movie11 = new Movie();
@@ -214,19 +277,29 @@ public class PopulateSampleData {
         movieRepository.saveAll(movieToCreate);
 
 
+
+
+
+
+//        This is a template.
 //        Movie movie6 = new Movie();
-//        movie6.setTitle("The White Storm 3: Heaven Or Hell");
+//        movie6.setTitle("");
 //        movie6.setDescription("");
-//        movie6.setRuntimeInMinute(163);
-//        movie6.setDirector("Christopher McQuarrie");
+//        movie6.setRuntimeInMinute();
+//        movie6.setDirector("");
 //        movie6.setCast("");
-//        movie6.setGenre("Action/Adventure");
-//        movie6.setReleaseDate(LocalDate.of(2023, 7, 13));
-//        movie6.setLanguage("English(Sub:Chinese)");
-//        movie6.setAgeRestriction(1);
+//        movie6.setGenre("");
+//        movie6.setReleaseDate();
+//        movie6.setShowingDate();
+//        movie6.setTicketSaleDate();
+//        movie6.setLastShowingDate();
+//        movie6.setBasePrice();
+//        movie6.setLanguage("");
+//        movie6.setAgeRestriction();
 
 
     }
+
 
 
 }
