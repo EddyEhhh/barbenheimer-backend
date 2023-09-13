@@ -3,7 +3,7 @@ package com.distinction.barbenheimer.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class Movie {
     private float basePrice;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MovieSchedule> movieSchedules;
+    private List<MovieScheduleDate> movieScheduleDates;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieImage> movieImages;

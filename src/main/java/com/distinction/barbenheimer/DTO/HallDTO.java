@@ -1,6 +1,5 @@
 package com.distinction.barbenheimer.DTO;
 
-import com.distinction.barbenheimer.model.MovieSchedule;
 import com.distinction.barbenheimer.model.Seat;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

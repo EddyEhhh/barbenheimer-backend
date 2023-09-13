@@ -24,7 +24,7 @@ public class WebSecurityConfig {
 
     private static final String[] WHITELIST_URL = {
             "/api/v1/movies/**",
-            "api/v1/demo"
+            "/api/v1/demo"
 
     };
 

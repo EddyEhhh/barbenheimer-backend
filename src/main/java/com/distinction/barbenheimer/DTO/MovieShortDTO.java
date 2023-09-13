@@ -1,34 +1,26 @@
 package com.distinction.barbenheimer.DTO;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class MovieDetailsDTO {
+public class MovieShortDTO {
 
     private Long id;
 
     private String title;
 
-    private String description;
-
     private int runtimeInMinute;
 
     private String genre;
-
-    private String director;
-
-    private String cast;
-
-    private String language;
 
     private int ageRestriction;
 
@@ -45,9 +37,6 @@ public class MovieDetailsDTO {
     //Last Showing Date must be after all(releaseDate, showingDate, ticketSaleDate)
     private LocalDateTime lastShowingDate;
 
-    private float basePrice;
+    private List<MovieImageDetailDTO> movieImages;
 
-    private List<MovieScheduleShowtimeDTO> movieScheduleShowtimeDTOs;
-
-    private List<MovieImageDetailDTO> movieImageDetailDTOs;
 }
