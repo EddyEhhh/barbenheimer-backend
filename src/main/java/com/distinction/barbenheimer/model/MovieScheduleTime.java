@@ -18,10 +18,12 @@ import java.util.List;
 public class MovieScheduleTime {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private MovieScheduleDate movieScheduleDate;
 
-    @Id
     private LocalTime showTime;
 
     @ManyToOne(fetch = FetchType.EAGER)

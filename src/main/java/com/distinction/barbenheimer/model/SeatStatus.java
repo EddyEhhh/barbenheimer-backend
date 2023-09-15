@@ -15,6 +15,9 @@ import lombok.NoArgsConstructor;
 public class SeatStatus {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private MovieScheduleTime movieScheduleTime;
 

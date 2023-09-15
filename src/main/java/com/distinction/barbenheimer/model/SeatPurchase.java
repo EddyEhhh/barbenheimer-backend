@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 public class SeatPurchase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns( {
             @JoinColumn(name="hall_id", referencedColumnName="hall_id"),
@@ -25,7 +28,6 @@ public class SeatPurchase {
     } )
     private Seat seat;
 
-    @Id
     @ManyToOne(fetch = FetchType.EAGER)
     private MovieScheduleDate movieScheduleDate;
 
