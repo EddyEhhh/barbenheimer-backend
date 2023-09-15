@@ -40,8 +40,8 @@ public class SearchController {
      * @return ResponseEntity<List<MovieTitleDTO>>
      */
     @GetMapping("/movies")
-    public ResponseEntity<List<MovieTitleDTO>> getAllCurrentTitleAndId() {
-        return ResponseEntity.ok(movieService.getAllCurrentTitleAndId());
+    public ResponseEntity<List<MovieTitleDTO>> getAllTitleAndId() {
+        return ResponseEntity.ok(movieService.getAllTitleAndId());
     }
 
 }

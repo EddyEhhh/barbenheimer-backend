@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class MovieTitleDTO {
-    public Long movieId;
 
-    public String movieTitle;
+    public Long id;
+
+    public String title;
+
 }

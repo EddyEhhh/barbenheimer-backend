@@ -59,20 +59,6 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getMoviesBySearch(movieTitle));
     }
 
-    
-    
-
-    
-    // /** 
-    //  * method returns all applicable movies that match the user's search input
-    //  * method only returns the selected movie title and its respective movieid
-    //  * @param movieTitle
-    //  * @return List<MovieDetailsDTO>
-    //  */
-    // @GetMapping("/searchTitle")
-    // public ResponseEntity<List<MovieDetailsDTO>> getMovieNameAndIdBySearch(@RequestParam("q") String movieTitle) {
-    //     return ResponseEntity.ok(movieService.getMovieNameAndIdBySearch(movieTitle));
-    // }
 
     
     /** 

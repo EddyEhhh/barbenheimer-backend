@@ -70,9 +70,8 @@ public class MovieServiceImpl implements MovieService{
      * @return List<MovieTitleDTO>
      */
     @Override
-    public List<MovieTitleDTO> getAllCurrentTitleAndId() {
-        LocalDateTime now = LocalDateTime.now();
-        List<Movie> movieList = movieRepository.findByLastShowingDateAfter(now);
+    public List<MovieTitleDTO> getAllTitleAndId() {
+        List<Movie> movieList = movieRepository.findAll();
         List<MovieTitleDTO> movieTitleDTOList = new ArrayList<>();
         for (Movie movie: movieList) {
             movieTitleDTOList.add(modelMapper.map(movie, MovieTitleDTO.class));
@@ -117,28 +116,6 @@ public class MovieServiceImpl implements MovieService{
     }
 
     
-    // /** 
-    //  * method returns only the name and id of a movie upon a user's search input
-    //  * 
-    //  * @param movieName
-    //  * @return List<MovieDetailsDTO>
-    //  */
-    // @Override
-    // public List<MovieDetailsDTO> getMovieNameAndIdBySearch(String movieTitle) {
-    //     List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
-    //     if (matchingMovies == null) {
-    //         throw new RuntimeException("Movie does not exist");
-    //     } 
-    //     List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
-    //     for (Movie movie : matchingMovies) {
-    //         matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
-    //                                     .title(movie.getTitle())
-    //                                     .build()
-    //                         );
-    //     }
-    //     return matchingDTOs;
-    
-    // }
 
 
     /** 
