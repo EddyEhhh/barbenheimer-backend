@@ -1,8 +1,10 @@
 package com.distinction.barbenheimer.config;
 
-import com.distinction.barbenheimer.model.Movie;
-import com.distinction.barbenheimer.model.MovieImage;
+import com.distinction.barbenheimer.model.*;
+import com.distinction.barbenheimer.repository.HallRepository;
 import com.distinction.barbenheimer.repository.MovieRepository;
+import com.distinction.barbenheimer.repository.MovieScheduleDateRepository;
+import com.distinction.barbenheimer.repository.MovieScheduleTimeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,15 @@ public class PopulateSampleData {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private HallRepository hallRepository;
+
+    @Autowired
+    private MovieScheduleDateRepository movieScheduleDateRepository;
+
+    @Autowired
+    private MovieScheduleTimeRepository movieScheduleTimeRepository;
 
     
     /** 
@@ -33,8 +45,25 @@ public class PopulateSampleData {
 
     public void autoGenerateMovie(){
 
-        List<Movie> movieToCreate = new ArrayList<>();
+        List<Hall> halls = new ArrayList<>();
 
+        Hall hall1 = new Hall();
+        Hall hall2 = new Hall();
+        Hall hall3 = new Hall();
+        Hall hall4 = new Hall();
+        Hall hall5 = new Hall();
+
+        halls.add(hall1);
+        halls.add(hall2);
+        halls.add(hall3);
+        halls.add(hall4);
+        halls.add(hall5);
+
+        hallRepository.saveAll(halls);
+
+
+
+        List<Movie> movieToCreate = new ArrayList<>();
 
         //Show now
         Movie movie1 = new Movie();
@@ -57,7 +86,12 @@ public class PopulateSampleData {
         List<MovieImage> movie1Images = new ArrayList<>();
         movie1Images.add(movie1Image);
         movie1.setMovieImages(movie1Images);
+
+        movie1.setMovieScheduleDates(autoGenerateMovie7DaySchedule(movie1, halls));
+
         movieToCreate.add(movie1);
+
+
 
         Movie movie2 = new Movie();
         movie2.setTitle("One and Only");
@@ -301,6 +335,42 @@ public class PopulateSampleData {
     }
 
 
+    public List<MovieScheduleDate> autoGenerateMovie7DaySchedule(Movie movie, List<Hall> halls){
+        List<MovieScheduleDate> movieScheduleDates = new ArrayList<>();
+
+        for(int day = 0 ; day < 7 ; day++){
+            MovieScheduleDate movieScheduleDate = new MovieScheduleDate();
+            movieScheduleDate.setMovie(movie);
+            movieScheduleDate.setShowDate(movie.getShowingDate().toLocalDate().plusDays(day));
+
+            LocalDateTime time = LocalDateTime.of(1,1,1,8,0);
+            LocalDateTime endTime = LocalDateTime.of(1,1,1,23, 59);
+
+            int hall = 0;
+
+            List<MovieScheduleTime> movieScheduleTimes = new ArrayList<>();
+
+            while(time.plusMinutes(movie.getRuntimeInMinute()).isBefore(endTime)){
+                log.info("RUN ----------");
+                MovieScheduleTime movieScheduleTime = new MovieScheduleTime();
+                movieScheduleTime.setMovieScheduleDate(movieScheduleDate);
+                movieScheduleTime.setHall(halls.get(hall));
+                movieScheduleTime.setShowTime(time.toLocalTime());
+                if(++hall >= halls.size()){
+                    hall = 0;
+                }
+                time = time.plusMinutes(45);
+
+                movieScheduleTimes.add(movieScheduleTime);
+            }
+
+            movieScheduleDate.setMovieScheduleTimes(movieScheduleTimes);
+            movieScheduleDates.add(movieScheduleDate);
+        }
+        log.info("TESTS"+movieScheduleDates.get(0).getMovieScheduleTimes().get(0).getShowTime().toString());
+        return movieScheduleDates;
+
+    }
 
 }
 
