@@ -6,6 +6,7 @@ import java.util.*;
 
 import com.distinction.barbenheimer.DTO.MovieShortDTO;
 import com.distinction.barbenheimer.DTO.MovieTitleDTO;
+import com.distinction.barbenheimer.exception.ResourceNotFoundException;
 import com.distinction.barbenheimer.model.MovieImage;
 import com.distinction.barbenheimer.repository.MovieImageRepository;
 import com.distinction.barbenheimer.s3.S3Buckets;
@@ -159,7 +160,7 @@ public class MovieServiceImpl implements MovieService{
 
         Movie movie = movieRepository.findById(movieId).get();
         if(movie == null){
-            return "Movie with specified id does not exist.";
+            throw new ResourceNotFoundException("Movie with id" + movieId + "does not exist.");
         }
         String movieTitle = movie.getTitle();
         String movieImageId = "img" + movieId;
