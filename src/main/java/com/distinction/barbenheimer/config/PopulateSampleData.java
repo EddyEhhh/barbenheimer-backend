@@ -8,6 +8,7 @@ import com.distinction.barbenheimer.repository.MovieScheduleTimeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.cglib.core.Local;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -307,6 +308,50 @@ public class PopulateSampleData {
         movie11.setLanguage("English(Sub:Chinese)");
         movie11.setAgeRestriction(1);
         movieToCreate.add(movie11);
+
+        Movie movie12 = new Movie();
+        movie12.setTitle("No More Bets 孤注一掷");
+        movie12.setDescription("The film is based on tens of thousands of real fraud cases, and the horrifying inside story of the entire industry chain of overseas cyber fraud. Programmer Pan Sheng and model Anna were attracted by an overseas recruitment ad and went abroad to seek wealth, but they were scammed and ended up working in a factory. In order to leave, the two are going to attack the gambler Ah Tian and his girlfriend Xiao Yu, take their money, and complete their business... Can Pan Sheng and Anna escape from the cruel leaders of the fraud group, Manager Lu and Ah Cai? Facing cross-border investigations and pursuit of the police, where can they escape to?");
+        movie12.setRuntimeInMinute(130);
+        movie12.setDirector("Ao Shen 申奥");
+        movie12.setCast("Yixing Zhang 张艺兴, Gina Chen Jin 金晨, Chuanjun Wang 王传君, Mei Yong 咏梅, Darren Wang 王大陆, Sunny Sun 孙阳, Zhou Ye 周也");
+        movie12.setGenre("Crime/Drama");
+        movie12.setReleaseDate(LocalDateTime.now().minusDays(2));
+        movie12.setShowingDate(LocalDateTime.now().minusDays(2));
+        movie12.setTicketSaleDate(LocalDateTime.now().minusDays(3));
+        movie12.setLastShowingDate(LocalDateTime.now().plusMonths(1));
+        movie12.setBasePrice(8);
+        movie12.setLanguage("Mandarin(Sub: English, Chinese)");
+        movie12.setAgeRestriction(2);
+        MovieImage movie12Image = new MovieImage();
+        movie12Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/No+More+Bets+%E5%AD%A4%E6%B3%A8%E4%B8%80%E6%8E%B7/img12");
+        movie12Image.setMovie(movie12);
+        List<MovieImage> movie12Images = new ArrayList<>();
+        movie12Images.add(movie12Image);
+        movie12.setMovieImages(movie12Images);
+        movieToCreate.add(movie12);
+
+        Movie movie13 = new Movie();
+        movie13.setTitle("The Nun II");
+        movie13.setDescription("In 1956 France, a priest is murdered, and it seems an evil is spreading. Sister Irene once again comes face to face with a demonic force.");
+        movie13.setRuntimeInMinute(110);
+        movie13.setDirector("Michael Chaves");
+        movie13.setCast("Taissa Farmiga, Storm Reid, Anna Popplewell, Bonnie Aarons, Katelyn Rose Downey");
+        movie13.setGenre("Horror/Mystery");
+        movie13.setReleaseDate(LocalDateTime.now().minusDays(15));
+        movie13.setShowingDate(LocalDateTime.now().minusDays(13));
+        movie13.setTicketSaleDate(LocalDateTime.now().minusDays(15));
+        movie13.setLastShowingDate(LocalDateTime.now().plusDays(14));
+        movie13.setBasePrice(8);
+        movie13.setLanguage("English(Sub: Chinese)");
+        movie13.setAgeRestriction(2);
+        MovieImage movie13Image = new MovieImage();
+        movie13Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/The+Nun+II/img13");
+        movie13Image.setMovie(movie13);
+        List<MovieImage> movie13Images = new ArrayList<>();
+        movie13Images.add(movie13Image);
+        movie13.setMovieImages(movie13Images);
+        movieToCreate.add(movie13);
 
         movieRepository.saveAll(movieToCreate);
 

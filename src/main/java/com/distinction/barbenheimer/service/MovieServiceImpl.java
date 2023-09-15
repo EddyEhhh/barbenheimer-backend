@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import com.distinction.barbenheimer.DTO.MovieShortDTO;
+import com.distinction.barbenheimer.DTO.MovieTitleDTO;
+import com.distinction.barbenheimer.exception.ResourceNotFoundException;
 import com.distinction.barbenheimer.model.MovieImage;
+import com.distinction.barbenheimer.repository.MovieImageRepository;
 import com.distinction.barbenheimer.s3.S3Buckets;
 import com.distinction.barbenheimer.s3.S3Service;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,8 @@ public class MovieServiceImpl implements MovieService{
     private MovieRepository movieRepository;
 
     @Autowired
+    private MovieImageRepository movieImageRepository;
+    @Autowired
     private S3Service s3Service;
 
     @Autowired
@@ -34,9 +39,10 @@ public class MovieServiceImpl implements MovieService{
     private ModelMapper modelMapper;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, ModelMapper modelMapper){
+    public MovieServiceImpl(MovieRepository movieRepository, MovieImageRepository movieImageRepository, ModelMapper modelMapper){
         this.modelMapper = modelMapper;
         this.movieRepository = movieRepository;
+        this.movieImageRepository = movieImageRepository;
     }
 
 
@@ -57,9 +63,30 @@ public class MovieServiceImpl implements MovieService{
         return movieDTOList;
     }
 
+    
+
 
     
     
+    
+    /** 
+     * method returns current showing movies' title and id
+     * 
+     * @return List<MovieTitleDTO>
+     */
+    @Override
+    public List<MovieTitleDTO> getAllTitleAndId() {
+        List<Movie> movieList = movieRepository.findAll();
+        List<MovieTitleDTO> movieTitleDTOList = new ArrayList<>();
+        for (Movie movie: movieList) {
+            movieTitleDTOList.add(modelMapper.map(movie, MovieTitleDTO.class));
+        }
+        return movieTitleDTOList;
+    }
+
+
+
+
     /** 
      * method returns all movies with names matching that of user input
      * 
@@ -67,8 +94,8 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<MovieDetailsDTO> getMoviesBySearch(String movieName) {
-        List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieName);
+    public List<MovieDetailsDTO> getMoviesBySearch(String movieTitle) {
+        List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");
         } 
@@ -92,6 +119,8 @@ public class MovieServiceImpl implements MovieService{
         return matchingDTOs;
     
     }
+
+    
 
 
     /** 
@@ -131,10 +160,19 @@ public class MovieServiceImpl implements MovieService{
 
         Movie movie = movieRepository.findById(movieId).get();
         if(movie == null){
-            return "Movie with specified id does not exist.";
+            throw new ResourceNotFoundException("Movie with id" + movieId + "does not exist.");
         }
         String movieTitle = movie.getTitle();
         String movieImageId = "img" + movieId;
+        List<MovieImage> movieImages = movie.getMovieImages();
+        if(movieImages != null && !movieImages.isEmpty()){
+            int imageCount = movieImages.size();
+            movieImageId += "_" + imageCount;
+        }
+
+        // saves the imageUrl into database
+        saveMovieImage(movie, movieImages, movieTitle, movieImageId);
+
 
         //puts into aws
         try {
@@ -147,6 +185,21 @@ public class MovieServiceImpl implements MovieService{
             throw new RuntimeException(e);
         }
     }
+
+    public void saveMovieImage(Movie movie, List<MovieImage> movieImages, String movieTitle, String movieImageId){
+        String imageUrl = "https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movieTitle + "/" + movieImageId;
+        MovieImage movieImage = new MovieImage();
+        movieImage.setMovie(movie);
+        movieImage.setImageUrl(imageUrl);
+        movieImageRepository.save(movieImage);
+        movieImages.add(movieImage);
+        movie.setMovieImages(movieImages);
+        movieRepository.save(movie);
+    }
+
+
+
+
 
 
 

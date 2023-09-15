@@ -23,12 +23,13 @@ public class Seat {
     @JoinColumn(name="hall_id")
     private Hall hall;
 
-    private String seatRow;
+    private String rowCharacter;
 
-    private int number;
+    private int columnNumber;
 
-    @OneToMany(mappedBy = "seat")
-    private List<SeatPurchase> seatPurchases;
+    private int x;
+
+    private int y;
 
     @OneToMany(mappedBy = "seat")
     private List<SeatStatus> seatStatuses;

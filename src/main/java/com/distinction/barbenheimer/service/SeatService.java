@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.distinction.barbenheimer.model.CustomerDetail;
 import com.distinction.barbenheimer.model.Seat;
+import com.distinction.barbenheimer.model.SeatStatus;
 
 public interface SeatService{
     

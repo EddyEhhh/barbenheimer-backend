@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,12 +22,10 @@ public class SeatPurchase {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumns( {
-            @JoinColumn(name="hall_id", referencedColumnName="hall_id"),
-            @JoinColumn(name="seatRow", referencedColumnName="seatRow"),
-            @JoinColumn(name="number", referencedColumnName="number"),
-    } )
     private Seat seat;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private SeatStatus seatStatus;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private MovieScheduleDate movieScheduleDate;
