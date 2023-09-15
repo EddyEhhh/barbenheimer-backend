@@ -1,6 +1,14 @@
 server:
   port: 8080
 
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        orm:
+          jdbc:
+            bind: trace
 
 spring:
 #  profiles:

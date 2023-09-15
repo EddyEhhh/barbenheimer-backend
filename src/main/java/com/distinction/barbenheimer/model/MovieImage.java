@@ -6,12 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieImage {
+@IdClass(MovieImage.class)
+public class MovieImage implements Serializable {
 
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
@@ -20,4 +23,10 @@ public class MovieImage {
 
     @Id
     private String imageUrl;
+
+
+    @Override
+    public String toString(){
+        return movie.getTitle() + " | " +  imageUrl;
+    }
 }
