@@ -1,6 +1,8 @@
 package com.distinction.barbenheimer.model;
 
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +22,9 @@ public class SeatStatus {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Seat seat;
+
+    @OneToOne(mappedBy = "seatStatus")
+    private SeatPurchase seatPurchases;
 
     private int state;
 
