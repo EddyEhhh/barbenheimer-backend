@@ -66,7 +66,7 @@ public class MovieController {
      * @return List<MovieDetailsDTO>
      */
     @GetMapping("/search")
-    public List<MovieDetailsDTO> getMovieNameAndIdBySearch(@RequestParam("q") String movieTitle) {
+    public ResponseEntity<List<MovieDetailsDTO>> getMovieNameAndIdBySearch(@RequestParam("q") String movieTitle) {
         return ResponseEntity.ok(movieService.getMovieNameAndIdBySearch(movieTitle));
     }
 

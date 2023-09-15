@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.distinction.barbenheimer.model.CustomerDetail;
 import com.distinction.barbenheimer.model.Seat;
+import com.distinction.barbenheimer.model.SeatStatus;
 
 public interface SeatService{
     
@@ -14,7 +15,7 @@ public interface SeatService{
 
     public List<Seat> selectedBy(CustomerDetail customerDetail);
 
-    
+    public SeatStatus status(Seat seat);
 
 
 }
