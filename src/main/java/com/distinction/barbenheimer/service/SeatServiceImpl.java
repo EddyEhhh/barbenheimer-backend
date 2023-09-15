@@ -2,10 +2,13 @@ package com.distinction.barbenheimer.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.distinction.barbenheimer.model.CustomerDetail;
 import com.distinction.barbenheimer.model.Hall;
 import com.distinction.barbenheimer.model.Seat;
 
+@Service
 public class SeatServiceImpl implements SeatService{
 
 //    @Override

@@ -21,10 +21,10 @@ public class Seat {
     private Hall hall;
 
     @Id
-    private String rowChar;
+    private String rowCharacter;
     
     @Id
-    private int columnNumer;
+    private int columnNumber;
 
     private int x;
 
