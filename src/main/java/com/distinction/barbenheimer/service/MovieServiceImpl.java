@@ -67,7 +67,7 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<MovieDetailsDTO> getMoviesBySearch(String movieName) {
+    public List<MovieDetailsDTO> getMoviesBySearch(String movieTitle) {
         List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieName);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");
@@ -86,6 +86,30 @@ public class MovieServiceImpl implements MovieService{
                                         .ageRestriction(movie.getAgeRestriction())
 //                                        .movieSchedules(movie.getMovieSchedules())
 //                                        .movieImages(movie.getMovieImages())
+                                        .build()
+                            );
+        }
+        return matchingDTOs;
+    
+    }
+
+    
+    /** 
+     * method returns only the name and id of a movie upon a user's search input
+     * 
+     * @param movieName
+     * @return List<MovieDetailsDTO>
+     */
+    @Override
+    public List<MovieDetailsDTO> getMovieNameAndIdBySearch(String movieTitle) {
+        List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
+        if (matchingMovies == null) {
+            throw new RuntimeException("Movie does not exist");
+        } 
+        List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
+        for (Movie movie : matchingMovies) {
+            matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
+                                        .title(movie.getTitle())
                                         .build()
                             );
         }

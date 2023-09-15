@@ -14,5 +14,7 @@ public interface SeatService{
 
     public List<Seat> selectedBy(CustomerDetail customerDetail);
 
+    
+
 
 }

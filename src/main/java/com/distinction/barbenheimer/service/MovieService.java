@@ -17,6 +17,8 @@ public interface MovieService {
 
     public List<MovieDetailsDTO> getMoviesBySearch(String movieTitle);
 
+    public List<MovieDetailsDTO> getMovieNameAndIdBySearch(String movieTitle);
+
     public MovieDetailsDTO getDetails(Long movieId);
 
     public List<LocalDateTime> getMovieShowtimes(Movie movie);
