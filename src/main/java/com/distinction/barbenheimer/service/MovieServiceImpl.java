@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import com.distinction.barbenheimer.DTO.MovieShortDTO;
+import com.distinction.barbenheimer.DTO.MovieTitleDTO;
 import com.distinction.barbenheimer.model.MovieImage;
 import com.distinction.barbenheimer.s3.S3Buckets;
 import com.distinction.barbenheimer.s3.S3Service;
@@ -57,9 +58,31 @@ public class MovieServiceImpl implements MovieService{
         return movieDTOList;
     }
 
+    
+
 
     
     
+    
+    /** 
+     * method returns current showing movies' title and id
+     * 
+     * @return List<MovieTitleDTO>
+     */
+    @Override
+    public List<MovieTitleDTO> getAllCurrentTitleAndId() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Movie> movieList = movieRepository.findByLastShowingDateAfter(now);
+        List<MovieTitleDTO> movieTitleDTOList = new ArrayList<>();
+        for (Movie movie: movieList) {
+            movieTitleDTOList.add(modelMapper.map(movie, MovieTitleDTO.class));
+        }
+        return movieTitleDTOList;
+    }
+
+
+
+
     /** 
      * method returns all movies with names matching that of user input
      * 
@@ -94,28 +117,28 @@ public class MovieServiceImpl implements MovieService{
     }
 
     
-    /** 
-     * method returns only the name and id of a movie upon a user's search input
-     * 
-     * @param movieName
-     * @return List<MovieDetailsDTO>
-     */
-    @Override
-    public List<MovieDetailsDTO> getMovieNameAndIdBySearch(String movieTitle) {
-        List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
-        if (matchingMovies == null) {
-            throw new RuntimeException("Movie does not exist");
-        } 
-        List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
-        for (Movie movie : matchingMovies) {
-            matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
-                                        .title(movie.getTitle())
-                                        .build()
-                            );
-        }
-        return matchingDTOs;
+    // /** 
+    //  * method returns only the name and id of a movie upon a user's search input
+    //  * 
+    //  * @param movieName
+    //  * @return List<MovieDetailsDTO>
+    //  */
+    // @Override
+    // public List<MovieDetailsDTO> getMovieNameAndIdBySearch(String movieTitle) {
+    //     List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
+    //     if (matchingMovies == null) {
+    //         throw new RuntimeException("Movie does not exist");
+    //     } 
+    //     List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
+    //     for (Movie movie : matchingMovies) {
+    //         matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
+    //                                     .title(movie.getTitle())
+    //                                     .build()
+    //                         );
+    //     }
+    //     return matchingDTOs;
     
-    }
+    // }
 
 
     /** 

@@ -2,6 +2,7 @@ package com.distinction.barbenheimer.controller;
 
 import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
 import com.distinction.barbenheimer.DTO.MovieShortDTO;
+import com.distinction.barbenheimer.DTO.MovieTitleDTO;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.service.MovieService;
 
@@ -34,6 +35,7 @@ public class MovieController {
 
     
     /** 
+     * method is a GET request handler
      * method returns all movies stored
      * 
      * @return ResponseEntity<List<Movie>>
@@ -43,7 +45,6 @@ public class MovieController {
         return ResponseEntity.ok(movieService.getAllCurrent());
     }
 
-    
     /** 
      * The method `getMovies` is a GET request handler.
      * It retrieves a list of filtered movies based on the provided movie title. 
@@ -53,22 +54,25 @@ public class MovieController {
      * @param movieTitle 
      * @return A response entity containing the list of all filtered movies matching input in search bar
      */
-    @GetMapping("/search")
+    @GetMapping(params = "q")
     public ResponseEntity<List<MovieDetailsDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
         return ResponseEntity.ok(movieService.getMoviesBySearch(movieTitle));
     }
 
     
-    /** 
-     * method returns all applicable movies that match the user's search input
-     * method only returns the selected movie title and its respective movieid
-     * @param movieTitle
-     * @return List<MovieDetailsDTO>
-     */
-    @GetMapping("/search")
-    public ResponseEntity<List<MovieDetailsDTO>> getMovieNameAndIdBySearch(@RequestParam("q") String movieTitle) {
-        return ResponseEntity.ok(movieService.getMovieNameAndIdBySearch(movieTitle));
-    }
+    
+
+    
+    // /** 
+    //  * method returns all applicable movies that match the user's search input
+    //  * method only returns the selected movie title and its respective movieid
+    //  * @param movieTitle
+    //  * @return List<MovieDetailsDTO>
+    //  */
+    // @GetMapping("/searchTitle")
+    // public ResponseEntity<List<MovieDetailsDTO>> getMovieNameAndIdBySearch(@RequestParam("q") String movieTitle) {
+    //     return ResponseEntity.ok(movieService.getMovieNameAndIdBySearch(movieTitle));
+    // }
 
     
     /** 
