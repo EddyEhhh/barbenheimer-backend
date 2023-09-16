@@ -7,6 +7,7 @@ import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.service.MovieService;
 
 import com.distinction.barbenheimer.service.MovieServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
