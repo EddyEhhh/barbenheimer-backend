@@ -18,14 +18,16 @@ import java.util.List;
 public class MovieScheduleDate {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @Id
     private LocalDate showDate;
 
-    @OneToMany(mappedBy = "movieScheduleDate")
+    @OneToMany(mappedBy = "movieScheduleDate", cascade = CascadeType.ALL)
     private List<MovieScheduleTime> movieScheduleTimes;
 
 

@@ -20,11 +20,7 @@ public class Hall {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty
     private int number;
-
-    @NotEmpty
-    private int seatCapacity;
 
 //    @OneToMany(mappedBy = "hall")
 //    private List<MovieScheduleDate> movieScheduleDates;

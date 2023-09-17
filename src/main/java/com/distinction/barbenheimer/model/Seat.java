@@ -16,14 +16,15 @@ import java.util.List;
 public class Seat {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="hall_id")
     private Hall hall;
 
-    @Id
     private String rowCharacter;
-    
-    @Id
+
     private int columnNumber;
 
     private int x;

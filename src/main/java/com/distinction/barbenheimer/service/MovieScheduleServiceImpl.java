@@ -1,7 +1,7 @@
 package com.distinction.barbenheimer.service;
 
 import com.distinction.barbenheimer.DTO.MovieScheduleDetailDTO;
-import com.distinction.barbenheimer.DTO.MovieScheduleShowtimeDTO;
+import com.distinction.barbenheimer.DTO.MovieScheduleDateDetailDTO;
 import com.distinction.barbenheimer.model.Movie;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -29,13 +29,13 @@ public class MovieScheduleServiceImpl implements MovieScheduleService {
 
     @Override
 
-    public List<MovieScheduleShowtimeDTO> getShowtime(Movie movie){
+    public List<MovieScheduleDateDetailDTO> getShowtime(Movie movie){
         return null;
     }
 
     @Override
 
-    public List<MovieScheduleShowtimeDTO> getShowtime(Movie movie, LocalDateTime before){
+    public List<MovieScheduleDateDetailDTO> getShowtime(Movie movie, LocalDateTime before){
         return null;
     }
 

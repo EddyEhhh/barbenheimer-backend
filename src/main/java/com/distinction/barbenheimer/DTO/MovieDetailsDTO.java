@@ -3,6 +3,7 @@ package com.distinction.barbenheimer.DTO;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.distinction.barbenheimer.model.MovieScheduleDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,7 +48,7 @@ public class MovieDetailsDTO {
 
     private float basePrice;
 
-    private List<MovieScheduleShowtimeDTO> movieScheduleShowtimeDTOs;
+    private List<MovieScheduleDateDetailDTO> movieScheduleDates;
 
     private List<MovieImageDetailDTO> movieImages;
 }

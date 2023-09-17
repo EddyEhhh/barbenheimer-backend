@@ -18,10 +18,15 @@ import java.util.List;
 public class SeatPurchase {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Seat seat;
+
     @OneToOne(fetch = FetchType.EAGER)
     private SeatStatus seatStatus;
 
-    @Id
     @ManyToOne(fetch = FetchType.EAGER)
     private MovieScheduleDate movieScheduleDate;
 
