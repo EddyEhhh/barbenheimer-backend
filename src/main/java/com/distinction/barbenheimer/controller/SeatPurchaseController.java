@@ -22,13 +22,21 @@ public class SeatPurchaseController {
     }
 
     //Things this needs: Customer Detail and Seat Selected
-
+    // upon landing on this payment page there will be a timeout after 10 mins.
     @GetMapping
-    public ResponseEntity<?> purchaseSeats(@RequestBody SeatSelectDTO seatSelectDTO, HttpSession httpSession){
+    public ResponseEntity<?> awaitPurchase(HttpSession httpSession){
         httpSession.setAttribute("customerToken", seatPurchaseService.createCustomerIdentifyingToken());
-        httpSession.setAttribute("seatSelectDTO", seatSelectDTO);
+        httpSession.setMaxInactiveInterval(600);
         return ResponseEntity.ok(httpSession.getAttribute("customerToken"));
     }
+
+
+//    @GetMapping
+//    public ResponseEntity<?> purchaseSeats(@RequestBody SeatSelectDTO seatSelectDTO, HttpSession httpSession){
+//        httpSession.setAttribute("customerToken", seatPurchaseService.createCustomerIdentifyingToken());
+//        httpSession.setAttribute("seatSelectDTO", seatSelectDTO);
+//        return ResponseEntity.ok(httpSession.getAttribute("customerToken"));
+//    }
 
 //    @GetMapping("/check")
 //    public ResponseEntity<?> checkSomething(HttpSession httpSession){

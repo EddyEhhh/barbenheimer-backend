@@ -80,7 +80,7 @@ public class PopulateSampleData {
         movie1.setLastShowingDate(LocalDateTime.now().plusMonths(2));
         movie1.setBasePrice(8);
         movie1.setLanguage("English(Sub:Chinese)");
-        movie1.setAgeRestriction(1);
+        movie1.setAgeRestriction(2);
         MovieImage movie1Image = new MovieImage();
         movie1Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Barbie/img1");
         movie1Image.setMovie(movie1);
@@ -107,7 +107,7 @@ public class PopulateSampleData {
         movie2.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie2.setBasePrice(8);
         movie2.setLanguage("Mandarin(Sub:English,Chinese)");
-        movie2.setAgeRestriction(0);
+        movie2.setAgeRestriction(1);
         MovieImage movie2Image = new MovieImage();
         movie2Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/One+and+Only/img2");
         movie2Image.setMovie(movie2);
@@ -130,7 +130,7 @@ public class PopulateSampleData {
         movie3.setLastShowingDate(LocalDateTime.now().plusMonths(2));
         movie3.setBasePrice(8);
         movie3.setLanguage("English(Sub:Chinese)");
-        movie3.setAgeRestriction(3);
+        movie3.setAgeRestriction(4);
         MovieImage movie3Image = new MovieImage();
         movie3Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Oppenheimer/img3");
         movie3Image.setMovie(movie3);
@@ -152,7 +152,7 @@ public class PopulateSampleData {
         movie4.setLastShowingDate(LocalDateTime.now().plusMonths(2));
         movie4.setBasePrice(8);
         movie4.setLanguage("English(Sub:Chinese)");
-        movie4.setAgeRestriction(1);
+        movie4.setAgeRestriction(2);
         MovieImage movie4Image = new MovieImage();
         movie4Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Mission%3A+Impossible+-+Dead+Reckoning+Part+One/img4");
         movie4Image.setMovie(movie4);
@@ -174,7 +174,7 @@ public class PopulateSampleData {
         movie5.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie5.setBasePrice(8);
         movie5.setLanguage("English(Sub:Chinese)");
-        movie5.setAgeRestriction(0);
+        movie5.setAgeRestriction(1);
         MovieImage movie5Image = new MovieImage();
         movie5Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Teenage+Mutant+Ninja+Turtles%3A+Mutant+Mayhem/img5");
         movie5Image.setMovie(movie5);
@@ -196,7 +196,7 @@ public class PopulateSampleData {
         movie6.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie6.setBasePrice(8);
         movie6.setLanguage("Mandarin(Sub:English,Chinese)");
-        movie6.setAgeRestriction(2);
+        movie6.setAgeRestriction(3);
         MovieImage movie6Image = new MovieImage();
         movie6Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/The+White+Storm+3%3A+Heaven+Or+Hell+%E6%89%AB%E6%AF%923%EF%BC%9A%E4%BA%BA%E5%9C%A8%E5%A4%A9%E6%B6%AF/img6");
         movie6Image.setMovie(movie6);
@@ -218,7 +218,7 @@ public class PopulateSampleData {
         movie7.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie7.setBasePrice(8);
         movie7.setLanguage("Korean(Sub:English,Chinese)");
-        movie7.setAgeRestriction(1);
+        movie7.setAgeRestriction(2);
         MovieImage movie7Image = new MovieImage();
         movie7Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Concrete+Utopia/img7");
         movie7Image.setMovie(movie7);
@@ -240,7 +240,7 @@ public class PopulateSampleData {
         movie8.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie8.setBasePrice(8);
         movie8.setLanguage("English(Sub:Chinese)");
-        movie8.setAgeRestriction(2);
+        movie8.setAgeRestriction(3);
         MovieImage movie8Image = new MovieImage();
         movie8Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/The+Equalizer+3/img8");
         movie8Image.setMovie(movie8);
@@ -262,7 +262,7 @@ public class PopulateSampleData {
         movie9.setLastShowingDate(LocalDateTime.now().plusMonths(2));
         movie9.setBasePrice(8);
         movie9.setLanguage("English,Korean(Sub:English,Chinese)");
-        movie9.setAgeRestriction(1);
+        movie9.setAgeRestriction(2);
         MovieImage movie9Image = new MovieImage();
         movie9Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Past+Lives/img9");
         movie9Image.setMovie(movie9);
@@ -284,7 +284,7 @@ public class PopulateSampleData {
         movie10.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie10.setBasePrice(8);
         movie10.setLanguage("English(Sub:Chinese)");
-        movie10.setAgeRestriction(1);
+        movie10.setAgeRestriction(2);
         MovieImage movie10Image = new MovieImage();
         movie10Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/Disney+And+Pixar's+Elemental/img10");
         movie10Image.setMovie(movie10);
@@ -306,7 +306,7 @@ public class PopulateSampleData {
         movie11.setLastShowingDate(LocalDateTime.now().minusMonths(1));
         movie11.setBasePrice(8);
         movie11.setLanguage("English(Sub:Chinese)");
-        movie11.setAgeRestriction(1);
+        movie11.setAgeRestriction(2);
         movieToCreate.add(movie11);
 
         Movie movie12 = new Movie();
@@ -322,7 +322,7 @@ public class PopulateSampleData {
         movie12.setLastShowingDate(LocalDateTime.now().plusMonths(1));
         movie12.setBasePrice(8);
         movie12.setLanguage("Mandarin(Sub: English, Chinese)");
-        movie12.setAgeRestriction(2);
+        movie12.setAgeRestriction(3);
         MovieImage movie12Image = new MovieImage();
         movie12Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/No+More+Bets+%E5%AD%A4%E6%B3%A8%E4%B8%80%E6%8E%B7/img12");
         movie12Image.setMovie(movie12);
@@ -344,7 +344,7 @@ public class PopulateSampleData {
         movie13.setLastShowingDate(LocalDateTime.now().plusDays(14));
         movie13.setBasePrice(8);
         movie13.setLanguage("English(Sub: Chinese)");
-        movie13.setAgeRestriction(2);
+        movie13.setAgeRestriction(3);
         MovieImage movie13Image = new MovieImage();
         movie13Image.setImageUrl("https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/The+Nun+II/img13");
         movie13Image.setMovie(movie13);
