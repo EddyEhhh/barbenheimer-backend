@@ -2,19 +2,22 @@ package com.distinction.barbenheimer.DTO;
 
 import java.time.LocalDateTime;
 
-import org.springframework.cglib.core.Local;
-
 import com.distinction.barbenheimer.model.Hall;
+import com.distinction.barbenheimer.model.SeatStatus;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class SeatSelectDTO {
 
-    public Long movieId;
+    public String rowCharacter;
 
-    public LocalDateTime showDate;
+    public int columnNumber;
 
-    public LocalDateTime showTime;
-    
-    private String rowCharacter;
-
-    private int columnNumber;
 }

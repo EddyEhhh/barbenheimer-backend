@@ -26,6 +26,7 @@ public class SeatStatus {
     @OneToOne(mappedBy = "seatStatus")
     private SeatPurchase seatPurchases;
 
+    // 1 for unavailable and 2 for pending confirmation
     private int state;
 
 
