@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class MovieScheduleServiceImpl implements MovieScheduleService {
+    
     private ModelMapper modelMapper;
 
     @Autowired
