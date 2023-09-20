@@ -44,37 +44,42 @@ public class PopulateSampleData {
     }
 
     public List<Seat> generateHallSeats(int[][] seatLayout){
-        log.info("TESTING---");
         List<Seat> seats = new ArrayList<>();
 
         char alphabet = 'A';
         int col = seatLayout.length;
         int row = seatLayout[0].length;
-        int colGap = 0;
-        String seatStringDebug = "";
+//        String seatStringDebug = "\n";
+//        String seatStringPosDebug = "\n";
         for(int y = 0 ; y < col ; y++ ){
             Seat seat = new Seat();
+            int colGap = 0;
             for(int x = 0 ; x < row ; x++){
-                if(x != 0){
-                    seatStringDebug += "-";
-                }
+//                if(x != 0){
+//                    seatStringDebug += "-";
+//                    seatStringPosDebug += "-";
+//                }
                 if(seatLayout[y][x] == 1){
-                    seat.setRowCharacter(String.valueOf(alphabet+y));
-                    seat.setColumnNumber(x-colGap);
+                    seat.setRowCharacter(String.valueOf((char) (alphabet+y)));
+                    seat.setColumnNumber(x-colGap+1);
                     seat.setX(x);
                     seat.setY(y);
-                    seatStringDebug += String.valueOf(alphabet+y) + String.valueOf(x-colGap);
+//                    seatStringDebug += seat.getRowCharacter() + seat.getColumnNumber();
+//                    seatStringPosDebug += ""+seat.getX() + "/" + seat.getY();
                 }else{
                     colGap++;
-                    seatStringDebug += "  ";
+//                    seatStringDebug += "00";
+//                    seatStringPosDebug += "00";
                 }
                 seats.add(seat);
             }
-            seatStringDebug += "\n";
+//            seatStringDebug += "\n";
+//            seatStringPosDebug += "\n";
         }
-        System.out.println("-------------------------");
-        System.out.println(seatStringDebug);
-        System.out.println("");
+//        log.info("-------------------------");
+//        log.info(seatStringDebug);
+//        log.info(seatStringPosDebug);
+//        log.info("");
         return seats;
     }
 
@@ -98,12 +103,33 @@ public class PopulateSampleData {
                                 {1,1,0,1,1,0,1,1,0,1,0,1,1},
                                 {1,1,0,0,0,0,0,0,0,0,0,1,1}
                               };
+
+        int[][] seatLayout2 = {
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
+                {0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0},
+        };
         
-        generateHallSeats(seatLayout1);
 
 
 
-        hall1.setSeats(null);
+
+        hall1.setSeats(generateHallSeats(seatLayout1));
+        hall2.setSeats(generateHallSeats(seatLayout2));
 
         halls.add(hall1);
         halls.add(hall2);
