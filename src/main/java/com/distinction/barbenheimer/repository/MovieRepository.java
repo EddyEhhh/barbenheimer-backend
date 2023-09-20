@@ -13,6 +13,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     public List<Movie> findAll();
 
+    public Movie findById(long id);
+
     public List<Movie> findByLastShowingDateAfter(LocalDateTime after);
     
     public Movie findByTitle(String movieTitle);

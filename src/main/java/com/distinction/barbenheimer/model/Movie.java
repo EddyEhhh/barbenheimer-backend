@@ -17,7 +17,7 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private long id;
 
 
     @NotEmpty

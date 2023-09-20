@@ -21,7 +21,7 @@ public class MovieScheduleTime {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private MovieScheduleDate movieScheduleDate;
 
     private LocalTime showTime;
