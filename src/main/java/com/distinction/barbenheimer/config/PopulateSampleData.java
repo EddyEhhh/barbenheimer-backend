@@ -15,8 +15,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -44,6 +43,41 @@ public class PopulateSampleData {
 
     }
 
+    public List<Seat> generateHallSeats(int[][] seatLayout){
+        log.info("TESTING---");
+        List<Seat> seats = new ArrayList<>();
+
+        char alphabet = 'A';
+        int col = seatLayout.length;
+        int row = seatLayout[0].length;
+        int colGap = 0;
+        String seatStringDebug = "";
+        for(int y = 0 ; y < col ; y++ ){
+            Seat seat = new Seat();
+            for(int x = 0 ; x < row ; x++){
+                if(x != 0){
+                    seatStringDebug += "-";
+                }
+                if(seatLayout[y][x] == 1){
+                    seat.setRowCharacter(String.valueOf(alphabet+y));
+                    seat.setColumnNumber(x-colGap);
+                    seat.setX(x);
+                    seat.setY(y);
+                    seatStringDebug += String.valueOf(alphabet+y) + String.valueOf(x-colGap);
+                }else{
+                    colGap++;
+                    seatStringDebug += "  ";
+                }
+                seats.add(seat);
+            }
+            seatStringDebug += "\n";
+        }
+        System.out.println("-------------------------");
+        System.out.println(seatStringDebug);
+        System.out.println("");
+        return seats;
+    }
+
     public void autoGenerateMovie(){
 
         List<Hall> halls = new ArrayList<>();
@@ -53,6 +87,23 @@ public class PopulateSampleData {
         Hall hall3 = new Hall();
         Hall hall4 = new Hall();
         Hall hall5 = new Hall();
+
+        log.info("HELLO");
+
+
+        int[][] seatLayout1 = {
+                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                                {1,1,0,0,0,0,0,0,0,0,0,1,1}
+                              };
+        
+        generateHallSeats(seatLayout1);
+
+
+
+        hall1.setSeats(null);
 
         halls.add(hall1);
         halls.add(hall2);

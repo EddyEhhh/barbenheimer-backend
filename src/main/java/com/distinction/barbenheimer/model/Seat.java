@@ -22,7 +22,7 @@ public class Seat {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="hall_id")
     private Hall hall;
-
+ 
     private String rowCharacter;
 
     private int columnNumber;

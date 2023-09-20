@@ -19,10 +19,4 @@ import java.util.List;
 public class MovieScheduleTimeDetailDTO {
 
     private long id;
-
-    private LocalTime showTime;
-
-    private HallDTO hall;
-
-//    private List<SeatStatus> seatStatuses;
 }
