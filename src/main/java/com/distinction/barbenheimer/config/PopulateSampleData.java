@@ -130,6 +130,9 @@ public class PopulateSampleData {
 
         hall1.setSeats(generateHallSeats(seatLayout1));
         hall2.setSeats(generateHallSeats(seatLayout2));
+        hall3.setSeats(generateHallSeats(seatLayout1));
+        hall4.setSeats(generateHallSeats(seatLayout2));
+        hall5.setSeats(generateHallSeats(seatLayout1));
 
         halls.add(hall1);
         halls.add(hall2);
