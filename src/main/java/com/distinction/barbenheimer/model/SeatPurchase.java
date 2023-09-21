@@ -31,7 +31,8 @@ public class SeatPurchase {
     private MovieScheduleDate movieScheduleDate;
 
     @NotEmpty
-    private String purchaseToken;
+    @Column(unique = true)
+    private String token;
 
     private LocalDateTime timestamp;
 }
