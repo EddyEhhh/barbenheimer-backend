@@ -22,6 +22,10 @@ public class Hall {
 
     private int number;
 
+    private int width;
+
+    private int height;
+
 //    @OneToMany(mappedBy = "hall")
 //    private List<MovieScheduleDate> movieScheduleDates;
 

@@ -127,13 +127,27 @@ public class PopulateSampleData {
                 {0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0},
         };
 
+
+
         hall1.setSeats(generateHallSeats(seatLayout1, hall1));
+        hall1.setWidth(seatLayout1[0].length);
+        hall1.setHeight(seatLayout1.length);
+
         hall2.setSeats(generateHallSeats(seatLayout2, hall2));
+        hall2.setWidth(seatLayout2[0].length);
+        hall2.setHeight(seatLayout2.length);
+
         hall3.setSeats(generateHallSeats(seatLayout1, hall3));
+        hall3.setWidth(seatLayout1[0].length);
+        hall3.setHeight(seatLayout1.length);
+
         hall4.setSeats(generateHallSeats(seatLayout2, hall4));
+        hall4.setWidth(seatLayout2[0].length);
+        hall4.setHeight(seatLayout2.length);
+
         hall5.setSeats(generateHallSeats(seatLayout1, hall5));
-
-
+        hall5.setWidth(seatLayout1[0].length);
+        hall5.setHeight(seatLayout1.length);
 
         halls.add(hall1);
         halls.add(hall2);

@@ -17,6 +17,10 @@ public class HallScheduleSeatDetailDTO {
 
     private int number;
 
+    private int width;
+
+    private int height;
+
     private List<ScheduleSeatDetailDTO> seats;
 
 
