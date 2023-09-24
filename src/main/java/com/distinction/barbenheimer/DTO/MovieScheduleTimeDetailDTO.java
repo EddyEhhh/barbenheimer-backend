@@ -19,4 +19,9 @@ import java.util.List;
 public class MovieScheduleTimeDetailDTO {
 
     private long id;
+
+    private LocalTime showTime;
+
+    private HallIdDTO hall;
+
 }
