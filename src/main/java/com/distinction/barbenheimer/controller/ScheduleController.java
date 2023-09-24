@@ -2,6 +2,7 @@ package com.distinction.barbenheimer.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ScheduleController {
 
     private ScheduleService scheduleService;
+
+
+    @Autowired
+    public ScheduleController(ScheduleService scheduleService){
+        this.scheduleService = scheduleService;
+    }
 
     
     /** 

@@ -30,8 +30,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     private SeatStatusRepository seatStatusRepository;
 
     @Autowired
-    public ScheduleServiceImpl(ModelMapper modelMapper) {
+    public ScheduleServiceImpl(ModelMapper modelMapper, MovieScheduleTimeRepository movieScheduleTimeRepository) {
+
         this.modelMapper = modelMapper;
+        this.movieScheduleTimeRepository = movieScheduleTimeRepository;
     }
 
     @Override
@@ -40,7 +42,6 @@ public class ScheduleServiceImpl implements ScheduleService {
         Hall hall = movieScheduleTime.getHall();
         // List<ScheduleSeatDetailDTO> scheduleSeatDetailDTO = new ArrayList<>();
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
-
 
         // for (Seat seat : hall.getSeats()) {
         //     SeatStatus seatStatus = seatStatusRepository.findByMovieScheduleTimeAndSeat(movieScheduleTime, seat);

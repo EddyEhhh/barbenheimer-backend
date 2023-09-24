@@ -19,7 +19,7 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="hall_id")
     private Hall hall;
  
