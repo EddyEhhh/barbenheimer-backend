@@ -47,6 +47,10 @@ aws:
     buckets:
       account: ${aws.bucket}
 
+stripe:
+  api:
+    key: ${stripe.api.key}
+
 ##cloud:
 ##  aws:
 ##    credentials:
