@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.springframework.cglib.core.Local;
 
+import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
 import com.distinction.barbenheimer.DTO.SeatDetailDTO;
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
 import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
@@ -22,7 +23,8 @@ public interface SeatService{
 
     public List<Seat> selectedBy(CustomerDetail customerDetail);
 
-    public MovieScheduleTime getTime(long movieId, LocalDate showDate, LocalTime showTime);
+
+    //public MovieScheduleTime getTime(long movieId, LocalDate showDate, LocalTime showTime);
 
 
 }

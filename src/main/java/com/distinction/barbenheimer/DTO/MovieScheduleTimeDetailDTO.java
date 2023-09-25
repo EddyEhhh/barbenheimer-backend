@@ -22,7 +22,6 @@ public class MovieScheduleTimeDetailDTO {
 
     private LocalTime showTime;
 
-    private HallDTO hall;
+    private HallIdDTO hall;
 
-//    private List<SeatStatus> seatStatuses;
 }

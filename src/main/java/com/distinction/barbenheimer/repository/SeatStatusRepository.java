@@ -2,6 +2,7 @@ package com.distinction.barbenheimer.repository;
 
 import com.distinction.barbenheimer.model.Hall;
 import com.distinction.barbenheimer.model.Movie;
+import com.distinction.barbenheimer.model.MovieScheduleTime;
 import com.distinction.barbenheimer.model.Seat;
 import com.distinction.barbenheimer.model.SeatStatus;
 
@@ -15,4 +16,5 @@ import java.util.List;
 @Repository
 public interface SeatStatusRepository extends JpaRepository<SeatStatus, Long> {
 
+    public SeatStatus findByMovieScheduleTimeAndSeat(MovieScheduleTime showTime, Seat seat);
 }
