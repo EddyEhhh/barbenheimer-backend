@@ -42,8 +42,8 @@ public class SeatController {
     }
 
     //testing
-    @GetMapping
-    public ResponseEntity<MovieScheduleTime> getTime(@PathVariable("movieId") long movieId, @PathVariable("showDate") LocalDate showDate, @PathVariable("showTime") LocalTime showTime) {
-        return ResponseEntity.ok(seatService.getTime(movieId, showDate, showTime));
-    }
+    // @GetMapping
+    // public ResponseEntity<MovieScheduleTime> getTime(@PathVariable("movieId") long movieId, @PathVariable("showDate") LocalDate showDate, @PathVariable("showTime") LocalTime showTime) {
+    //     return ResponseEntity.ok(seatService.getTime(movieId, showDate, showTime));
+    // }
 }

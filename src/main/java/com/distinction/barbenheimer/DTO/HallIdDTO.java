@@ -17,14 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class HallDTO {
+public class HallIdDTO {
 
-    private Long id;
+    private Long id; // hall id
 
-    private int number;
-
-    private int seatCapacity;
-
-    private List<Seat> seats;
+    private int number; // hall number
 
 }

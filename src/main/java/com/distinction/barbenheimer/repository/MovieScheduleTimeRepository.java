@@ -1,6 +1,8 @@
 package com.distinction.barbenheimer.repository;
 
+import com.distinction.barbenheimer.DTO.HallIdDTO;
 import com.distinction.barbenheimer.model.Movie;
+import com.distinction.barbenheimer.model.MovieScheduleDate;
 import com.distinction.barbenheimer.model.MovieScheduleTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -20,4 +22,7 @@ public interface MovieScheduleTimeRepository extends JpaRepository<MovieSchedule
 
     public List<MovieScheduleTime> findByShowTime(LocalTime showTime);
 
+    public MovieScheduleTime findByMovieScheduleDateAndShowTime(MovieScheduleDate movieScheduleDate, LocalTime showTime);
+
+    public MovieScheduleTime findById(long id);
 }
