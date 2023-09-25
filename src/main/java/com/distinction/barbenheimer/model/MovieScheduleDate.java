@@ -27,7 +27,7 @@ public class MovieScheduleDate {
 
     private LocalDate showDate;
 
-    @OneToMany(mappedBy = "movieScheduleDate", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movieScheduleDate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MovieScheduleTime> movieScheduleTimes;
 
 

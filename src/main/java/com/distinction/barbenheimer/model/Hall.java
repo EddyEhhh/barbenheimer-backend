@@ -29,6 +29,6 @@ public class Hall {
 //    @OneToMany(mappedBy = "hall")
 //    private List<MovieScheduleDate> movieScheduleDates;
 
-    @OneToMany(mappedBy = "hall", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hall", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Seat> seats;
 }
