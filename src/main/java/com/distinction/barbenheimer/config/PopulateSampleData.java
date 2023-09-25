@@ -396,7 +396,6 @@ public class PopulateSampleData {
             List<MovieScheduleTime> movieScheduleTimes = new ArrayList<>();
 
             while(time.plusMinutes(movie.getRuntimeInMinute()).isBefore(endTime)){
-                log.info("RUN ----------");
                 MovieScheduleTime movieScheduleTime = new MovieScheduleTime();
                 movieScheduleTime.setMovieScheduleDate(movieScheduleDate);
                 movieScheduleTime.setHall(halls.get(hall));
@@ -404,7 +403,7 @@ public class PopulateSampleData {
                 if(++hall >= halls.size()){
                     hall = 0;
                 }
-                time = time.plusMinutes(45);
+                time = time.plusMinutes(135);
 
                 movieScheduleTimes.add(movieScheduleTime);
             }

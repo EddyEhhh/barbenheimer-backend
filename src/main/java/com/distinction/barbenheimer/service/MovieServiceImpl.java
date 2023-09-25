@@ -3,6 +3,7 @@ package com.distinction.barbenheimer.service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.distinction.barbenheimer.DTO.MovieShortDTO;
 import com.distinction.barbenheimer.DTO.MovieTitleDTO;
@@ -94,28 +95,16 @@ public class MovieServiceImpl implements MovieService{
      * @return List<Movie>
      */
     @Override
-    public List<MovieDetailsDTO> getMoviesBySearch(String movieTitle) {
+    public List<MovieShortDTO> getMoviesBySearch(String movieTitle) {
         List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");
         } 
-        List<MovieDetailsDTO> matchingDTOs = new ArrayList<>();
-        for (Movie movie : matchingMovies) {
-            matchingDTOs.add(MovieDetailsDTO.builder().id(movie.getId())
-                                        .title(movie.getTitle())
-                                        .description(movie.getDescription())
-                                        .runtimeInMinute(movie.getRuntimeInMinute())
-                                        .director(movie.getDirector())
-                                        .cast(movie.getCast())
-                                        .genre(movie.getGenre())
-                                        .releaseDate(movie.getReleaseDate())
-                                        .language(movie.getLanguage())
-                                        .ageRestriction(movie.getAgeRestriction())
-//                                        .movieSchedules(movie.getMovieSchedules())
-//                                        .movieImages(movie.getMovieImages())
-                                        .build()
-                            );
-        }
+        List<MovieShortDTO> matchingDTOs = matchingMovies
+                .stream()
+                .map(eachMovie -> modelMapper.map(eachMovie, MovieShortDTO.class))
+                .collect(Collectors.toList());
+
         return matchingDTOs;
     
     }
