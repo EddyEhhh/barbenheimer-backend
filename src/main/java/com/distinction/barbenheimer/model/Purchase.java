@@ -32,8 +32,6 @@ public class Purchase {
     @OneToMany(fetch = FetchType.EAGER)
     private List<SeatStatus> seatStatuses;
 
-    private double paidAmount;
-
     private LocalDateTime dateTime;
 
 
