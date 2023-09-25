@@ -62,7 +62,7 @@ public class TicketPurchaseCompleteEventListener implements ApplicationListener<
             ticketSeats.append(", ");
             ticketCount++;
         }
-        ticketSeats.delete(ticketSeats.length()-3,ticketSeats.length()-1);
+        ticketSeats.delete(ticketSeats.length()-2,ticketSeats.length()-1);
 
         Map<String, Object> params = new HashMap<>();
         params.put("ticketId", purchase.getId());
