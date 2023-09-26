@@ -1,5 +1,6 @@
 package com.distinction.barbenheimer.service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import org.modelmapper.ModelMapper;
@@ -55,6 +56,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
 
         }
+
 
         return hallScheduleSeatDetailDTO;
     }
