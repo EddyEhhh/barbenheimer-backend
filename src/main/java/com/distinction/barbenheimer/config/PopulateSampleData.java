@@ -517,6 +517,7 @@ public class PopulateSampleData {
             if(movie.getMovieScheduleDates().size() <= 0){
                 break;
             }
+
             MovieScheduleDate movieScheduleDate = movie.getMovieScheduleDates().get(0);
             // get first 2 time of 1st date schedule of each movie
             for(int movieScheduleIndex = 0 ; movieScheduleIndex < 2 ; movieScheduleIndex++){
