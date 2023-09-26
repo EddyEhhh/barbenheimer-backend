@@ -3,31 +3,20 @@ package com.distinction.barbenheimer.service;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import com.distinction.barbenheimer.DTO.*;
 import com.distinction.barbenheimer.exception.ResourceNotFoundException;
-import jakarta.transaction.Transactional;
+import com.distinction.barbenheimer.model.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.ModelMap;
 
-import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
-import com.distinction.barbenheimer.DTO.ScheduleSeatDetailDTO;
-import com.distinction.barbenheimer.DTO.SeatNumberDTO;
-import com.distinction.barbenheimer.DTO.SeatSelectDTO;
-import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
 import com.distinction.barbenheimer.exception.AlreadyExistsException;
-import com.distinction.barbenheimer.model.Hall;
-import com.distinction.barbenheimer.model.MovieScheduleTime;
 import com.distinction.barbenheimer.model.OngoingPurchase;
-import com.distinction.barbenheimer.model.Seat;
-import com.distinction.barbenheimer.model.OngoingPurchase;
-import com.distinction.barbenheimer.model.SeatStatus;
 import com.distinction.barbenheimer.repository.MovieScheduleTimeRepository;
 import com.distinction.barbenheimer.repository.OngoingPurchaseRepository;
 import com.distinction.barbenheimer.repository.SeatRepository;
 import com.distinction.barbenheimer.repository.SeatStatusRepository;
 
-import ch.qos.logback.core.model.Model;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -92,11 +81,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     public boolean validateOngoingPurchaseToken(String token){
-        OngoingPurchase ongoingPurchase = ongoingPurchaseRepository.findByToken(token);
-        if(ongoingPurchase == null){
+        Optional<OngoingPurchase> ongoingPurchase = ongoingPurchaseRepository.findByToken(token);
+        if(ongoingPurchase.isEmpty()){
             throw new ResourceNotFoundException("error.token.notFound");
-        }else if(ongoingPurchase.getExpireTimeStamp().compareTo(LocalDateTime.now()) == -1){ //check expiry of ongoingPurchase
-            removeOngoingPurchase(ongoingPurchase);
+        }else if(ongoingPurchase.get().getExpireTimeStamp().compareTo(LocalDateTime.now()) == -1){ //check expiry of ongoingPurchase
+            removeOngoingPurchase(ongoingPurchase.get());
             return false;
         }else{
             return true;
@@ -114,9 +103,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public HallScheduleSeatDetailDTO selectSeats(long showTimeId, List<SeatSelectDTO> seatSelectDTOs) throws AlreadyExistsException{ // haven't purchase, so status is 1 (temp reserve)
+    public OngoingPurchaseTokenDTO selectSeats(long showTimeId, List<SeatSelectDTO> seatSelectDTOs) throws AlreadyExistsException{ // haven't purchase, so status is 1 (temp reserve)
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);
         Hall hall = movieScheduleTime.getHall();
+        Movie movie = movieScheduleTime.getMovieScheduleDate().getMovie();
 
         List<SeatStatus> seatStatuses = new ArrayList<>();
         OngoingPurchase ongoingPurchase = new OngoingPurchase();
@@ -148,14 +138,22 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         }
 
+        int numberOfTicket = seatSelectDTOs.size();
+
         ongoingPurchase.setSeatStatus(seatStatuses);
         ongoingPurchase.setToken(ongoingPurchaseService.createCustomerIdentifyingToken());
         ongoingPurchase.setExpireTimeStamp(LocalDateTime.now().plusMinutes(10));
+        ongoingPurchase.setTotalPrice(movie.getBasePrice()*numberOfTicket);
         ongoingPurchaseRepository.save(ongoingPurchase);
         seatStatusRepository.saveAll(seatStatuses);
 
-        HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
 
-        return hallScheduleSeatDetailDTO;
+        OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(ongoingPurchase.getToken());
+
+
+
+//        HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
+
+        return ongoingPurchaseTokenDTO;
     }
 }

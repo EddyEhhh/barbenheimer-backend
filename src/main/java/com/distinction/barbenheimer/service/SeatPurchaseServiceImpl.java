@@ -2,11 +2,8 @@ package com.distinction.barbenheimer.service;
 
 import com.distinction.barbenheimer.exception.ResourceNotFoundException;
 import com.distinction.barbenheimer.model.OngoingPurchase;
-import com.distinction.barbenheimer.model.SeatPurchase;
-import com.distinction.barbenheimer.DTO.PaymentDTO;
 import com.distinction.barbenheimer.repository.OngoingPurchaseRepository;
 import com.distinction.barbenheimer.repository.PurchaseRepository;
-import com.distinction.barbenheimer.repository.SeatPurchaseRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;

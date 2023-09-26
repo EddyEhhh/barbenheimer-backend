@@ -4,13 +4,14 @@ import com.distinction.barbenheimer.DTO.PurchaseDTO;
 import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
 import com.distinction.barbenheimer.exception.ResourceNotFoundException;
 import com.distinction.barbenheimer.model.Purchase;
-import com.distinction.barbenheimer.model.SeatPurchase;
+import com.distinction.barbenheimer.model.SeatStatus;
 import com.distinction.barbenheimer.repository.PurchaseRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -30,4 +31,8 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .build();
         return ResponseEntity.ok(purchaseRepository.save(purchase));
     }
+
+
+
+
 }

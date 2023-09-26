@@ -5,6 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import com.distinction.barbenheimer.model.OngoingPurchase;
 import java.util.List;
+import java.util.Optional;
+
 import com.distinction.barbenheimer.model.SeatStatus;
 
 
@@ -14,6 +16,6 @@ public interface OngoingPurchaseRepository extends JpaRepository<OngoingPurchase
     
     public OngoingPurchase findBySeatStatus(SeatStatus seatStatus);
 
-    public OngoingPurchase findByToken(String purchaseToken);
+    public Optional<OngoingPurchase> findByToken(String purchaseToken);
 
 }

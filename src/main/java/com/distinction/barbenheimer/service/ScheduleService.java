@@ -1,6 +1,7 @@
 package com.distinction.barbenheimer.service;
 
 import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
+import com.distinction.barbenheimer.DTO.OngoingPurchaseTokenDTO;
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
 import com.distinction.barbenheimer.model.OngoingPurchase;
 
@@ -15,7 +16,7 @@ public interface ScheduleService {
     public void invalidateAllExpiredPurchaseToken();
 
 
-    public HallScheduleSeatDetailDTO selectSeats(long showTimeId, List<SeatSelectDTO> seatSelectDTOs);
+    public OngoingPurchaseTokenDTO selectSeats(long showTimeId, List<SeatSelectDTO> seatSelectDTOs);
 
 
 }
