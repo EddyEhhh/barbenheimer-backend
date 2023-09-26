@@ -1,16 +1,21 @@
 package com.distinction.barbenheimer.service;
 
 
-import com.distinction.barbenheimer.DTO.PaymentDTO;
+import com.distinction.barbenheimer.DTO.PurchaseDTO;
+import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
 import com.stripe.exception.StripeException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
 
+@Service
 public interface SeatPurchaseService {
 
 
-        public String checkout(PaymentDTO paymentDTO, HttpServletResponse response, HttpSession httpSession) throws StripeException, IOException;
+        public ResponseEntity<?> saveOngoingPurchase(HttpSession httpSession);
+
+        public void deleteOngoingPurchase(HttpSession httpSession);
 }

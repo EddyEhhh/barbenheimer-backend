@@ -26,21 +26,18 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class MovieServiceImpl implements MovieService{
 
-    @Autowired
     private MovieRepository movieRepository;
 
-    @Autowired
     private MovieImageRepository movieImageRepository;
-    @Autowired
+
     private S3Service s3Service;
 
-    @Autowired
     private S3Buckets s3Buckets;
 
     private ModelMapper modelMapper;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, MovieImageRepository movieImageRepository, ModelMapper modelMapper){
+    public MovieServiceImpl(MovieRepository movieRepository, MovieImageRepository movieImageRepository, ModelMapper modelMapper, S3Service s3Service, S3Buckets s3Buckets){
         this.modelMapper = modelMapper;
         this.movieRepository = movieRepository;
         this.movieImageRepository = movieImageRepository;
