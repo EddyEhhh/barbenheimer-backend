@@ -21,17 +21,16 @@ public class OngoingPurchase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Seat seat;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="ongoingPurchase")
+    private List<SeatStatus> seatStatus;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private SeatStatus seatStatus;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private MovieScheduleDate movieScheduleDate;
 
     @NotEmpty
+    @Column(unique=true)
     private String purchaseToken;
 
     private LocalDateTime expireTimeStamp;
+
+    private double totalPrice;
+
 }
