@@ -44,47 +44,31 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private ModelMapper modelMapper;
     @Autowired
-    public ScheduleServiceImpl(ModelMapper modelMapper, MovieScheduleTimeRepository movieScheduleTimeRepository) {
+    public ScheduleServiceImpl(ModelMapper modelMapper, MovieScheduleTimeRepository movieScheduleTimeRepository, SeatStatusRepository seatStatusRepository) {
 
         this.modelMapper = modelMapper;
         this.movieScheduleTimeRepository = movieScheduleTimeRepository;
+        this.seatStatusRepository = seatStatusRepository;
     }
 
     @Override
     public HallScheduleSeatDetailDTO getHallLayout(long showTimeId) { // can use hashmap to solve as well
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);
         Hall hall = movieScheduleTime.getHall();
+        List<Seat> seats = hall.getSeats();
         // List<ScheduleSeatDetailDTO> scheduleSeatDetailDTO = new ArrayList<>();
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
+        List<ScheduleSeatDetailDTO> scheduleSeatDetailDTOList = hallScheduleSeatDetailDTO.getSeats();
 
-        // for (Seat seat : hall.getSeats()) {
-        //     SeatStatus seatStatus = seatStatusRepository.findByMovieScheduleTimeAndSeat(movieScheduleTime, seat);
-        //     if (seatStatus != null) {
-        //         int state = seatStatus.getState();
-        //         scheduleSeatDetailDTO.add(ScheduleSeatDetailDTO.builder()
-        //                 .rowCharacter(seat.getRowCharacter())
-        //                 .columnNumber(seat.getColumnNumber())
-        //                 .x(seat.getX())
-        //                 .y(seat.getY())
-        //                 .state(state)
-        //                 .build());
-        //     }
-            // List<SeatStatus> seatStatus = seat.getSeatStatuses();
-            // int counter = 0;
-            // while (counter < seatStatus.size()) {
-            // if (seatStatus != null) {
-            //     int state = seatStatus.get(counter).getState();
-            //     scheduleSeatDetailDTO.add(ScheduleSeatDetailDTO.builder()
-            //             .rowCharacter(seat.getRowCharacter())
-            //             .columnNumber(seat.getColumnNumber())
-            //             .x(seat.getX())
-            //             .y(seat.getY())
-            //             .state(state)
-            //             .build());
-            // }
-            // counter++;
-            // }
-       // }
+        for(int seatIndex = 0 ; seatIndex < hall.getSeats().size() ; seatIndex++ ){
+            Optional<SeatStatus> seatStatus = seatStatusRepository.findByMovieScheduleTimeAndSeat(movieScheduleTime, seats.get(seatIndex));
+            if(seatStatus.isPresent()){
+                ScheduleSeatDetailDTO tempScheduleSeatDetailDTO = scheduleSeatDetailDTOList.get(seatIndex);
+                tempScheduleSeatDetailDTO.setState(seatStatus.get().getState());
+                scheduleSeatDetailDTOList.set(seatIndex, tempScheduleSeatDetailDTO);
+            }
+
+        }
 
 
         return hallScheduleSeatDetailDTO;

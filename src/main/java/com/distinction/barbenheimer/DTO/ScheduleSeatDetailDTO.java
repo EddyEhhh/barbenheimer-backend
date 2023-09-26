@@ -21,6 +21,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class ScheduleSeatDetailDTO {
+
+    private long id;
  
     private String rowCharacter;
 
