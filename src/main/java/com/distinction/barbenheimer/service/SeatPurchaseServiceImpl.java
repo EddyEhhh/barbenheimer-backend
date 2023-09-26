@@ -1,8 +1,8 @@
 package com.distinction.barbenheimer.service;
 
 import com.distinction.barbenheimer.DTO.PaymentDTO;
+import com.distinction.barbenheimer.repository.OngoingPurchaseRepository;
 import com.distinction.barbenheimer.repository.PurchaseRepository;
-import com.distinction.barbenheimer.repository.SeatPurchaseRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service
 public class SeatPurchaseServiceImpl implements SeatPurchaseService {
 
-    private SeatPurchaseRepository seatPurchaseRepository;
+    private OngoingPurchaseRepository ongoingPurchaseRepository;
 
     private PurchaseRepository purchaseRepository;
 
@@ -28,16 +28,11 @@ public class SeatPurchaseServiceImpl implements SeatPurchaseService {
     private String stripeKey;
 
     @Autowired
-    public SeatPurchaseServiceImpl(SeatPurchaseRepository seatPurchaseRepository, PurchaseRepository purchaseRepository){
-        this.seatPurchaseRepository = seatPurchaseRepository;
+    public SeatPurchaseServiceImpl(OngoingPurchaseRepository ongoingPurchaseRepository, PurchaseRepository purchaseRepository){
+        this.ongoingPurchaseRepository = ongoingPurchaseRepository;
     }
 
-    public String createCustomerIdentifyingToken(){
-        StringBuilder token = new StringBuilder();
-        long currentTimeInMillisecond = Instant.now().toEpochMilli();
-        token.append(currentTimeInMillisecond).append(UUID.randomUUID().toString());
-        return token.toString().replace("-","");
-    }
+
 
     public String checkout(PaymentDTO paymentDTO, HttpServletResponse response, HttpSession httpSession) throws StripeException, IOException {
         double totalPaidAmount = paymentDTO.getPriceInCents() * paymentDTO.getQuantity();

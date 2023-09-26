@@ -42,17 +42,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private SeatRepository seatRepository;
      
-    private SeatService seatService;
+    private OngoingPurchaseService ongoingPurchaseService;
 
     private ModelMapper modelMapper;
     @Autowired
-    public ScheduleServiceImpl(ModelMapper modelMapper, MovieScheduleTimeRepository movieScheduleTimeRepository, SeatRepository seatRepository, SeatStatusRepository seatStatusRepository, OngoingPurchaseRepository ongoingPurchaseRepository) {
+    public ScheduleServiceImpl(ModelMapper modelMapper, OngoingPurchaseService ongoingPurchaseService, MovieScheduleTimeRepository movieScheduleTimeRepository, SeatRepository seatRepository, SeatStatusRepository seatStatusRepository, OngoingPurchaseRepository ongoingPurchaseRepository) {
 
         this.modelMapper = modelMapper;
         this.movieScheduleTimeRepository = movieScheduleTimeRepository;
         this.seatStatusRepository = seatStatusRepository;
         this.ongoingPurchaseRepository = ongoingPurchaseRepository;
         this.seatRepository = seatRepository;
+        this.ongoingPurchaseService = ongoingPurchaseService;
 
     }
 
@@ -91,7 +92,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     public boolean validateOngoingPurchaseToken(String token){
-        OngoingPurchase ongoingPurchase = ongoingPurchaseRepository.findByPurchaseToken(token);
+        OngoingPurchase ongoingPurchase = ongoingPurchaseRepository.findByToken(token);
         if(ongoingPurchase == null){
             throw new ResourceNotFoundException("error.token.notFound");
         }else if(ongoingPurchase.getExpireTimeStamp().compareTo(LocalDateTime.now()) == -1){ //check expiry of ongoingPurchase
@@ -148,7 +149,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         ongoingPurchase.setSeatStatus(seatStatuses);
-        ongoingPurchase.setPurchaseToken(LocalDateTime.now().toString());
+        ongoingPurchase.setToken(ongoingPurchaseService.createCustomerIdentifyingToken());
         ongoingPurchase.setExpireTimeStamp(LocalDateTime.now().plusMinutes(10));
         ongoingPurchaseRepository.save(ongoingPurchase);
         seatStatusRepository.saveAll(seatStatuses);

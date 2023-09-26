@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface SeatPurchaseService {
 
-        public String createCustomerIdentifyingToken();
 
         public String checkout(PaymentDTO paymentDTO, HttpServletResponse response, HttpSession httpSession) throws StripeException, IOException;
 }

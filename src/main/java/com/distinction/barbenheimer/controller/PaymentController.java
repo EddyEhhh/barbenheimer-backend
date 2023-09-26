@@ -28,7 +28,6 @@ public class PaymentController {
 
     @PostMapping("/create-checkout-session")
     public String checkout (@RequestBody PaymentDTO paymentDTO, HttpServletResponse response, HttpSession httpSession) throws StripeException, IOException {
-        httpSession.setAttribute("customerToken", seatPurchaseService.createCustomerIdentifyingToken());
 //        httpSession.setAttribute("seatSelectDTO", seatSelectDTO);
         return seatPurchaseService.checkout(paymentDTO, response, httpSession);
     }

@@ -14,6 +14,6 @@ public interface OngoingPurchaseRepository extends JpaRepository<OngoingPurchase
     
     public OngoingPurchase findBySeatStatus(SeatStatus seatStatus);
 
-    public OngoingPurchase findByPurchaseToken(String purchaseToken);
+    public OngoingPurchase findByToken(String purchaseToken);
 
 }
