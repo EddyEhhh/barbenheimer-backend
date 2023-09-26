@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
 import com.distinction.barbenheimer.exception.AlreadyExistsException;
-import com.distinction.barbenheimer.exception.SeatUnavailableException;
 import com.distinction.barbenheimer.model.MovieScheduleDate;
 import com.distinction.barbenheimer.model.SeatStatus;
 import com.distinction.barbenheimer.service.ScheduleService;
@@ -52,7 +51,6 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<?> selectSeats(@PathVariable("scheduleTimeId") long showTimeId, @RequestBody List<SeatSelectDTO> seatSelectDTOs){
         try {
-            scheduleService.selectSeats(showTimeId, seatSelectDTOs);
             return ResponseEntity.ok(scheduleService.selectSeats(showTimeId, seatSelectDTOs));
         } catch (AlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
