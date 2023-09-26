@@ -2,6 +2,7 @@ package com.distinction.barbenheimer.config;
 
 import com.distinction.barbenheimer.model.*;
 import com.distinction.barbenheimer.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -32,6 +33,16 @@ public class PopulateSampleData {
 
     @Autowired
     private SeatRepository seatRepository;
+
+    @Autowired
+    private SeatStatusRepository seatStatusRepository;
+
+    @Autowired
+    private PurchaseRepository purchaseRepository;
+
+    @Autowired
+    private CustomerDetailRepository customerDetailRepository;
+
 
     
     /** 
@@ -227,6 +238,7 @@ public class PopulateSampleData {
         List<MovieImage> movie2Images = new ArrayList<>();
         movie2Images.add(movie2Image);
         movie2.setMovieImages(movie2Images);
+        movie2.setMovieScheduleDates(autoGenerateMovie7DaySchedule(movie2, halls));
         movieToCreate.add(movie2);
 
 
@@ -250,6 +262,7 @@ public class PopulateSampleData {
         List<MovieImage> movie3Images = new ArrayList<>();
         movie3Images.add(movie3Image);
         movie3.setMovieImages(movie3Images);
+        movie3.setMovieScheduleDates(autoGenerateMovie7DaySchedule(movie3, halls));
         movieToCreate.add(movie3);
 
         Movie movie4 = new Movie();
@@ -272,6 +285,7 @@ public class PopulateSampleData {
         List<MovieImage> movie4Images = new ArrayList<>();
         movie4Images.add(movie4Image);
         movie4.setMovieImages(movie4Images);
+        movie4.setMovieScheduleDates(autoGenerateMovie7DaySchedule(movie4, halls));
         movieToCreate.add(movie4);
 
         Movie movie5 = new Movie();
@@ -294,6 +308,7 @@ public class PopulateSampleData {
         List<MovieImage> movie5Images = new ArrayList<>();
         movie5Images.add(movie5Image);
         movie5.setMovieImages(movie5Images);
+        movie5.setMovieScheduleDates(autoGenerateMovie7DaySchedule(movie5, halls));
         movieToCreate.add(movie5);
 
         Movie movie6 = new Movie();
@@ -468,7 +483,7 @@ public class PopulateSampleData {
 
         movieRepository.saveAll(movieToCreate);
 
-
+        autoGeneratePurchase();
 
 
 
@@ -492,6 +507,53 @@ public class PopulateSampleData {
 
     }
 
+
+    @Transactional
+    public void autoGeneratePurchase(){
+        LocalDateTime now = LocalDateTime.now();
+        List<Movie> movieList = movieRepository.findByLastShowingDateAfter(now);
+
+        for(Movie movie : movieList){
+            if(movie.getMovieScheduleDates().size() <= 0){
+                break;
+            }
+            MovieScheduleDate movieScheduleDate = movie.getMovieScheduleDates().get(0);
+            // get first 2 time of 1st date schedule of each movie
+            for(int movieScheduleIndex = 0 ; movieScheduleIndex < 2 ; movieScheduleIndex++){
+                MovieScheduleTime movieScheduleTime = movieScheduleDate.getMovieScheduleTimes().get(movieScheduleIndex);
+                List<Seat> seats = movieScheduleTime.getHall().getSeats();
+                // buy first 5 seats
+
+                List<SeatStatus> toAddToPurchase = new ArrayList<>();
+                double paidAmount = 0;
+                for(int seatIndex = 0 ; seatIndex < 5 ; seatIndex++){
+
+                    SeatStatus seatStatus = SeatStatus.builder()
+                            .seat(seats.get(seatIndex))
+                            .state(2)
+                            .movieScheduleTime(movieScheduleTime)
+                            .build();
+                    paidAmount += movie.getBasePrice();
+                    toAddToPurchase.add(seatStatus);
+                }
+                CustomerDetail customer = CustomerDetail.builder().email("barbenheimer203@gmail.com").build();
+                customerDetailRepository.save(customer);
+                Purchase purchase = Purchase.builder()
+                                .seatStatuses(toAddToPurchase)
+                                .customerDetail(customer)
+                                .paidAmount(paidAmount)
+                                .dateTime(LocalDateTime.now())
+                                .build();
+
+                seatStatusRepository.saveAll(toAddToPurchase);
+                purchaseRepository.save(purchase);
+
+
+            }
+
+        }
+
+    }
 
     public List<MovieScheduleDate> autoGenerateMovie7DaySchedule(Movie movie, List<Hall> halls){
         List<MovieScheduleDate> movieScheduleDates = new ArrayList<>();

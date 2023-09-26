@@ -59,7 +59,7 @@ public class Movie {
 
     private float basePrice;
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true,  fetch = FetchType.EAGER)
     private List<MovieScheduleDate> movieScheduleDates;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)

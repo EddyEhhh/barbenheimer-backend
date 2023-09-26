@@ -27,6 +27,8 @@ public class Purchase {
     @OneToOne
     private CustomerDetail customerDetail;
 
+    private double paidAmount;
+
     @OneToMany(fetch = FetchType.EAGER)
     private List<SeatStatus> seatStatuses;
 
