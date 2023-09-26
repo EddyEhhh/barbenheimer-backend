@@ -13,4 +13,7 @@ import com.distinction.barbenheimer.model.SeatStatus;
 public interface OngoingPurchaseRepository extends JpaRepository<OngoingPurchase, Long>{
     
     public OngoingPurchase findBySeatStatus(SeatStatus seatStatus);
+
+    public OngoingPurchase findByPurchaseToken(String purchaseToken);
+
 }

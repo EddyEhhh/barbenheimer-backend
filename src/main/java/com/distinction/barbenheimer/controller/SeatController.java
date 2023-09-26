@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
 import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
 import com.distinction.barbenheimer.exception.AlreadyExistsException;
-import com.distinction.barbenheimer.exception.SeatUnavailableException;
 import com.distinction.barbenheimer.model.CustomerDetail;
 import com.distinction.barbenheimer.model.MovieScheduleTime;
 import com.distinction.barbenheimer.model.Seat;
