@@ -16,6 +16,4 @@ public interface MovieScheduleService {
 
     public List<MovieScheduleDateDetailDTO> getShowtime(Movie movie, LocalDateTime before);
 
-
-
 }

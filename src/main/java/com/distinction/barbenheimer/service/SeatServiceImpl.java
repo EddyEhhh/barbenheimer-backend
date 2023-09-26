@@ -80,11 +80,10 @@ public class SeatServiceImpl implements SeatService{
     //     return movieScheduleTime;
     // }
 
-    @Override
-    public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public boolean checkStatus(Long movieId, LocalDate showDate, LocalTime showTime){
+    //     return null;
+    // }
 
 
     @Override
