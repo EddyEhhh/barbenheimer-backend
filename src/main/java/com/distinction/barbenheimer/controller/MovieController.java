@@ -57,7 +57,7 @@ public class MovieController {
      * @return A response entity containing the list of all filtered movies matching input in search bar
      */
     @GetMapping(params = "q")
-    public ResponseEntity<List<MovieDetailsDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
+    public ResponseEntity<List<MovieShortDTO>> getMoviesBySearch(@RequestParam("q") String movieTitle) {
         return ResponseEntity.ok(movieService.getMoviesBySearch(movieTitle));
     }
 
