@@ -85,7 +85,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             Seat seat = seatRepository.findByHallAndRowCharacterAndColumnNumber(hall, rowCharacter, columnNumber);
 
             // check whether status exists, if it does, throw exeception
-            SeatStatus seatStatus = seatStatusRepository.findByMovieScheduleTimeAndSeat(movieScheduleTime, seat);
+            SeatStatus seatStatus = seatStatusRepository.findByMovieScheduleTimeAndSeat(movieScheduleTime, seat).get();
             if (seatStatus != null) {
                 if (seatStatus.getState() == 1) {
                     throw new AlreadyExistsException("some seats are unavailable at the moment");
