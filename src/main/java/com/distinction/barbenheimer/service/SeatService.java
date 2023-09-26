@@ -19,7 +19,7 @@ public interface SeatService{
 
     public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime);
 
-    public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime);
+    //public boolean checkStatus(Long movieId, LocalDate showDate, LocalTime showTime);
 
     public List<Seat> selectedBy(CustomerDetail customerDetail);
 

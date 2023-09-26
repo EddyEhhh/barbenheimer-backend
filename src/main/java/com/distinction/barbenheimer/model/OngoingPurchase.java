@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SeatPurchase {
+public class OngoingPurchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,5 +33,5 @@ public class SeatPurchase {
     @NotEmpty
     private String purchaseToken;
 
-    private LocalDateTime timestamp;
+    private LocalDateTime expireTimeStamp;
 }

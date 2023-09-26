@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.distinction.barbenheimer.DTO.SeatDetailDTO;
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
 import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
+import com.distinction.barbenheimer.exception.SeatUnavailableException;
 import com.distinction.barbenheimer.model.CustomerDetail;
 import com.distinction.barbenheimer.model.Hall;
 import com.distinction.barbenheimer.model.Movie;
@@ -80,11 +81,10 @@ public class SeatServiceImpl implements SeatService{
     //     return movieScheduleTime;
     // }
 
-    @Override
-    public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public boolean checkStatus(Long movieId, LocalDate showDate, LocalTime showTime){
+    //     return null;
+    // }
 
 
     @Override

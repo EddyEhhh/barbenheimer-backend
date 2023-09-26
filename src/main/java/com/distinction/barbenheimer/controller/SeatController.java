@@ -4,6 +4,8 @@ import java.time.*;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
 import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
+import com.distinction.barbenheimer.exception.AlreadyExistsException;
+import com.distinction.barbenheimer.exception.SeatUnavailableException;
 import com.distinction.barbenheimer.model.CustomerDetail;
 import com.distinction.barbenheimer.model.MovieScheduleTime;
 import com.distinction.barbenheimer.model.Seat;
@@ -31,9 +35,11 @@ public class SeatController {
         this.seatService = seatService;
     } 
 
-    // @PostMapping
-    // public ResponseEntity<List<SeatStatusDetailDTO>> getStatus(@PathVariable Long movieId, @PathVariable LocalDate showDate, @PathVariable LocalTime showTime) {
-    //     return ResponseEntity.ok(seatService.getStatus(movieId, showDate, showTime));
+    // @GetMapping
+    // public ResponseEntity<?> checkStatus(@PathVariable Long movieId, @PathVariable LocalDate showDate, @PathVariable LocalTime showTime) {
+    
+    //     seatService.checkStatus(movieId, showDate, showTime);
+    //     return ResponseEntity.ok(seatService.checkStatus(movieId, showDate, showTime));
     // }
 
     @PostMapping("/customer")

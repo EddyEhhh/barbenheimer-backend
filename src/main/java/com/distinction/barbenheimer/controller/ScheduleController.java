@@ -3,6 +3,7 @@ package com.distinction.barbenheimer.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
 import com.distinction.barbenheimer.DTO.SeatSelectDTO;
+import com.distinction.barbenheimer.exception.AlreadyExistsException;
+import com.distinction.barbenheimer.exception.SeatUnavailableException;
 import com.distinction.barbenheimer.model.MovieScheduleDate;
 import com.distinction.barbenheimer.model.SeatStatus;
 import com.distinction.barbenheimer.service.ScheduleService;
@@ -47,8 +50,13 @@ public class ScheduleController {
     }
 
     @PostMapping
-    public ResponseEntity<SeatStatus> selectSeats(@PathVariable("scheduleTimeId") long showTimeId, @RequestBody List<SeatSelectDTO> seatSelectDTOs){
-        return null;
+    public ResponseEntity<?> selectSeats(@PathVariable("scheduleTimeId") long showTimeId, @RequestBody List<SeatSelectDTO> seatSelectDTOs){
+        try {
+            scheduleService.selectSeats(showTimeId, seatSelectDTOs);
+            return ResponseEntity.ok(scheduleService.selectSeats(showTimeId, seatSelectDTOs));
+        } catch (AlreadyExistsException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     
