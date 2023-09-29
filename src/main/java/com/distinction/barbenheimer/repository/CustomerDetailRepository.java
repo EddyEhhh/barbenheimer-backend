@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.distinction.barbenheimer.model.CustomerDetail;
 
-public interface CustomerDetailsRepository extends JpaRepository<CustomerDetail,Long>{
+public interface CustomerDetailRepository extends JpaRepository<CustomerDetail,Long>{
     
 }

@@ -1,6 +1,6 @@
 package com.distinction.barbenheimer.service;
 
-public interface CustomerDetailsService {
+public interface CustomerDetailService {
     
     public void inputCustomerDetails(String email);
 }
