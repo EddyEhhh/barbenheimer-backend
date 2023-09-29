@@ -26,10 +26,10 @@ public class SeatStatus {
     @ManyToOne(fetch = FetchType.EAGER)
     private Seat seat;
 
-    @OneToOne(mappedBy = "seatStatus")
-    private SeatPurchase seatPurchases;
+    @ManyToOne
+    private OngoingPurchase ongoingPurchase;
 
-    // 1 for unavailable and 2 for pending confirmation
+    // 2 for unavailable and 1 for pending confirmation
     private int state;
 
 

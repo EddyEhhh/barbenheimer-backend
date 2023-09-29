@@ -16,4 +16,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
 
     public Seat findById(long id);
 
+    public Seat findByHallAndRowCharacterAndColumnNumber(Hall hall, String rowCharacter, int columnNumber);
+
 }
