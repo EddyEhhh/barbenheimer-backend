@@ -41,7 +41,7 @@ public class PopulateSampleData {
     private PurchaseRepository purchaseRepository;
 
     @Autowired
-    private CustomerDetailRepository customerDetailRepository;
+    private CustomerDetailsRepository customerDetailRepository;
 
 
     
