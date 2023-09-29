@@ -1,12 +1,10 @@
 package com.distinction.barbenheimer.controller;
 
-import com.distinction.barbenheimer.DTO.OngoingPurchaseDetailDTO;
-import com.distinction.barbenheimer.DTO.OngoingPurchaseTokenDTO;
-import com.distinction.barbenheimer.DTO.PurchaseDTO;
-import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
+import com.distinction.barbenheimer.DTO.*;
 import com.distinction.barbenheimer.service.OngoingPurchaseService;
 import com.distinction.barbenheimer.service.PurchaseService;
 import com.distinction.barbenheimer.service.SeatPurchaseService;
+import com.stripe.exception.StripeException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/pay")
 @Slf4j
-public class PaymentController {
+public class PurchaseController {
 
     private final SeatPurchaseService seatPurchaseService;
 
@@ -26,7 +24,7 @@ public class PaymentController {
     private OngoingPurchaseService ongoingPurchaseService;
 
     @Autowired
-    public PaymentController(SeatPurchaseService seatPurchaseService, PurchaseService purchaseService, OngoingPurchaseService ongoingPurchaseService){
+    public PurchaseController(SeatPurchaseService seatPurchaseService, PurchaseService purchaseService, OngoingPurchaseService ongoingPurchaseService){
         this.seatPurchaseService = seatPurchaseService;
         this.purchaseService = purchaseService;
         this.ongoingPurchaseService = ongoingPurchaseService;
@@ -45,11 +43,22 @@ public class PaymentController {
 //        return ResponseEntity.ok(seatPurchaseService.saveOngoingPurchase(httpSession));
 //    }
 
+    //TODO: revise this
     @PostMapping("/purchase")
-    public ResponseEntity<?> savePurchase(SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO, HttpSession httpSession){
+    public ResponseEntity<?> savePurchase(@RequestBody SeatStatusDetailDTO seatStatusDetailDTO, @RequestBody PurchaseDTO purchaseDTO, HttpSession httpSession){
         seatPurchaseService.deleteOngoingPurchase(httpSession);
         return purchaseService.savePurchase(seatStatusDetailDTO, purchaseDTO, httpSession);
     }
+
+    @PostMapping(value = "/paymentIntent", consumes = "application/json")
+    public ResponseEntity<?> createPaymentIntent(@RequestBody PurchaseDTO purchaseDTO) throws StripeException {
+        PurchaseResponseDTO purchaseResponseDTO = purchaseService.createPaymentIntent(purchaseDTO);
+        return ResponseEntity.ok(purchaseResponseDTO);
+    }
+
+
+
+
 
 
 }

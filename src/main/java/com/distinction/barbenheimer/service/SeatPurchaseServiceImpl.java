@@ -30,9 +30,6 @@ public class SeatPurchaseServiceImpl implements SeatPurchaseService {
         this.ongoingPurchaseRepository = ongoingPurchaseRepository;
     }
 
-
-
-
     //TODO: add seat to be stored
 
     /**
