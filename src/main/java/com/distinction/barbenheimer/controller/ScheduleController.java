@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
-import com.distinction.barbenheimer.DTO.SeatSelectDTO;
+import com.distinction.barbenheimer.dto.HallScheduleSeatDetailDTO;
+import com.distinction.barbenheimer.dto.SeatSelectDTO;
 import com.distinction.barbenheimer.exception.AlreadyExistsException;
-import com.distinction.barbenheimer.model.MovieScheduleDate;
-import com.distinction.barbenheimer.model.SeatStatus;
 import com.distinction.barbenheimer.service.ScheduleService;
 
 import lombok.extern.slf4j.Slf4j;

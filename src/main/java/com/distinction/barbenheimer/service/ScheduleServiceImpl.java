@@ -3,7 +3,7 @@ package com.distinction.barbenheimer.service;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.distinction.barbenheimer.DTO.*;
+import com.distinction.barbenheimer.dto.*;
 import com.distinction.barbenheimer.exception.ResourceNotFoundException;
 import com.distinction.barbenheimer.model.*;
 import org.modelmapper.ModelMapper;

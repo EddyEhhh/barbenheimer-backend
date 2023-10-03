@@ -1,16 +1,16 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class MovieImageDetailDTO {
+public class PurchaseResponseDTO {
 
-    private String imageUrl;
+    private String clientSecret;
 
 }

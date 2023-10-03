@@ -1,8 +1,8 @@
 package com.distinction.barbenheimer.service;
 
-import com.distinction.barbenheimer.DTO.PurchaseResponseDTO;
-import com.distinction.barbenheimer.DTO.PurchaseDTO;
-import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
+import com.distinction.barbenheimer.dto.PurchaseResponseDTO;
+import com.distinction.barbenheimer.dto.PurchaseDTO;
+import com.distinction.barbenheimer.dto.SeatStatusDetailDTO;
 import com.distinction.barbenheimer.model.Purchase;
 import com.distinction.barbenheimer.repository.PurchaseRepository;
 import com.stripe.Stripe;

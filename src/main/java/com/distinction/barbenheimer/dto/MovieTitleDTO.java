@@ -1,16 +1,18 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
-public class PurchaseResponseDTO {
+public class MovieTitleDTO {
 
-    private String clientSecret;
+    public Long id;
+
+    public String title;
 
 }

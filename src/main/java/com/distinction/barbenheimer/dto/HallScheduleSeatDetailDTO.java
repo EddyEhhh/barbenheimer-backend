@@ -1,8 +1,6 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 import java.util.List;
-
-import com.distinction.barbenheimer.model.Seat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,9 +1,6 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 
-import java.util.List;
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

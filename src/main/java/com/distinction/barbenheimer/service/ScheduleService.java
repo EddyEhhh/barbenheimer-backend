@@ -1,9 +1,8 @@
 package com.distinction.barbenheimer.service;
 
-import com.distinction.barbenheimer.DTO.HallScheduleSeatDetailDTO;
-import com.distinction.barbenheimer.DTO.OngoingPurchaseTokenDTO;
-import com.distinction.barbenheimer.DTO.SeatSelectDTO;
-import com.distinction.barbenheimer.model.OngoingPurchase;
+import com.distinction.barbenheimer.dto.HallScheduleSeatDetailDTO;
+import com.distinction.barbenheimer.dto.OngoingPurchaseTokenDTO;
+import com.distinction.barbenheimer.dto.SeatSelectDTO;
 
 import java.util.*;
 

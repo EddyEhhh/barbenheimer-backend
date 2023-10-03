@@ -1,22 +1,26 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
-public class SeatNumberDTO {
+public class ScheduleSeatDetailDTO {
 
+    private long id;
+ 
     private String rowCharacter;
-    
+
     private int columnNumber;
+
+    private int x;
+
+    private int y;
+
+    private int state;
 
 }

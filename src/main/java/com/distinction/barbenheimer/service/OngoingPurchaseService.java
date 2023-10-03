@@ -1,7 +1,7 @@
 package com.distinction.barbenheimer.service;
 
-import com.distinction.barbenheimer.DTO.OngoingPurchaseDetailDTO;
-import com.distinction.barbenheimer.DTO.OngoingPurchaseTokenDTO;
+import com.distinction.barbenheimer.dto.OngoingPurchaseDetailDTO;
+import com.distinction.barbenheimer.dto.OngoingPurchaseTokenDTO;
 
 public interface OngoingPurchaseService {
 

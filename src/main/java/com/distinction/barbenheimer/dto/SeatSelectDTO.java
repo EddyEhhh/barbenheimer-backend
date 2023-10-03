@@ -1,9 +1,4 @@
-package com.distinction.barbenheimer.DTO;
-
-import java.time.LocalDateTime;
-
-import com.distinction.barbenheimer.model.Hall;
-import com.distinction.barbenheimer.model.SeatStatus;
+package com.distinction.barbenheimer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

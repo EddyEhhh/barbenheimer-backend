@@ -1,22 +1,13 @@
 package com.distinction.barbenheimer.controller;
 
-import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
-import com.distinction.barbenheimer.DTO.MovieShortDTO;
-import com.distinction.barbenheimer.DTO.MovieTitleDTO;
-import com.distinction.barbenheimer.model.Movie;
+import com.distinction.barbenheimer.dto.MovieTitleDTO;
 import com.distinction.barbenheimer.service.MovieService;
 
-import com.distinction.barbenheimer.service.MovieServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")

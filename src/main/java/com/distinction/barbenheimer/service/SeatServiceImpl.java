@@ -1,23 +1,18 @@
 package com.distinction.barbenheimer.service;
 
 import java.time.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import com.distinction.barbenheimer.DTO.SeatDetailDTO;
-import com.distinction.barbenheimer.DTO.SeatSelectDTO;
-import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
+import com.distinction.barbenheimer.dto.SeatDetailDTO;
 import com.distinction.barbenheimer.model.CustomerDetail;
-import com.distinction.barbenheimer.model.Hall;
 import com.distinction.barbenheimer.model.Movie;
 import com.distinction.barbenheimer.model.MovieScheduleDate;
 import com.distinction.barbenheimer.model.MovieScheduleTime;
 import com.distinction.barbenheimer.model.Seat;
-import com.distinction.barbenheimer.model.SeatStatus;
 import com.distinction.barbenheimer.repository.MovieRepository;
 import com.distinction.barbenheimer.repository.MovieScheduleDateRepository;
 import com.distinction.barbenheimer.repository.MovieScheduleTimeRepository;

@@ -1,14 +1,13 @@
 package com.distinction.barbenheimer.service;
-import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
-import com.distinction.barbenheimer.DTO.MovieShortDTO;
-import com.distinction.barbenheimer.DTO.MovieTitleDTO;
+import com.distinction.barbenheimer.dto.MovieDetailsDTO;
+import com.distinction.barbenheimer.dto.MovieShortDTO;
+import com.distinction.barbenheimer.dto.MovieTitleDTO;
 import com.distinction.barbenheimer.model.Movie;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.distinction.barbenheimer.model.Movie;
 import org.springframework.web.multipart.MultipartFile;
 
 

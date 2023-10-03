@@ -1,4 +1,4 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 
 import lombok.AllArgsConstructor;

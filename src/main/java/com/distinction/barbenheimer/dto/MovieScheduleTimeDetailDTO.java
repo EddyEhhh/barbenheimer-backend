@@ -1,16 +1,11 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
-import com.distinction.barbenheimer.model.Hall;
-import com.distinction.barbenheimer.model.MovieScheduleDate;
-import com.distinction.barbenheimer.model.SeatStatus;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
-import java.util.List;
 
 @Data
 @Builder

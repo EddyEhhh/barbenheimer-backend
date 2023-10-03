@@ -1,6 +1,6 @@
 package com.distinction.barbenheimer.controller;
 
-import com.distinction.barbenheimer.DTO.*;
+import com.distinction.barbenheimer.dto.*;
 import com.distinction.barbenheimer.service.OngoingPurchaseService;
 import com.distinction.barbenheimer.service.PurchaseService;
 import com.distinction.barbenheimer.service.SeatPurchaseService;

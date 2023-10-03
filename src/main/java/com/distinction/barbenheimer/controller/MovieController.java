@@ -1,14 +1,9 @@
 package com.distinction.barbenheimer.controller;
 
-import com.distinction.barbenheimer.DTO.MovieDetailsDTO;
-import com.distinction.barbenheimer.DTO.MovieShortDTO;
-import com.distinction.barbenheimer.DTO.MovieTitleDTO;
-import com.distinction.barbenheimer.model.Movie;
+import com.distinction.barbenheimer.dto.MovieDetailsDTO;
+import com.distinction.barbenheimer.dto.MovieShortDTO;
 import com.distinction.barbenheimer.service.MovieService;
 
-import com.distinction.barbenheimer.service.MovieServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

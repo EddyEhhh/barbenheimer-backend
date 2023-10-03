@@ -1,10 +1,10 @@
 package com.distinction.barbenheimer.service;
 
 
-import com.distinction.barbenheimer.DTO.MovieShortDTO;
-import com.distinction.barbenheimer.DTO.OngoingPurchaseDetailDTO;
-import com.distinction.barbenheimer.DTO.OngoingPurchaseTokenDTO;
-import com.distinction.barbenheimer.DTO.SeatDetailDTO;
+import com.distinction.barbenheimer.dto.MovieShortDTO;
+import com.distinction.barbenheimer.dto.OngoingPurchaseDetailDTO;
+import com.distinction.barbenheimer.dto.OngoingPurchaseTokenDTO;
+import com.distinction.barbenheimer.dto.SeatDetailDTO;
 import com.distinction.barbenheimer.exception.ResourceNotFoundException;
 import com.distinction.barbenheimer.model.*;
 import com.distinction.barbenheimer.repository.OngoingPurchaseRepository;

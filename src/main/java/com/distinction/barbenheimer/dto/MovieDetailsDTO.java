@@ -1,9 +1,8 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.distinction.barbenheimer.model.MovieScheduleDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

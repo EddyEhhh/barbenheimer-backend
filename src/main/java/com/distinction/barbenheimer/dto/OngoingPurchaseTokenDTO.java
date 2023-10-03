@@ -1,18 +1,17 @@
-package com.distinction.barbenheimer.DTO;
+package com.distinction.barbenheimer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Builder
-public class MovieTitleDTO {
+public class OngoingPurchaseTokenDTO {
 
-    public Long id;
+    private String token;
 
-    public String title;
 
 }
