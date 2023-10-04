@@ -31,6 +31,14 @@ public class MailServiceImpl implements MailService {
     private String email;
 
 
+    /**
+     * sends an email to the specified email address with the specified message and subject
+     *
+     * @param to receiver email
+     * @param subject email subject
+     * @param message email body
+     * @return void
+     */
     @Async
     public void sendEmail(String to, String subject, String message){
         try {
@@ -49,6 +57,15 @@ public class MailServiceImpl implements MailService {
 
     }
 
+    /**
+     * sends an email to the specified email address with the specified message, subject and image
+     *
+     * @param to receiver email
+     * @param subject email subject
+     * @param message email body
+     * @param image image data in bytes
+     * @return void
+     */
     @Async
     public void sendEmailWithImage(String to, String subject, String message, byte[] image) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
