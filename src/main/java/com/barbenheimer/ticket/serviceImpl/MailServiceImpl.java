@@ -23,12 +23,16 @@ import java.util.Date;
 @Slf4j
 public class MailServiceImpl implements MailService {
 
-    @Autowired
     private JavaMailSender mailSender;
 
 
     @Value("${mail.email}")
     private String email;
+
+    @Autowired
+    public MailServiceImpl(JavaMailSender mailSender){
+        this.mailSender = mailSender;
+    }
 
 
     /**
