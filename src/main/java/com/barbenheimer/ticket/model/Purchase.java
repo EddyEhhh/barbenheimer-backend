@@ -34,6 +34,10 @@ public class Purchase {
 
     private LocalDateTime dateTime;
 
+    public Purchase(double paidAmount){
+        this.paidAmount = paidAmount;
+    }
+
 
 
 
