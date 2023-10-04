@@ -16,13 +16,11 @@ import com.distinction.barbenheimer.model.SeatStatus;
 
 public interface SeatService{
 
-    public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime);
+    //public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime);
 
-    public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime);
+    //public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime);
 
     public List<Seat> selectedBy(CustomerDetail customerDetail);
 
     public MovieScheduleTime getTime(long movieId, LocalDate showDate, LocalTime showTime);
-
-
 }

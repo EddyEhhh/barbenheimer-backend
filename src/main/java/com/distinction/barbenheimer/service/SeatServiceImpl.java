@@ -39,20 +39,26 @@ public class SeatServiceImpl implements SeatService{
         this.seatRepository = seatRepository;
     }
 
-    @Override
-    public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime) {
-        MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findByMovieScheduleDate_Movie_IdAndMovieScheduleDate_ShowDateAndShowTime(movieId, showDate, showTime).get();
-        Hall hall = movieScheduleTime.getHall();
-        List<Seat> layoutSeats = hall.getSeats();
-        List<SeatDetailDTO> layoutDTO = new ArrayList<>();
-        for (Seat seat: layoutSeats) {
-            layoutDTO.add(modelMapper.map(seat, SeatDetailDTO.class));
-        }
-        return layoutDTO;
-    }
+    
+    
+    // @Override
+    // public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime) {
+    //     MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findByMovieScheduleDate_Movie_IdAndMovieScheduleDate_ShowDateAndShowTime(movieId, showDate, showTime).get();
+    //     Hall hall = movieScheduleTime.getHall();
+    //     List<Seat> layoutSeats = hall.getSeats();
+    //     List<SeatDetailDTO> layoutDTO = new ArrayList<>();
+    //     for (Seat seat: layoutSeats) {
+    //         layoutDTO.add(modelMapper.map(seat, SeatDetailDTO.class));
+    //     }
+    //     return layoutDTO;
+    // }
     
 
-
+    /** 
+     * method is a GET request handler
+     * returns the MovieScheduleTime object of a specific movie showing at a specific datetime
+     * @return MovieScheduleTime
+     */
     @Override
     public MovieScheduleTime getTime(long movieId, LocalDate showDate, LocalTime showTime) {
         MovieScheduleTime movieScheduleTime2 = movieScheduleTimeRepository.findByShowTime(LocalTime.of(8,0)).get(0);
@@ -64,13 +70,17 @@ public class SeatServiceImpl implements SeatService{
         return movieScheduleTime;
     }
 
-    @Override
-    public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public List<SeatStatusDetailDTO> getStatus(Long movieId, LocalDate showDate, LocalTime showTime) {
+    //     // TODO Auto-generated method stub
+    //     return null;
+    // }
 
-
+    /** 
+     * method is a GET request handler
+     * returns the seats that a customer selected for a specific purchase
+     * @return MovieScheduleTime
+     */
     @Override
     public List<Seat> selectedBy(CustomerDetail customerDetail) {
         // TODO Auto-generated method stub
