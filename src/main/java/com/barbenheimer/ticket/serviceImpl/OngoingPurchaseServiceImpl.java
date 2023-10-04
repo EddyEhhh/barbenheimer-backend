@@ -50,6 +50,12 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
         return token.toString().replace("-","");
     }
 
+    /**
+     *
+     * @param ongoingPurchaseTokenDTO
+     * @return ongoingPurchaseDetailDTO
+     */
+
     public OngoingPurchaseDetailDTO getDetail(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
         String token = ongoingPurchaseTokenDTO.getToken();
         Optional<OngoingPurchase> ongoingPurchaseOptional = ongoingPurchaseRepository.findByToken(token);

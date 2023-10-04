@@ -20,3 +20,4 @@ public class MovieServiceTest {
     private MovieServiceImpl movieService;
 
 }
+

@@ -32,6 +32,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         this.purchaseRepository = purchaseRepository;
     }
 
+    //TODO: define the clock
     @Override
     public ResponseEntity<?> savePurchase(CustomerDetail customerDetail, SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO, Clock clock) {
         Purchase purchase = Purchase.builder()
