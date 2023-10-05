@@ -23,14 +23,26 @@ import java.util.Date;
 @Slf4j
 public class MailServiceImpl implements MailService {
 
-    @Autowired
     private JavaMailSender mailSender;
 
 
     @Value("${mail.email}")
     private String email;
 
+    @Autowired
+    public MailServiceImpl(JavaMailSender mailSender){
+        this.mailSender = mailSender;
+    }
 
+
+    /**
+     * sends an email to the specified email address with the specified message and subject
+     *
+     * @param to receiver email
+     * @param subject email subject
+     * @param message email body
+     * @return void
+     */
     @Async
     public void sendEmail(String to, String subject, String message){
         try {
@@ -49,6 +61,15 @@ public class MailServiceImpl implements MailService {
 
     }
 
+    /**
+     * sends an email to the specified email address with the specified message, subject and image
+     *
+     * @param to receiver email
+     * @param subject email subject
+     * @param message email body
+     * @param image image data in bytes
+     * @return void
+     */
     @Async
     public void sendEmailWithImage(String to, String subject, String message, byte[] image) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();

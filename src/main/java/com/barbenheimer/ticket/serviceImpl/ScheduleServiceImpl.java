@@ -51,6 +51,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     }
 
+    /**
+     * get a list of seats based on a specific show schedule
+     *
+     * @param showTimeId selected show schedule
+     * @return HallScheduleSeatDetailDTO
+     */
     @Override
     public HallScheduleSeatDetailDTO getSeats(long showTimeId) { // can use hashmap to solve as well
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);
@@ -76,7 +82,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         return hallScheduleSeatDetailDTO;
     }
 
-
+    /**
+     * select a list of seats based on a specific show schedule
+     *
+     * @param showTimeId selected show schedule
+     * @return HallScheduleSeatDetailDTO
+     */
     @Override
     public OngoingPurchaseTokenDTO selectSeats(long showTimeId, List<SeatSelectDTO> seatSelectDTOs) throws AlreadyExistsException{ // haven't purchase, so status is 1 (temp reserve)
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);

@@ -36,9 +36,9 @@ public class ScheduleController {
 
     
     /** 
-     * method is a GET request handler
-     * it returns 
-     * @param showTimeId
+     * method is a GET request handler to obtain a list of seats based on a specific show schedule
+     *
+     * @param showTimeId selected show schedule
      * @return ResponseEntity<HallScheduleSeatDetailDTO>
      */
     @GetMapping
@@ -46,6 +46,14 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.getSeats(showTimeId));
     }
 
+
+    /**
+     * method is a Post request handler to select a list of seats based on a specific show schedule
+     *
+     * @param showTimeId selected show schedule
+     * @param seatSelectDTOs seats being selected
+     * @return ResponseEntity<?>
+     */
     @PostMapping
     public ResponseEntity<?> selectSeats(@PathVariable("scheduleTimeId") long showTimeId, @RequestBody List<SeatSelectDTO> seatSelectDTOs){
         try {

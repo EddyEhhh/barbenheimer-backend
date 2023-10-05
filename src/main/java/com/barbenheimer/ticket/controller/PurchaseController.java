@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping("/api/v1/pay")
+@RequestMapping("/api/v1/payments")
 @Slf4j
 public class PurchaseController {
 
