@@ -39,19 +39,19 @@ public class SeatController {
     // }
 
     /** 
-     * this method is a POST request handler
+     * this method is a GET request handler
      * receives details of a customer
      * returns the seats that the customer selected during this purchase
      * @return ResponseEntity<List<Seat>>
      */
-    @PostMapping("/customer")
+    @GetMapping("/customer")
     public ResponseEntity<List<Seat>> selectedBy(CustomerDetail customerDetail) {
         return ResponseEntity.ok(seatService.selectedBy(customerDetail));
     }
 
-    //testing
-    // @GetMapping
-    // public ResponseEntity<MovieScheduleTime> getTime(@PathVariable("movieId") long movieId, @PathVariable("showDate") LocalDate showDate, @PathVariable("showTime") LocalTime showTime) {
-    //     return ResponseEntity.ok(seatService.getTime(movieId, showDate, showTime));
-    // }
+    
+    @GetMapping
+    public ResponseEntity<MovieScheduleTime> getTime(@PathVariable("movieId") long movieId, @PathVariable("showDate") LocalDate showDate, @PathVariable("showTime") LocalTime showTime) {
+        return ResponseEntity.ok(seatService.getTime(movieId, showDate, showTime));
+    }
 }
