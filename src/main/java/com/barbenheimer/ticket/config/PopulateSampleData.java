@@ -1,7 +1,7 @@
 package com.barbenheimer.ticket.config;
 
-import com.barbenheimer.customer.model.CustomerDetail;
-import com.barbenheimer.customer.repository.CustomerDetailRepository;
+import com.barbenheimer.ticket.model.CustomerDetail;
+import com.barbenheimer.ticket.repository.CustomerDetailRepository;
 import com.barbenheimer.ticket.model.*;
 import com.barbenheimer.ticket.repository.*;
 import jakarta.transaction.Transactional;
