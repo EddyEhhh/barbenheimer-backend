@@ -1,4 +1,4 @@
-package com.barbenheimer.customer.controller;
+package com.barbenheimer.ticket.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.barbenheimer.customer.service.CustomerDetailService;
+import com.barbenheimer.ticket.service.CustomerDetailService;
 
 import jakarta.validation.constraints.Email;
 import lombok.extern.slf4j.Slf4j;

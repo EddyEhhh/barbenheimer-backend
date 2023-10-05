@@ -1,11 +1,11 @@
-package com.barbenheimer.customer.serviceImpl;
+package com.barbenheimer.ticket.serviceImpl;
 
-import com.barbenheimer.customer.repository.CustomerDetailRepository;
-import com.barbenheimer.customer.service.CustomerDetailService;
+import com.barbenheimer.ticket.repository.CustomerDetailRepository;
+import com.barbenheimer.ticket.service.CustomerDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.barbenheimer.customer.model.CustomerDetail;
+import com.barbenheimer.ticket.model.CustomerDetail;
 
 import lombok.extern.slf4j.Slf4j;
 @Service

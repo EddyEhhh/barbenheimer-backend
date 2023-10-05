@@ -1,6 +1,5 @@
 package com.barbenheimer.ticket.model;
 
-import com.barbenheimer.customer.model.CustomerDetail;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

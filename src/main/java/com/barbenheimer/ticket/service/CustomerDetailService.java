@@ -1,4 +1,4 @@
-package com.barbenheimer.customer.service;
+package com.barbenheimer.ticket.service;
 
 public interface CustomerDetailService {
     

@@ -1,4 +1,4 @@
-package com.barbenheimer.customer;
+package com.barbenheimer.ticket.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,15 +8,13 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.barbenheimer.customer.model.CustomerDetail;
-import com.barbenheimer.customer.repository.CustomerDetailRepository;
-import com.barbenheimer.customer.service.CustomerDetailService;
-import com.barbenheimer.customer.serviceImpl.CustomerDetailServiceImpl;
+import com.barbenheimer.ticket.model.CustomerDetail;
+import com.barbenheimer.ticket.repository.CustomerDetailRepository;
+import com.barbenheimer.ticket.serviceImpl.CustomerDetailServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
