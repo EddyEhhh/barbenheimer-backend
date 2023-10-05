@@ -3,22 +3,20 @@ package com.barbenheimer.ticket.serviceImpl;
 import com.barbenheimer.customer.model.CustomerDetail;
 import com.barbenheimer.ticket.dto.PurchaseDTO;
 import com.barbenheimer.ticket.dto.PurchaseResponseDTO;
-import com.barbenheimer.ticket.repository.PurchaseRepository;
 import com.barbenheimer.ticket.dto.SeatStatusDetailDTO;
 import com.barbenheimer.ticket.model.Purchase;
+import com.barbenheimer.ticket.repository.PurchaseRepository;
 import com.barbenheimer.ticket.service.PurchaseService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -34,10 +32,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     //TODO: define the clock
     @Override
-    public ResponseEntity<?> savePurchase(CustomerDetail customerDetail, SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO, Clock clock) {
+    public ResponseEntity<?> savePurchase(CustomerDetail customerDetail, SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO) {
         Purchase purchase = Purchase.builder()
                 .customerDetail(customerDetail)
-                .dateTime(LocalDateTime.now(clock))
+                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .paidAmount(purchaseDTO.getPriceInCents() * purchaseDTO.getQuantity())
                 .build();
         return ResponseEntity.ok(purchaseRepository.save(purchase));

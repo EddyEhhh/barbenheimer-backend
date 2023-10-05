@@ -1,7 +1,9 @@
 package com.barbenheimer.ticket.serviceImpl;
 
 import java.io.IOException;
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -51,7 +53,7 @@ public class MovieServiceImpl implements MovieService {
      */
     @Override
     public List<MovieShortDTO> getAllCurrent() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
         List<Movie> movieList = movieRepository.findByLastShowingDateAfter(now);
         List<MovieShortDTO> movieDTOList = new ArrayList<>();
         for (Movie eachMovie : movieList) {

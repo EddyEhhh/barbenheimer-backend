@@ -1,19 +1,17 @@
 package com.barbenheimer.ticket.serviceImpl;
 
 
-import com.barbenheimer.ticket.dto.OngoingPurchaseDetailDTO;
-import com.barbenheimer.ticket.model.*;
-import com.barbenheimer.ticket.repository.OngoingPurchaseRepository;
 import com.barbenheimer.ticket.dto.MovieShortDTO;
+import com.barbenheimer.ticket.dto.OngoingPurchaseDetailDTO;
 import com.barbenheimer.ticket.dto.OngoingPurchaseTokenDTO;
 import com.barbenheimer.ticket.dto.SeatDetailDTO;
 import com.barbenheimer.ticket.exception.ResourceNotFoundException;
+import com.barbenheimer.ticket.model.*;
+import com.barbenheimer.ticket.repository.OngoingPurchaseRepository;
 import com.barbenheimer.ticket.repository.SeatStatusRepository;
 import com.barbenheimer.ticket.service.OngoingPurchaseService;
-import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -25,8 +23,6 @@ import java.util.UUID;
 
 @Service
 public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
-
-
 
     private OngoingPurchaseRepository ongoingPurchaseRepository;
 

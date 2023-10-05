@@ -12,6 +12,6 @@ import java.time.Clock;
 
 public interface PurchaseService{
 
-    public ResponseEntity<?> savePurchase(CustomerDetail customerDetail, SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO, Clock clock);
+    public ResponseEntity<?> savePurchase(CustomerDetail customerDetail, SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO);
     public PurchaseResponseDTO createPaymentIntent(PurchaseDTO purchaseDTO) throws StripeException;
 }
