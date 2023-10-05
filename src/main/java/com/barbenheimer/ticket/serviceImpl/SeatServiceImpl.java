@@ -56,25 +56,25 @@ public class SeatServiceImpl implements SeatService {
     //     return layoutDTO;
     // }
 
-    @Override
-    public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime) {
-        Optional<Movie> movie = movieRepository.findById(movieId);
-        MovieScheduleDate movieScheduleDate = movieScheduleDateRepository.findByMovieAndShowDate(movie, showDate);
-        MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findByMovieScheduleDateAndShowTime(movieScheduleDate, showTime);
-        return null;
-    }
-
-
     // @Override
-    // public MovieScheduleTime getTime(long movieId, LocalDate showDate, LocalTime showTime) {
-    //     MovieScheduleTime movieScheduleTime2 = movieScheduleTimeRepository.findByShowTime(LocalTime.of(8,0)).get(0);
-    //     log.info("ORDER: " + movieScheduleTime2.toString());
-    //     log.info("TEST MOVIEID: " + movieId);
-    //     log.info("TEST SHOWDATE: " + showDate.toString());
-    //     log.info("TEST SHOWTIME: " + showTime.toString());
-    //     MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findByMovieScheduleDate_Movie_IdAndMovieScheduleDate_ShowDateAndShowTime(movieId, showDate, showTime).get();
-    //     return movieScheduleTime;
+    // public List<SeatDetailDTO> getLayout(Long movieId, LocalDate showDate, LocalTime showTime) {
+    //     Optional<Movie> movie = movieRepository.findById(movieId);
+    //     MovieScheduleDate movieScheduleDate = movieScheduleDateRepository.findByMovieAndShowDate(movie, showDate);
+    //     MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findByMovieScheduleDateAndShowTime(movieScheduleDate, showTime);
+    //     return null;
     // }
+
+
+    @Override
+    public MovieScheduleTime getTime(long movieId, LocalDate showDate, LocalTime showTime) {
+        MovieScheduleTime movieScheduleTime2 = movieScheduleTimeRepository.findByShowTime(LocalTime.of(8,0)).get(0);
+        log.info("ORDER: " + movieScheduleTime2.toString());
+        log.info("TEST MOVIEID: " + movieId);
+        log.info("TEST SHOWDATE: " + showDate.toString());
+        log.info("TEST SHOWTIME: " + showTime.toString());
+        MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findByMovieScheduleDate_Movie_IdAndMovieScheduleDate_ShowDateAndShowTime(movieId, showDate, showTime).get();
+        return movieScheduleTime;
+    }
 
     // @Override
     // public boolean checkStatus(Long movieId, LocalDate showDate, LocalTime showTime){
