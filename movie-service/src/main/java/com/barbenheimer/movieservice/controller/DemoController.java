@@ -1,8 +1,10 @@
 package com.barbenheimer.movieservice.controller;
 
+import com.barbenheimer.movieservice.dto.TicketMailDetailDTO;
 import com.barbenheimer.movieservice.event.TicketPurchaseCompleteEvent;
 import com.barbenheimer.movieservice.model.Purchase;
 import com.barbenheimer.movieservice.repository.PurchaseRepository;
+import com.barbenheimer.movieservice.service.PurchaseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,16 +24,19 @@ public class DemoController {
 
     private PurchaseRepository purchaseRepository;
 
-    private final KafkaTemplate<String, TicketPurchaseCompleteEvent> kafkaTemplate;
+    private PurchaseService purchaseService;
+
 
     @Autowired
-    public DemoController(KafkaTemplate kafkaTemplate, ApplicationEventPublisher applicationEventPublisher, PurchaseRepository purchaseRepository){
+    public DemoController(ApplicationEventPublisher applicationEventPublisher,
+                          PurchaseRepository purchaseRepository,
+                          PurchaseService purchaseService){
         this.applicationEventPublisher = applicationEventPublisher;
         this.purchaseRepository = purchaseRepository;
-        this.kafkaTemplate = kafkaTemplate;
+        this.purchaseService = purchaseService;
     }
 
-    @GetMapping
+    @GetMapping("/movie")
     public String demo(){
         return "Hello there!";
     }
@@ -39,11 +44,10 @@ public class DemoController {
 
     @GetMapping("/mail")
     public String demoMail(){
+        log.info("Mailer sent");
         Purchase purchase = purchaseRepository.findById(Long.valueOf(1)).get();
-        log.info(purchase.toString());
-        kafkaTemplate.send("mailerTopic", new TicketPurchaseCompleteEvent(purchase));
-        return "mailed";
-//        return "emailing";
+        purchaseService.sendMail(purchase);
+        return "emailing";
     }
 
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 0
   servlet:
     session:
       cookie:
@@ -19,3 +19,20 @@ spring:
         starttls:
           enable: ${mail.properties.mail.smtp.auth.starttls.enable}
 
+    # Kafka properties
+    kafka:
+      bootstrap-servers: ${kafka.bootstrap-server.host}:${kafka.bootstrap-server.port}
+      template:
+        default-topic: mailerTopic
+      consumer:
+        group-id: mailerId
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#        properties:
+#          spring:
+#            json:
+#              value:
+#                default:
+#                  type: com.barbenheimer.mailerservice.dto.TicketMailDetailDTO
+#              trusted:
+#                packages: com.barbenheimer.mailerservice.dto

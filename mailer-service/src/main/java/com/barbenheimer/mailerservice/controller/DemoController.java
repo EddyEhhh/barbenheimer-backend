@@ -1,7 +1,5 @@
 package com.barbenheimer.mailerservice.controller;
 
-import com.barbenheimer.mailerservice.event.TicketPurchaseCompleteEvent;
-import com.barbenheimer.mailerservice.model.Purchase;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -30,10 +28,10 @@ public class DemoController {
     }
 
 
-    @GetMapping("/mail")
-    public String demoMail(Purchase purchase){
-        applicationEventPublisher.publishEvent(new TicketPurchaseCompleteEvent(purchase));
-        return "emailing";
-    }
+//    @GetMapping("/mail")
+//    public String demoMail(Purchase purchase){
+//        applicationEventPublisher.publishEvent(new TicketPurchaseCompleteEvent(purchase));
+//        return "emailing";
+//    }
 
 }

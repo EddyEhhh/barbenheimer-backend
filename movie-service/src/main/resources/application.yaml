@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 0
   servlet:
     session:
       cookie:
@@ -35,6 +35,11 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.barbenheimer.movieservice.event.TicketPurchaseCompleteEvent
 
 aws:
   region: ${aws.default.region}

@@ -1,6 +1,6 @@
 package com.barbenheimer.movieservice.event;
 
-import com.barbenheimer.movieservice.model.Purchase;
+import com.barbenheimer.movieservice.dto.TicketMailDetailDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;
@@ -9,11 +9,14 @@ import org.springframework.context.ApplicationEvent;
 @Setter
 public class TicketPurchaseCompleteEvent extends ApplicationEvent {
 
-    private Purchase purchase;
+    private TicketMailDetailDTO ticketMailDetailDTO;
+//    private String message;
 
-    public TicketPurchaseCompleteEvent(Purchase purchase){
-        super(purchase);
-        this.purchase = purchase;
+    public TicketPurchaseCompleteEvent(TicketMailDetailDTO ticketMailDetailDTO){
+        super(ticketMailDetailDTO);
+        this.ticketMailDetailDTO = ticketMailDetailDTO;
+//        this.purchase = purchase;
     }
 
 }
+
