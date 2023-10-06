@@ -26,6 +26,11 @@ spring:
     username: ${database.username}
     password: ${database.password}
     driverClassName: com.mysql.cj.jdbc.Driver
+  cloud:
+    compatibility-verifier:
+        enabled: false
+  application:
+    name: movie-service
 
 # Kafka properties
   kafka:
@@ -40,6 +45,22 @@ spring:
           json:
             type:
               mapping: event:com.barbenheimer.movieservice.event.TicketPurchaseCompleteEvent
+
+#Eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${discovery.username}:${discovery.password}@${discovery.server.host}:${discovery.server.port}/eureka
+
+## Zipkin
+management:
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
 
 aws:
   region: ${aws.default.region}
