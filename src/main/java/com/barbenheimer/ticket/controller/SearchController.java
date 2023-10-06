@@ -28,7 +28,6 @@ public class SearchController {
     /** 
      * method is a GET request handler
      * returns all currently showing movies' title and Id
-     * @param movieTitle
      * @return ResponseEntity<List<MovieTitleDTO>>
      */
     @GetMapping("/movies")
