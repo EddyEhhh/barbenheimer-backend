@@ -1,8 +1,9 @@
 package com.barbenheimer.ticket.serviceImpl;
 
-import com.barbenheimer.customer.model.CustomerDetail;
+
 import com.barbenheimer.ticket.dto.PurchaseDTO;
 import com.barbenheimer.ticket.dto.SeatStatusDetailDTO;
+import com.barbenheimer.ticket.model.CustomerDetail;
 import com.barbenheimer.ticket.model.Purchase;
 import com.barbenheimer.ticket.repository.PurchaseRepository;
 import com.barbenheimer.ticket.service.PurchaseService;

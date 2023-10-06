@@ -1,8 +1,8 @@
 package com.barbenheimer.ticket.service;
 
-import com.barbenheimer.customer.model.CustomerDetail;
 import com.barbenheimer.ticket.dto.PurchaseDTO;
 import com.barbenheimer.ticket.dto.SeatStatusDetailDTO;
+import com.barbenheimer.ticket.model.CustomerDetail;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import jakarta.servlet.http.HttpServletRequest;

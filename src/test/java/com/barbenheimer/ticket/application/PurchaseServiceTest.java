@@ -1,6 +1,6 @@
 package com.barbenheimer.ticket.application;
 
-import com.barbenheimer.customer.model.CustomerDetail;
+import com.barbenheimer.ticket.model.CustomerDetail;
 import com.barbenheimer.ticket.dto.PurchaseDTO;
 import com.barbenheimer.ticket.dto.SeatStatusDetailDTO;
 import com.barbenheimer.ticket.model.Purchase;

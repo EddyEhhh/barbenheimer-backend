@@ -123,7 +123,7 @@ public class MovieServiceTest {
     void saveMovieImage(){
         String movieImageId = "1";
         Movie movie = Movie.builder().title("fakename").movieImages(new ArrayList<MovieImage>()).build();
-        String movieImageUrl = "https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movie.getTitle() + "/" + movieImageId;
+        String movieImageUrl = "https://barbenheimer-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movie.getTitle() + "/" + movieImageId;
 
         MovieImage movieImage = MovieImage.builder().movie(movie).imageUrl(movieImageUrl).build();
 
