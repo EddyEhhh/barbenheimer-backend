@@ -1,11 +1,11 @@
-package com.barbenheimer.customer.serviceImpl;
+package com.barbenheimer.ticket.serviceImpl;
 
-import com.barbenheimer.customer.repository.CustomerDetailRepository;
-import com.barbenheimer.customer.service.CustomerDetailService;
+import com.barbenheimer.ticket.repository.CustomerDetailRepository;
+import com.barbenheimer.ticket.service.CustomerDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.barbenheimer.customer.model.CustomerDetail;
+import com.barbenheimer.ticket.model.CustomerDetail;
 
 import lombok.extern.slf4j.Slf4j;
 @Service
@@ -19,8 +19,12 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         this.customerDetailRepository = customerDetailRepository;
     }
 
-    public void inputCustomerDetails(String email) {
+    public void inputCustomerDetails(String email){
         CustomerDetail customerDetail = new CustomerDetail();
+        String regex = "^[A-Z0-9+_.-]+@[A-Z0-9.-]+$";
+        if (!email.matches(regex)) {
+            throw new IllegalArgumentException("Please enter a valid email address.");
+        }
         customerDetail.setEmail(email);
         customerDetailRepository.save(customerDetail);
     }

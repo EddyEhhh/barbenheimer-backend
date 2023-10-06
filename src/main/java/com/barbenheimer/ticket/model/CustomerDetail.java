@@ -1,4 +1,4 @@
-package com.barbenheimer.customer.model;
+package com.barbenheimer.ticket.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

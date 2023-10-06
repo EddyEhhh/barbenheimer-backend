@@ -48,7 +48,7 @@ public class MovieController {
      * It takes in a `movieTitle` as a path variable and returns a ResponseEntity` 
      * containing a list of `Movie` objects.
      * 
-     * @param movieTitle 
+     * @param movieTitle
      * @return A response entity containing the list of all filtered movies matching input in search bar
      */
     @GetMapping(params = "q")
@@ -59,7 +59,7 @@ public class MovieController {
 
     
     /** 
-     * method returns everything related to movie selevted by user
+     * method returns everything related to movie selected by user
      * 
      * @param movieId
      * @return ResponseEntity<MovieDetailsDTO>
@@ -78,7 +78,6 @@ public class MovieController {
      * @return ResponseEntity<?> defining the response message upon uploading image
      * @throws IOException
      */
-
     @PostMapping(value = "/{movieId}/imageUpload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
