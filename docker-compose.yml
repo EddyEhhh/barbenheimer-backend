@@ -24,6 +24,13 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
 
+  # Zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+
 #  mysql:
 #    image: mysql
 #    restart: always
@@ -36,12 +43,7 @@ services:
 #    ports:
 #      - 8080:8080
 #
-#  # Zipkin
-#  zipkin:
-#    image: openzipkin/zipkin
-#    container_name: zipkin
-#    ports:
-#      - "9411:9411"
+
 #
 #
 #  ## Eureka Server
