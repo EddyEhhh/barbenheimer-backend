@@ -8,10 +8,17 @@ import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
 import com.barbenheimer.movieservice.service.PurchaseService;
 import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import com.stripe.net.Webhook;
+import jakarta.servlet.http.HttpServletRequest;
+import com.stripe.model.PaymentIntent;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -32,7 +39,7 @@ public class PurchaseController {
 
     @GetMapping
     public ResponseEntity<OngoingPurchaseDetailDTO> getOngoingPurchaseDetail(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
-//        log.info("token: " + ongoingPurchaseTokenDTO.getToken());
+        log.info("token: " + ongoingPurchaseTokenDTO.getToken());
         return ResponseEntity.ok(ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO));
     }
 
@@ -52,13 +59,14 @@ public class PurchaseController {
 
     @PostMapping(value = "/paymentIntent", consumes = "application/json")
     public ResponseEntity<?> createPaymentIntent(@RequestBody PurchaseDTO purchaseDTO) throws StripeException {
-        PurchaseResponseDTO purchaseResponseDTO = purchaseService.createPaymentIntent(purchaseDTO);
-        return ResponseEntity.ok(purchaseResponseDTO);
+        PaymentIntent paymentIntent = purchaseService.createPaymentIntent(purchaseDTO);
+        return ResponseEntity.ok(paymentIntent);
     }
 
-
-
-
+    @PostMapping(value = "/webhook")
+    public ResponseEntity<?> updatePaymentIntentStatus(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
+        return purchaseService.updatePaymentIntentStatus(payload, sigHeader);
+    }
 
 
 }

@@ -27,9 +27,8 @@ public class SearchController {
     
     /** 
      * method is a GET request handler
-     * method receives move title and Id from user input in search bar
-     * returns all currently showing movies' title and Id 
-     * @param movieTitle
+     * * method receives move title and Id from user input in search bar
+     * returns all currently showing movies' title and Id
      * @return ResponseEntity<List<MovieTitleDTO>>
      */
     @GetMapping("/movies")

@@ -43,6 +43,8 @@ public class MovieServiceImpl implements MovieService {
         this.modelMapper = modelMapper;
         this.movieRepository = movieRepository;
         this.movieImageRepository = movieImageRepository;
+        this.s3Service = s3Service;
+        this.s3Buckets = s3Buckets;
     }
 
     
@@ -173,7 +175,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public void saveMovieImage(Movie movie, List<MovieImage> movieImages, String movieTitle, String movieImageId){
-        String imageUrl = "https://barbenheimer203-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movieTitle + "/" + movieImageId;
+        String imageUrl = "https://barbenheimer-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movieTitle + "/" + movieImageId;
         MovieImage movieImage = new MovieImage();
         movieImage.setMovie(movie);
         movieImage.setImageUrl(imageUrl);
