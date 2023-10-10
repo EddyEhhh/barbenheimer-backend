@@ -1,0 +1,64 @@
+server:
+  port: 0
+  servlet:
+    session:
+      cookie:
+        secure: true
+
+
+spring:
+  mail:
+    host: ${mail.host}
+    port: ${mail.port}
+    username: ${mail.email}
+    password: ${mail.password}
+    protocol: smtps
+    properties:
+      mail:
+        smtps:
+          auth: true
+        starttls:
+          enable: true
+  cloud:
+    compatibility-verifier:
+      enabled: false
+  application:
+    name: mailer-service
+
+
+#        properties:
+#          spring:
+#            json:
+#              value:
+#                default:
+#                  type: com.barbenheimer.mailerservice.dto.TicketMailDetailDTO
+#              trusted:
+#                packages: com.barbenheimer.mailerservice.dto
+
+
+## Zipkin
+management:
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+
+#Eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${discovery.username}:${discovery.password}@${discovery.server.host}:${discovery.server.port}/eureka
+
+
+# Kafka properties
+kafka:
+  bootstrap-servers: ${kafka.bootstrap-server.host}:${kafka.bootstrap-server.port}
+  template:
+    default-topic: mailerTopic
+  consumer:
+    group-id: mailerId
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
