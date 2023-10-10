@@ -59,6 +59,14 @@ public class PurchaseController {
         return ResponseEntity.ok(paymentIntent);
     }
 
+
+    /**
+     * This method is called when a payment intent created for a customer has its status changed.
+     * E.g. from payment_intent.processing to payment_intent.succeeded
+     * @param payload
+     * @param sigHeader
+     * @return
+     */
     @PostMapping(value = "/webhook")
     public ResponseEntity<?> updatePaymentIntentStatus(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
         return purchaseService.updatePaymentIntentStatus(payload, sigHeader);
