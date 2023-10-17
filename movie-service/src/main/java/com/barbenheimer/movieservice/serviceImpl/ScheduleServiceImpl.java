@@ -3,10 +3,7 @@ package com.barbenheimer.movieservice.serviceImpl;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.barbenheimer.movieservice.dto.HallScheduleSeatDetailDTO;
-import com.barbenheimer.movieservice.dto.OngoingPurchaseTokenDTO;
-import com.barbenheimer.movieservice.dto.ScheduleSeatDetailDTO;
-import com.barbenheimer.movieservice.dto.SeatSelectDTO;
+import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
@@ -59,12 +56,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public HallScheduleSeatDetailDTO getSeats(long showTimeId) { // can use hashmap to solve as well
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);
+        MovieScheduleDate movieScheduleDate = movieScheduleTime.getMovieScheduleDate();
         Hall hall = movieScheduleTime.getHall();
+        Movie movie = movieScheduleDate.getMovie();
+
         List<Seat> seats = hall.getSeats();
         // List<ScheduleSeatDetailDTO> scheduleSeatDetailDTO = new ArrayList<>();
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
         List<ScheduleSeatDetailDTO> scheduleSeatDetailDTOList = hallScheduleSeatDetailDTO.getSeats();
-
+        hallScheduleSeatDetailDTO.setMovie(modelMapper.map(movie, MovieShortDTO.class));
+        hallScheduleSeatDetailDTO.setShowtime(LocalDateTime.of(movieScheduleDate.getShowDate(), movieScheduleTime.getShowTime()));
         ongoingPurchaseService.invalidateAllExpiredPurchaseToken();
 
         for(int seatIndex = 0 ; seatIndex < hall.getSeats().size() ; seatIndex++ ){
