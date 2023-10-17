@@ -1,5 +1,8 @@
 package com.barbenheimer.movieservice.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class HallScheduleSeatDetailDTO {
+
+    private MovieShortDTO movie;
+
+    private LocalDate showdate;
+
+    private LocalTime showtime;
 
     private int number;
 

@@ -3,11 +3,7 @@ package com.barbenheimer.movieservice.serviceImpl;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import com.barbenheimer.movieservice.dto.HallScheduleSeatDetailDTO;
-import com.barbenheimer.movieservice.dto.OngoingPurchaseTokenDTO;
-import com.barbenheimer.movieservice.dto.ScheduleSeatDetailDTO;
-import com.barbenheimer.movieservice.dto.SeatSelectDTO;
-import com.barbenheimer.movieservice.model.*;
+import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
@@ -27,17 +23,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private MovieScheduleTimeRepository movieScheduleTimeRepository;
+    private final MovieScheduleTimeRepository movieScheduleTimeRepository;
 
-    private SeatStatusRepository seatStatusRepository;
+    private final SeatStatusRepository seatStatusRepository;
 
-    private OngoingPurchaseRepository ongoingPurchaseRepository;
+    private final OngoingPurchaseRepository ongoingPurchaseRepository;
 
-    private SeatRepository seatRepository;
+    private final SeatRepository seatRepository;
      
-    private OngoingPurchaseService ongoingPurchaseService;
+    private final OngoingPurchaseService ongoingPurchaseService;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
     @Autowired
     public ScheduleServiceImpl(ModelMapper modelMapper, OngoingPurchaseService ongoingPurchaseService, MovieScheduleTimeRepository movieScheduleTimeRepository, SeatRepository seatRepository, SeatStatusRepository seatStatusRepository, OngoingPurchaseRepository ongoingPurchaseRepository) {
 
@@ -59,12 +56,18 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public HallScheduleSeatDetailDTO getSeats(long showTimeId) { // can use hashmap to solve as well
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);
+        MovieScheduleDate movieScheduleDate = movieScheduleTime.getMovieScheduleDate();
         Hall hall = movieScheduleTime.getHall();
+        Movie movie = movieScheduleDate.getMovie();
+
         List<Seat> seats = hall.getSeats();
         // List<ScheduleSeatDetailDTO> scheduleSeatDetailDTO = new ArrayList<>();
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
         List<ScheduleSeatDetailDTO> scheduleSeatDetailDTOList = hallScheduleSeatDetailDTO.getSeats();
-
+        scheduleSeatDetailDTOList.forEach(dto -> dto.setPrice(movie.getBasePrice()));
+        hallScheduleSeatDetailDTO.setMovie(modelMapper.map(movie, MovieShortDTO.class));
+        hallScheduleSeatDetailDTO.setShowdate(movieScheduleDate.getShowDate());
+        hallScheduleSeatDetailDTO.setShowtime(movieScheduleTime.getShowTime());
         ongoingPurchaseService.invalidateAllExpiredPurchaseToken();
 
         for(int seatIndex = 0 ; seatIndex < hall.getSeats().size() ; seatIndex++ ){
@@ -133,12 +136,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         seatStatusRepository.saveAll(seatStatuses);
 
 
-        OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(ongoingPurchase.getToken());
-
 
 
 //        HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
 
-        return ongoingPurchaseTokenDTO;
+        return new OngoingPurchaseTokenDTO(ongoingPurchase.getToken());
     }
 }
