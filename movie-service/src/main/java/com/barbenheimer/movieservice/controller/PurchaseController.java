@@ -43,19 +43,13 @@ public class PurchaseController {
         return ResponseEntity.ok(ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO));
     }
 
-//    //TODO: add seat to be stored
-//    @PostMapping("/ongoingPurchase")
-//    public ResponseEntity<?> saveOngoingPurchase(HttpSession httpSession){
-//        httpSession.setAttribute("customerToken", seatPurchaseService.createCustomerIdentifyingToken());
-//        return ResponseEntity.ok(seatPurchaseService.saveOngoingPurchase(httpSession));
-//    }
 
-    //TODO: revise this
-//    @PostMapping("/purchase")
-//    public ResponseEntity<?> savePurchase(@RequestBody SeatStatusDetailDTO seatStatusDetailDTO, @RequestBody PurchaseDTO purchaseDTO, HttpSession httpSession){
-//        seatPurchaseService.deleteOngoingPurchase(httpSession);
-//        return purchaseService.savePurchase(seatStatusDetailDTO, purchaseDTO, httpSession);
-//    }
+    /**
+     * This method is called when the customer has selected their desired seats and is now ready for payment.
+     * @param purchaseDTO
+     * @return ResponseEntity<?> containing PaymentIntent
+     * @throws StripeException
+     */
 
     @PostMapping(value = "/paymentIntent", consumes = "application/json")
     public ResponseEntity<?> createPaymentIntent(@RequestBody PurchaseDTO purchaseDTO) throws StripeException {

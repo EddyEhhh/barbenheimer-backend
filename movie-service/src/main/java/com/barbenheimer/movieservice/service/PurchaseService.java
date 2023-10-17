@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface PurchaseService{
 
-    public ResponseEntity<?> savePurchase(CustomerDetail customerDetail, SeatStatusDetailDTO seatStatusDetailDTO, PurchaseDTO purchaseDTO);
+    public ResponseEntity<?> savePurchase(PaymentIntent paymentIntent);
     public PaymentIntent createPaymentIntent(PurchaseDTO purchaseDTO) throws StripeException;
 
     //public ResponseEntity<?> updatePaymentIntentStatus(HttpServletRequest httpServletRequest) throws IOException;

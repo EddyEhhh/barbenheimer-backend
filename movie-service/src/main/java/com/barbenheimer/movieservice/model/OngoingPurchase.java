@@ -22,7 +22,7 @@ public class OngoingPurchase {
     private long id;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="ongoingPurchase")
-    private List<SeatStatus> seatStatus;
+    private List<SeatStatus> seatStatuses;
 
 
     @NotEmpty
