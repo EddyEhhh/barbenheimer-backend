@@ -154,7 +154,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     public String ticketSeatDescription(PurchaseDTO purchaseDTO){
         StringBuilder ticketSeats = new StringBuilder();
-        List<SeatStatus> seatStatuses = purchaseDTO.getOngoingPurchase().getSeatStatuses();
+        List<SeatStatus> seatStatuses = purchaseDTO.getOngoingPurchase().getSeatStatus();
 
         for(int i = 0; i < seatStatuses.size(); i++){
             ticketSeats.append(seatStatuses.get(i).getSeat().getRowCharacter() + seatStatuses.get(i).getSeat().getColumnNumber());
@@ -177,7 +177,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         Purchase purchase = purchaseRepository.save(Purchase.builder()
                 .customerDetail(customerDetail)
-                .seatStatuses(ongoingPurchase.getSeatStatuses())
+                .seatStatuses(ongoingPurchase.getSeatStatus())
                 .paidAmount(paymentIntent.getAmount())
                 .dateTime(LocalDateTime.now())
                 .build());
