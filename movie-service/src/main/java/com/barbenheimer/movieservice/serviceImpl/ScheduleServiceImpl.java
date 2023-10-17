@@ -5,7 +5,6 @@ import java.util.*;
 
 import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.model.*;
-import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
 import com.barbenheimer.movieservice.service.ScheduleService;
@@ -24,17 +23,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private MovieScheduleTimeRepository movieScheduleTimeRepository;
+    private final MovieScheduleTimeRepository movieScheduleTimeRepository;
 
-    private SeatStatusRepository seatStatusRepository;
+    private final SeatStatusRepository seatStatusRepository;
 
-    private OngoingPurchaseRepository ongoingPurchaseRepository;
+    private final OngoingPurchaseRepository ongoingPurchaseRepository;
 
-    private SeatRepository seatRepository;
+    private final SeatRepository seatRepository;
      
-    private OngoingPurchaseService ongoingPurchaseService;
+    private final OngoingPurchaseService ongoingPurchaseService;
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
+
     @Autowired
     public ScheduleServiceImpl(ModelMapper modelMapper, OngoingPurchaseService ongoingPurchaseService, MovieScheduleTimeRepository movieScheduleTimeRepository, SeatRepository seatRepository, SeatStatusRepository seatStatusRepository, OngoingPurchaseRepository ongoingPurchaseRepository) {
 
@@ -64,7 +64,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         // List<ScheduleSeatDetailDTO> scheduleSeatDetailDTO = new ArrayList<>();
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
         List<ScheduleSeatDetailDTO> scheduleSeatDetailDTOList = hallScheduleSeatDetailDTO.getSeats();
-        scheduleSeatDetailDTOList.stream().forEach(dto -> dto.setPrice(movie.getBasePrice()));
+        scheduleSeatDetailDTOList.forEach(dto -> dto.setPrice(movie.getBasePrice()));
         hallScheduleSeatDetailDTO.setMovie(modelMapper.map(movie, MovieShortDTO.class));
         hallScheduleSeatDetailDTO.setShowdate(movieScheduleDate.getShowDate());
         hallScheduleSeatDetailDTO.setShowtime(movieScheduleTime.getShowTime());
@@ -136,12 +136,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         seatStatusRepository.saveAll(seatStatuses);
 
 
-        OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(ongoingPurchase.getToken());
-
 
 
 //        HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
 
-        return ongoingPurchaseTokenDTO;
+        return new OngoingPurchaseTokenDTO(ongoingPurchase.getToken());
     }
 }
