@@ -64,6 +64,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         // List<ScheduleSeatDetailDTO> scheduleSeatDetailDTO = new ArrayList<>();
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
         List<ScheduleSeatDetailDTO> scheduleSeatDetailDTOList = hallScheduleSeatDetailDTO.getSeats();
+        scheduleSeatDetailDTOList.stream().forEach(dto -> dto.setPrice(movie.getBasePrice()));
         hallScheduleSeatDetailDTO.setMovie(modelMapper.map(movie, MovieShortDTO.class));
         hallScheduleSeatDetailDTO.setShowdate(movieScheduleDate.getShowDate());
         hallScheduleSeatDetailDTO.setShowtime(movieScheduleTime.getShowTime());
