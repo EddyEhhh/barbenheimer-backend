@@ -65,7 +65,8 @@ public class ScheduleServiceImpl implements ScheduleService {
         HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);
         List<ScheduleSeatDetailDTO> scheduleSeatDetailDTOList = hallScheduleSeatDetailDTO.getSeats();
         hallScheduleSeatDetailDTO.setMovie(modelMapper.map(movie, MovieShortDTO.class));
-        hallScheduleSeatDetailDTO.setShowtime(LocalDateTime.of(movieScheduleDate.getShowDate(), movieScheduleTime.getShowTime()));
+        hallScheduleSeatDetailDTO.setShowdate(movieScheduleDate.getShowDate());
+        hallScheduleSeatDetailDTO.setShowtime(movieScheduleTime.getShowTime());
         ongoingPurchaseService.invalidateAllExpiredPurchaseToken();
 
         for(int seatIndex = 0 ; seatIndex < hall.getSeats().size() ; seatIndex++ ){
