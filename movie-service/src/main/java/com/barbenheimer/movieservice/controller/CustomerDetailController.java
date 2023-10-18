@@ -41,7 +41,7 @@ public class CustomerDetailController {
      * @return ResponseEntity<?>
      */
     @PostMapping
-    public ResponseEntity<?> inputCustomerDetails(@RequestBody @Email String email) {
+    public ResponseEntity<?> inputCustomerDetails(@RequestBody String email) {
         try {
             customerDetailsService.inputCustomerDetails(email);
             return ResponseEntity.ok("A confirmation email was sent to your email");
