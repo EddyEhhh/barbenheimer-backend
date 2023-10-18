@@ -51,14 +51,14 @@ public class PurchaseServiceTest {
 //        verify(purchases).save(purchase);
 //    }
 
-    Purchase generateFakePurchase(PurchaseDTO purchaseDTO){
-        CustomerDetail customerDetail = CustomerDetail.builder().email("abcdefg@gmail.com").build();
-        return Purchase.builder()
-                .customerDetail(customerDetail)
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .paidAmount(purchaseDTO.getPriceInCents() * purchaseDTO.getQuantity())
-                .build();
-    }
+//    Purchase generateFakePurchase(PurchaseDTO purchaseDTO){
+//        CustomerDetail customerDetail = CustomerDetail.builder().email("abcdefg@gmail.com").build();
+//        return Purchase.builder()
+//                .customerDetail(customerDetail)
+//                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//                .paidAmount(purchaseDTO.getPriceInCents() * purchaseDTO.getQuantity())
+//                .build();
+//    }
 
 
 

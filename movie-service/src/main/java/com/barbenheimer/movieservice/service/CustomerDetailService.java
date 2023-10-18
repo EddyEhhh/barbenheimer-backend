@@ -1,5 +1,7 @@
 package com.barbenheimer.movieservice.service;
 
+import com.barbenheimer.movieservice.model.CustomerDetail;
+
 public interface CustomerDetailService {
     
     /** 
@@ -12,5 +14,5 @@ public interface CustomerDetailService {
      * @param email
      * @return ResponseEntity<?>
      */
-    public void inputCustomerDetails(String email);
+    public CustomerDetail inputCustomerDetails(String email);
 }
