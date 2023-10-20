@@ -44,41 +44,27 @@ public class PurchaseController {
     /**
      * This method is called when the customer is directed the payment summary page after successful payment.
      * It returns a PurchaseShortDTO containing necessary payment details to show as a post-payment summary.
-     * @param paymentIntentId
+     * @param checkoutSessionId
      * @return ResponseEntity<PurchaseShortDTO>
      * @throws StripeException
      */
-    @GetMapping("/{paymentIntentId}")
-    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(@PathVariable("paymentIntentId") String paymentIntentId ) throws StripeException {
-        PurchaseShortDTO purchaseShortDTO = purchaseService.getPurchaseByPaymentIntent(paymentIntentId);
+    @GetMapping("/{checkoutSessionId}")
+    public ResponseEntity<PurchaseShortDTO> getPurchaseByCheckoutSession(@PathVariable("checkoutSessionId") String checkoutSessionId ) throws StripeException {
+        PurchaseShortDTO purchaseShortDTO = purchaseService.getPurchaseByCheckoutSession(checkoutSessionId);
         return ResponseEntity.ok(purchaseShortDTO);
     }
 
 
-    /**
-     * This method is called when the customer has selected their desired seats and is now ready for payment.
-     * @param purchaseDTO
-     * @return ResponseEntity<?> containing PaymentIntent
-     * @throws StripeException
-     */
-
-    @PostMapping(value = "/paymentIntent", consumes = "application/json")
-    public ResponseEntity<?> createPaymentIntent(@RequestBody PurchaseDTO purchaseDTO) throws StripeException {
-        PaymentIntent paymentIntent = purchaseService.createPaymentIntent(purchaseDTO);
-        return ResponseEntity.ok(paymentIntent);
-    }
-
 
     /**
-     * This method is called by Stripe automatically when a payment intent created for a customer has its status changed.
-     * E.g. from payment_intent.processing to payment_intent.succeeded
+     * This method is called by Stripe automatically when a checkout session is completed by a customer.
      * @param payload
      * @param sigHeader
      * @return ResponseEntity<?>
      */
     @PostMapping(value = "/webhook")
-    public ResponseEntity<?> updatePaymentIntentStatus(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
-        return purchaseService.updatePaymentIntentStatus(payload, sigHeader);
+    public ResponseEntity<?> checkoutSessionStatus(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
+        return purchaseService.checkoutSessionStatus(payload, sigHeader);
     }
 
 

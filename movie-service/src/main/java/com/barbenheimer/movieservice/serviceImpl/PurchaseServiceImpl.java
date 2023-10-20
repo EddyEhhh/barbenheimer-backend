@@ -19,8 +19,11 @@ import com.stripe.model.Customer;
 import com.stripe.model.Event;
 
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.checkout.Session;
 import com.stripe.net.Webhook;
 import com.stripe.param.PaymentIntentCreateParams;
+import com.stripe.param.checkout.SessionCreateParams;
+import com.stripe.param.checkout.SessionRetrieveParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -60,37 +63,13 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     /**
-     * This method creates a payment intent detailing the amount for payment, the currency in which the payment is to be made in and the
-     * description of the product the customer is paying for.
-     * @param purchaseDTO
-     * @return PaymentIntent
-     * @throws StripeException
-     */
-    public PaymentIntent createPaymentIntent(PurchaseDTO purchaseDTO) throws StripeException {
-        Stripe.apiKey = stripeApiKey;
-
-        Map<String, String> metadata = new HashMap<>();
-        metadata.put("customerDetailId", String.valueOf(getCustomerDetailByEmail(purchaseDTO.getCustomerEmail()).getId()));
-        metadata.put("ongoingPurchaseId", String.valueOf(purchaseDTO.getOngoingPurchase().getId()));
-
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount(purchaseDTO.getQuantity() * purchaseDTO.getPriceInCents())
-                .setCurrency("sgd")
-                .setDescription(purchaseDTO.getQuantity() + " ticket(s) for " + purchaseDTO.getMovieName() + " on " + purchaseDTO.getMovieShowtime() + ", seats " + ticketSeatDescription(purchaseDTO))
-                .putAllMetadata(metadata)
-                .build();
-        return PaymentIntent.create(params);
-    }
-
-
-    /**
-     * This method will be called when the customer's payment has successfully went through. It calls the savePurchase function
+     * This method will be called when a checkout session has been completed. It calls the savePurchase function
      * to save the purchase into the database for persistence.
      * @param payload
      * @param sigHeader
      * @return ResponseEntity<?>
      */
-    public ResponseEntity<?> updatePaymentIntentStatus(String payload, String sigHeader){
+    public ResponseEntity<?> checkoutSessionStatus(String payload, String sigHeader){
         Event event;
 
         try{
@@ -100,60 +79,66 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
         switch (event.getType()) {
-            case "payment_intent.succeeded": {
-                //Casts the event into a PaymentIntent object for retrieving purchase data to save into repository.
-               PaymentIntent paymentIntent = (PaymentIntent) event
-                       .getDataObjectDeserializer()
-                       .getObject()
-                       .get();
-               //Saves the purchase into repository
-               savePurchase(paymentIntent);
-               return ResponseEntity.status(200).body("Payment Succeeded");
+
+            case "checkout.session.completed" : {
+                Session session = (Session) event.getDataObjectDeserializer().getObject().get();
+                System.out.println("Session with sessionId: " + session.getId() + " completed. Awaiting payment.");
             }
-            // ... handle other event types
+            case "checkout.session.async_payment_succeeded": {
+                Session session = (Session) event.getDataObjectDeserializer().getObject().get();
+                //creates and saves a new customer detail with email if it doesn't exist in the database
+                saveCustomerDetailIfNotExists(session.getCustomerEmail());
+                //saves the purchase into database
+                savePurchase(session);
+                System.out.println("Payment succeeded and purchase is saved successfully");
+            }
+            case "checkout.session.async_payment_failed": {
+                Session session = (Session) event.getDataObjectDeserializer().getObject().get();
+                System.out.println("Session with sessionId: " + session.getId() + " failed.");
+            }
             default:
                 System.out.println("Unhandled event type: " + event.getType());
         }
 
-        return ResponseEntity.ok("Customer purchase succeeded and saved.");
+        return ResponseEntity.ok("");
     }
 
 
     /**
-     * This method returns a purchase corresponding to a payment intent in the form of a purchaseShortDTO.
+     * This method returns a purchase corresponding to a checkout session in the form of a purchaseShortDTO.
      * It is meant for the frontend to retrieve a purchase detail to be shown as a payment summary for the customer post-payment.
-     * @param paymentIntentId
+     * @param checkoutSessionId
      * @return PurchaseShortDTO
      * @throws StripeException
      */
 
-    public PurchaseShortDTO getPurchaseByPaymentIntent(String paymentIntentId) throws StripeException {
-        PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+    public PurchaseShortDTO getPurchaseByCheckoutSession(String checkoutSessionId) throws StripeException {
+        Session session = Session.retrieve(checkoutSessionId);
 
-        CustomerDetail customerDetail = getCustomerDetailByPaymentIntent(paymentIntent);
-        OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntent);
+        CustomerDetail customerDetail = getCustomerDetailBySession(session);
+        OngoingPurchase ongoingPurchase = getOngoingPurchaseBySession(session);
 
         return PurchaseShortDTO.builder()
                 .customerDetail(customerDetail)
-                .paidAmount(paymentIntent.getAmountReceived())
+                .paidAmount(session.getAmountTotal())
                 .seatStatuses(ongoingPurchase.getSeatStatus())
                 .build();
     }
 
     /**
-     * This method saves the purchase made into database given the payment intent.
-     * @param paymentIntent
+     * This method saves the purchase made into database given the checkout session.
+     * @param session
      * @return ResponseEntity
      */
-    public ResponseEntity savePurchase(PaymentIntent paymentIntent) {
+    public ResponseEntity savePurchase(Session session) {
 
-        CustomerDetail customerDetail = getCustomerDetailByPaymentIntent(paymentIntent);
-        OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntent);
+        CustomerDetail customerDetail = getCustomerDetailBySession(session);
+        OngoingPurchase ongoingPurchase = getOngoingPurchaseBySession(session);
 
         Purchase purchase = purchaseRepository.save(Purchase.builder()
                 .customerDetail(customerDetail)
                 .seatStatuses(ongoingPurchase.getSeatStatus())
-                .paidAmount(paymentIntent.getAmount())
+                .paidAmount(session.getAmountTotal())
                 .dateTime(LocalDateTime.now())
                 .build());
 
@@ -198,23 +183,6 @@ public class PurchaseServiceImpl implements PurchaseService {
      *
     */
 
-    public String ticketSeatDescription(PurchaseDTO purchaseDTO){
-        StringBuilder ticketSeats = new StringBuilder();
-        List<SeatStatus> seatStatuses = purchaseDTO.getOngoingPurchase().getSeatStatus();
-
-        for(int i = 0; i < seatStatuses.size(); i++){
-            ticketSeats.append(seatStatuses.get(i).getSeat().getRowCharacter() + seatStatuses.get(i).getSeat().getColumnNumber());
-            if(i != seatStatuses.size() - 1){
-                ticketSeats.append(", ");
-            }
-        }
-        return ticketSeats.toString();
-    }
-
-    public CustomerDetail getCustomerDetailByEmail(String customerEmail){
-        saveCustomerDetailIfNotExists(customerEmail);
-        return customerDetailRepository.findByEmail(customerEmail).get();
-    }
 
     public void saveCustomerDetailIfNotExists(String customerEmail){
         Optional<CustomerDetail> customerDetail = customerDetailRepository.findByEmail(customerEmail);
@@ -223,19 +191,19 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
     }
 
-    public CustomerDetail getCustomerDetailByPaymentIntent(PaymentIntent paymentIntent){
-        Long customerDetailId = Long.parseLong(paymentIntent.getMetadata().get("customerDetailId"));
-        CustomerDetail customerDetail = customerDetailRepository.findById(customerDetailId)
-                .orElseThrow(() -> new ResourceNotFoundException("CustomerDetail with id: " + customerDetailId + " does not exist."));
+    public CustomerDetail getCustomerDetailBySession(Session session){
+        CustomerDetail customerDetail = customerDetailRepository.findByEmail(session.getCustomerEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("CustomerDetail with email: " + session.getCustomerEmail() + " does not exist."));
         return customerDetail;
     }
 
-    public OngoingPurchase getOngoingPurchaseByPaymentIntent(PaymentIntent paymentIntent){
-        Long ongoingPurchaseId = Long.parseLong(paymentIntent.getMetadata().get("ongoingPurchaseId"));
+    public OngoingPurchase getOngoingPurchaseBySession(Session session){
+        Long ongoingPurchaseId = Long.parseLong(session.getMetadata().get("ongoingPurchaseId"));
         OngoingPurchase ongoingPurchase = ongoingPurchaseRepository.findById(ongoingPurchaseId)
                 .orElseThrow(() -> new ResourceNotFoundException("OngoingPurchase with id: " + ongoingPurchaseId + " does not exist."));
         return ongoingPurchase;
     }
+
 
 
 

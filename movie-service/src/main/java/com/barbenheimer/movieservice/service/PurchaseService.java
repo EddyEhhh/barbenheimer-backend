@@ -6,19 +6,17 @@ import com.barbenheimer.movieservice.dto.PurchaseShortDTO;
 import com.barbenheimer.movieservice.model.Purchase;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.checkout.Session;
 import org.springframework.http.ResponseEntity;
 
 
 public interface PurchaseService{
 
-    public ResponseEntity<?> savePurchase(PaymentIntent paymentIntent);
-    public PaymentIntent createPaymentIntent(PurchaseDTO purchaseDTO) throws StripeException;
-
-    //public ResponseEntity<?> updatePaymentIntentStatus(HttpServletRequest httpServletRequest) throws IOException;
-
-    public ResponseEntity<?> updatePaymentIntentStatus(String payload, String sigHeader);
+    public ResponseEntity<?> savePurchase(Session session);
 
     public void sendMail(Purchase purchase);
 
-    public PurchaseShortDTO getPurchaseByPaymentIntent(String paymentIntentId) throws StripeException;
+    public PurchaseShortDTO getPurchaseByCheckoutSession(String checkoutSessionId) throws StripeException;
+
+    public ResponseEntity<?> checkoutSessionStatus(String payload, String sigHeader);
 }
