@@ -31,6 +31,16 @@ services:
     ports:
       - "9411:9411"
 
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: barbenheimer
+    ports:
+      - "3306:3306"
+
 #  mysql:
 #    image: mysql
 #    restart: always
