@@ -34,30 +34,6 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
         this.seatStatusRepository = seatStatusRepository;
     }
 
-    @Override
-    public String createCustomerIdentifyingToken(){
-        StringBuilder token = new StringBuilder();
-        long currentTimeInMillisecond = Instant.now().toEpochMilli();
-        token.append(currentTimeInMillisecond).append(UUID.randomUUID().toString());
-        return token.toString().replace("-","");
-    }
-
-//    /**
-//     * This method creates an ongoing purchase attached with a timestamp that indicates its expiry in 10 minutes post creation.
-//     * @param ongoingPurchaseShortDTO
-//     * @return ResponseEntity<?>
-//     */
-//    public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
-//
-//        OngoingPurchase ongoingPurchase = OngoingPurchase.builder()
-//                .seatStatus(ongoingPurchaseShortDTO.getSeatStatus())
-//                .token(ongoingPurchaseShortDTO.getToken())
-//                .expireTimeStamp(LocalDateTime.now().plusMinutes(10))
-//                .totalPrice(ongoingPurchaseShortDTO.getTotalPrice())
-//                .build();
-//
-//        return ResponseEntity.ok(ongoingPurchaseRepository.save(ongoingPurchase));
-//    }
 
     /**
      * This method will be called before a payment intent is confirmed. It checks to see if the token referring to an ongoing purchase
@@ -122,21 +98,6 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
 
         return ongoingPurchaseDetailDTO;
     }
-
-//    public OngoingPurchaseShortDTO getOngoingPurchase(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
-//        OngoingPurchase ongoingPurchase = ongoingPurchaseRepository.findByToken(ongoingPurchaseTokenDTO.getToken())
-//                .orElseThrow(() -> new ResourceNotFoundException("Ongoing purchase with token: " + ongoingPurchaseTokenDTO.getToken() + " does not exist."));
-//        OngoingPurchaseShortDTO ongoingPurchaseShortDTO = OngoingPurchaseShortDTO.builder()
-//                .seatStatus(ongoingPurchase.getSeatStatus().stream()
-//                        .map(eachOngoingPurchase
-//                                -> modelMapper
-//                                .map(eachOngoingPurchase, SeatSelectDTO.class))
-//                        .toList())
-//                .token(ongoingPurchase.getToken())
-//                .totalPrice(ongoingPurchase.getTotalPrice())
-//                .build();
-//        return ongoingPurchaseShortDTO;
-//    }
 
 
     public void invalidateAllExpiredPurchaseToken(){

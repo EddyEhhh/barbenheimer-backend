@@ -41,21 +41,6 @@ public class PurchaseController {
         return ResponseEntity.ok(ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO));
     }
 
-//    @GetMapping("/getOngoingPurchase")
-//    public ResponseEntity<OngoingPurchaseShortDTO> getOngoingPurchase(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
-//        return ResponseEntity.ok(ongoingPurchaseService.getOngoingPurchase(ongoingPurchaseTokenDTO));
-//    }
-
-//    /**
-//     * This method creates an ongoing purchase.
-//     * @param ongoingPurchaseShortDTO
-//     * @return ResponseEntity<?>
-//     */
-//    @PostMapping
-//    public ResponseEntity<?> createOngoingPurchase(@RequestBody OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
-//        return ongoingPurchaseService.createOngoingPurchase(ongoingPurchaseShortDTO);
-//    }
-
 
     /**
      * This method checks if an ongoing purchase is still valid.
@@ -77,7 +62,7 @@ public class PurchaseController {
      */
     @GetMapping("/getPurchase")
     public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
-        return purchaseService.getPurchaseByPaymentIntent(ongoingPurchaseTokenDTO);
+        return ResponseEntity.ok(purchaseService.getPurchaseByPaymentIntent(ongoingPurchaseTokenDTO));
     }
 
 

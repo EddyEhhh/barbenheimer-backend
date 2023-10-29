@@ -11,17 +11,11 @@ import java.util.Map;
 
 public interface OngoingPurchaseService {
 
-    public String createCustomerIdentifyingToken();
-
     public OngoingPurchaseDetailDTO getDetail(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO);
 
     public boolean validateOngoingPurchaseToken(String token);
 
     public void invalidateAllExpiredPurchaseToken();
-
-//   public OngoingPurchaseShortDTO getOngoingPurchase(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO);
-
-//    public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO);
 
     public PaymentIntentValidationDTO checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException;
 }

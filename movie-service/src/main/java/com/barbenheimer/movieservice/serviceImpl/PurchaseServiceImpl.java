@@ -108,26 +108,24 @@ public class PurchaseServiceImpl implements PurchaseService {
      * @throws StripeException
      */
 
-    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+    public PurchaseShortDTO getPurchaseByPaymentIntent(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
 
         Purchase purchase = purchaseRepository.findByPaymentIntentId(ongoingPurchaseTokenDTO.getToken())
                 .orElseThrow(() -> new ResourceNotFoundException("Purchase with paymentIntentId: " + ongoingPurchaseTokenDTO.getToken() + " does not exist."));
 
-        PurchaseShortDTO purchaseShortDTO =  PurchaseShortDTO.builder()
+        return  PurchaseShortDTO.builder()
                 .customerDetail(purchase.getCustomerDetail())
                 .paidAmount(purchase.getPaidAmount())
                 .seatStatuses(purchase.getSeatStatuses())
                 .build();
-
-        return ResponseEntity.ok(purchaseShortDTO);
     }
 
     /**
      * This method saves the purchase made into database given the payment intent.
      * @param paymentIntent
-     * @return ResponseEntity
+     *
      */
-    public ResponseEntity savePurchase(PaymentIntent paymentIntent) {
+    public void savePurchase(PaymentIntent paymentIntent) {
 
         CustomerDetail customerDetail = getCustomerDetailByPaymentIntent(paymentIntent);
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntent.getId());
@@ -138,15 +136,13 @@ public class PurchaseServiceImpl implements PurchaseService {
             seatStatus.setState(2);
         }
 
-        Purchase purchase = purchaseRepository.save(Purchase.builder()
+        purchaseRepository.save(Purchase.builder()
                         .paymentIntentId(paymentIntent.getId())
                         .customerDetail(customerDetail)
                         .seatStatuses(seatStatuses)
                         .paidAmount(paymentIntent.getAmount())
                         .dateTime(LocalDateTime.now())
                         .build());
-
-        return ResponseEntity.ok(purchase);
     }
 
     public void sendMail(Purchase purchase){

@@ -16,7 +16,7 @@ public interface PurchaseService{
 
     public void sendMail(Purchase purchase);
 
-     public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException;
+     public PurchaseShortDTO getPurchaseByPaymentIntent(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException;
 
      public ResponseEntity<?> paymentIntentStatus(String payload, String sigHeader);
 
