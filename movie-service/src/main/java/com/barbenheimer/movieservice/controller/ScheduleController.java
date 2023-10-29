@@ -3,6 +3,7 @@ package com.barbenheimer.movieservice.controller;
 import java.util.List;
 
 import com.barbenheimer.movieservice.dto.HallScheduleSeatDetailDTO;
+import com.barbenheimer.movieservice.dto.OngoingPurchaseShortDTO;
 import com.barbenheimer.movieservice.dto.SeatSelectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,9 +56,9 @@ public class ScheduleController {
      * @return ResponseEntity<?>
      */
     @PostMapping
-    public ResponseEntity<?> selectSeats(@PathVariable("scheduleTimeId") long showTimeId, @RequestBody List<SeatSelectDTO> seatSelectDTOs){
+    public ResponseEntity<?> selectSeats(@PathVariable("scheduleTimeId") long showTimeId, @RequestBody OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
         try {
-            return ResponseEntity.ok(scheduleService.selectSeats(showTimeId, seatSelectDTOs));
+            return ResponseEntity.ok(scheduleService.selectSeats(showTimeId, ongoingPurchaseShortDTO));
         } catch (AlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

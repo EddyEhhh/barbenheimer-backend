@@ -41,20 +41,20 @@ public class PurchaseController {
         return ResponseEntity.ok(ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO));
     }
 
-    @GetMapping("/getOngoingPurchase")
-    public ResponseEntity<OngoingPurchaseShortDTO> getOngoingPurchase(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
-        return ongoingPurchaseService.getOngoingPurchase(ongoingPurchaseTokenDTO);
-    }
+//    @GetMapping("/getOngoingPurchase")
+//    public ResponseEntity<OngoingPurchaseShortDTO> getOngoingPurchase(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
+//        return ResponseEntity.ok(ongoingPurchaseService.getOngoingPurchase(ongoingPurchaseTokenDTO));
+//    }
 
-    /**
-     * This method creates an ongoing purchase.
-     * @param ongoingPurchaseShortDTO
-     * @return ResponseEntity<?>
-     */
-    @PostMapping
-    public ResponseEntity<?> createOngoingPurchase(@RequestBody OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
-        return ongoingPurchaseService.createOngoingPurchase(ongoingPurchaseShortDTO);
-    }
+//    /**
+//     * This method creates an ongoing purchase.
+//     * @param ongoingPurchaseShortDTO
+//     * @return ResponseEntity<?>
+//     */
+//    @PostMapping
+//    public ResponseEntity<?> createOngoingPurchase(@RequestBody OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
+//        return ongoingPurchaseService.createOngoingPurchase(ongoingPurchaseShortDTO);
+//    }
 
 
     /**
