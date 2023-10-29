@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/payments")
@@ -63,7 +65,8 @@ public class PurchaseController {
      */
     @GetMapping("/checkToken")
     public ResponseEntity<?> checkIfValidToken(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
-        return ongoingPurchaseService.checkIfValidToken(ongoingPurchaseTokenDTO);
+        Map<String, Boolean> map = ongoingPurchaseService.checkIfValidToken(ongoingPurchaseTokenDTO);
+        return ResponseEntity.ok(map);
     }
 
     /**

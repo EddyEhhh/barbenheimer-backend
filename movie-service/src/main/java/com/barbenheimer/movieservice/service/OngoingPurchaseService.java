@@ -6,6 +6,8 @@ import com.barbenheimer.movieservice.dto.OngoingPurchaseTokenDTO;
 import com.stripe.exception.StripeException;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Map;
+
 public interface OngoingPurchaseService {
 
     public String createCustomerIdentifyingToken();
@@ -20,5 +22,5 @@ public interface OngoingPurchaseService {
 
     public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO);
 
-    public ResponseEntity<?> checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException;
+    public Map<String, Boolean> checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException;
 }

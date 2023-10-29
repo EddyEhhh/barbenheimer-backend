@@ -69,7 +69,7 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
      * @return
      * @throws StripeException
      */
-    public ResponseEntity<?> checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+    public Map<String, Boolean> checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(ongoingPurchaseTokenDTO.getToken());
 
         Map<String, Boolean> map = new HashMap<>();
@@ -90,7 +90,7 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
                 throw new RuntimeException("Payment Intent failed to cancel. " + e.getMessage());
             }
         }
-        return ResponseEntity.ok(map);
+        return map;
     }
 
 
