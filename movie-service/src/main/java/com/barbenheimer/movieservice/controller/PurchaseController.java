@@ -39,6 +39,11 @@ public class PurchaseController {
         return ResponseEntity.ok(ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO));
     }
 
+    @GetMapping("/getOngoingPurchase")
+    public ResponseEntity<OngoingPurchaseShortDTO> getOngoingPurchase(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
+        return ongoingPurchaseService.getOngoingPurchase(ongoingPurchaseTokenDTO);
+    }
+
     /**
      * This method creates an ongoing purchase.
      * @param ongoingPurchaseShortDTO
@@ -46,30 +51,30 @@ public class PurchaseController {
      */
     @PostMapping
     public ResponseEntity<?> createOngoingPurchase(@RequestBody OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
-        return purchaseService.createOngoingPurchase(ongoingPurchaseShortDTO);
+        return ongoingPurchaseService.createOngoingPurchase(ongoingPurchaseShortDTO);
     }
 
 
     /**
      * This method checks if an ongoing purchase is still valid.
-     * @param paymentIntentId
+     * @param ongoingPurchaseTokenDTO
      * @return ResponseEntity<?>
      * @throws StripeException
      */
     @GetMapping("/checkToken")
-    public ResponseEntity<?> checkIfValidToken(@RequestBody String paymentIntentId) throws StripeException {
-        return purchaseService.checkIfValidToken(paymentIntentId);
+    public ResponseEntity<?> checkIfValidToken(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+        return ongoingPurchaseService.checkIfValidToken(ongoingPurchaseTokenDTO);
     }
 
     /**
      * This method gets the purchase linked to a payment intent id for the frontend to display its details on a payment summary page.
-     * @param paymentIntentId
+     * @param ongoingPurchaseTokenDTO
      * @return ResponseEntity<PurchaseShortDTO>
      * @throws StripeException
      */
-    @GetMapping("/{paymentIntentId}")
-    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(@PathVariable("paymentIntentId") String paymentIntentId) throws StripeException {
-        return purchaseService.getPurchaseByPaymentIntent(paymentIntentId);
+    @GetMapping("/getPurchase")
+    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+        return purchaseService.getPurchaseByPaymentIntent(ongoingPurchaseTokenDTO);
     }
 
 

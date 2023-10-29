@@ -2,6 +2,7 @@ package com.barbenheimer.movieservice.serviceImpl;
 
 
 import com.barbenheimer.movieservice.dto.OngoingPurchaseShortDTO;
+import com.barbenheimer.movieservice.dto.OngoingPurchaseTokenDTO;
 import com.barbenheimer.movieservice.dto.PurchaseShortDTO;
 import com.barbenheimer.movieservice.dto.TicketMailDetailDTO;
 import com.barbenheimer.movieservice.exception.ResourceNotFoundException;
@@ -55,57 +56,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     /**
-     * This method creates an ongoing purchase attached with a timestamp that indicates its expiry in 10 minutes post creation.
-     * @param ongoingPurchaseShortDTO
-     * @return ResponseEntity<?>
-     */
-    public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
-
-        OngoingPurchase ongoingPurchase = OngoingPurchase.builder()
-                .seatStatus(ongoingPurchaseShortDTO.getSeatStatus())
-                .token(ongoingPurchaseShortDTO.getToken())
-                .expireTimeStamp(LocalDateTime.now().plusMinutes(10))
-                .totalPrice(ongoingPurchaseShortDTO.getTotalPrice())
-                .build();
-
-        return ResponseEntity.ok(ongoingPurchaseRepository.save(ongoingPurchase));
-    }
-
-
-    /**
-     * This method will be called before a payment intent is confirmed. It checks to see if the token referring to an ongoing purchase
-     * is still valid (within 10 mins). If it is not valid, the payment intent will be canceled.
-     *
-     * @param paymentIntentID
-     * @return
-     * @throws StripeException
-     */
-    public ResponseEntity<?> checkIfValidToken(String paymentIntentID) throws StripeException {
-        OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntentID);
-
-        Map<String, Boolean> map = new HashMap<>();
-        map.put("validity", true);
-
-        if(ongoingPurchase.getExpireTimeStamp().isBefore(LocalDateTime.now())){
-            deleteOngoingPurchase(paymentIntentID);
-            map.put("validity", false);
-            PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentID);
-            paymentIntent.setCancellationReason("Token has expired.");
-
-            try {
-                PaymentIntent updatedPaymentIntent = paymentIntent.cancel();
-                System.out.println("Token has expired, corresponding payment intent has been canceled.");
-            } catch (Error e){
-                // An error is thrown by Stripe if the payment intent is already canceled or isn't in a cancelable state.
-                System.out.println(e.getMessage());
-                throw new RuntimeException("Payment Intent failed to cancel. " + e.getMessage());
-            }
-        }
-        return ResponseEntity.ok(map);
-    }
-
-
-    /**
      * This method will be called when a payment intent has been completed. It calls the savePurchase function
      * to save the purchase into the database for persistence.
      * @param payload
@@ -153,15 +103,15 @@ public class PurchaseServiceImpl implements PurchaseService {
     /**
      * This method returns a purchase corresponding to a payment intent in the form of a purchaseShortDTO.
      * It is meant for the frontend to retrieve a purchase detail to be shown as a payment summary for the customer post-payment.
-     * @param paymentIntentId
+     * @param ongoingPurchaseTokenDTO
      * @return PurchaseShortDTO
      * @throws StripeException
      */
 
-    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(String paymentIntentId) throws StripeException {
+    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
 
-        Purchase purchase = purchaseRepository.findByPaymentIntentId(paymentIntentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Purchase with paymentIntentId: " + paymentIntentId + " does not exist."));
+        Purchase purchase = purchaseRepository.findByPaymentIntentId(ongoingPurchaseTokenDTO.getToken())
+                .orElseThrow(() -> new ResourceNotFoundException("Purchase with paymentIntentId: " + ongoingPurchaseTokenDTO.getToken() + " does not exist."));
 
         PurchaseShortDTO purchaseShortDTO =  PurchaseShortDTO.builder()
                 .customerDetail(purchase.getCustomerDetail())
