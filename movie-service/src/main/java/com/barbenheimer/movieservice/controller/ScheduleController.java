@@ -52,7 +52,7 @@ public class ScheduleController {
      * method is a Post request handler to select a list of seats based on a specific show schedule
      *
      * @param showTimeId selected show schedule
-     * @param seatSelectDTOs seats being selected
+     * @param ongoingPurchaseShortDTO seats being selected and payment intent id as token
      * @return ResponseEntity<?>
      */
     @PostMapping

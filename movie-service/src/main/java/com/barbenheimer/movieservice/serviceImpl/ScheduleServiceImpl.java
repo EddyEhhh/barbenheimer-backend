@@ -98,7 +98,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         List<SeatStatus> seatStatuses = new ArrayList<>();
         OngoingPurchase ongoingPurchase = new OngoingPurchase();
-        for (SeatSelectDTO selected : ongoingPurchaseShortDTO.getSeatStatus()) {
+        for (SeatSelectDTO selected : ongoingPurchaseShortDTO.getSeatSelectDTOS()) {
             String rowCharacter = selected.getRowCharacter();
             int columnNumber = selected.getColumnNumber();
 
@@ -126,7 +126,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         }
 
-        int numberOfTicket = ongoingPurchaseShortDTO.getSeatStatus().size();
+        int numberOfTicket = ongoingPurchaseShortDTO.getSeatSelectDTOS().size();
 
         ongoingPurchase.setSeatStatus(seatStatuses);
         ongoingPurchase.setToken(ongoingPurchaseShortDTO.getToken());
