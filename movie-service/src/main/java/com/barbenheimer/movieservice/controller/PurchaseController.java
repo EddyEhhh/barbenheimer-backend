@@ -65,8 +65,8 @@ public class PurchaseController {
      */
     @GetMapping("/checkToken")
     public ResponseEntity<?> checkIfValidToken(@RequestBody OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
-        Map<String, Boolean> map = ongoingPurchaseService.checkIfValidToken(ongoingPurchaseTokenDTO);
-        return ResponseEntity.ok(map);
+        PaymentIntentValidationDTO paymentIntentValidationDTO = ongoingPurchaseService.checkIfValidToken(ongoingPurchaseTokenDTO);
+        return ResponseEntity.ok(paymentIntentValidationDTO);
     }
 
     /**

@@ -5,14 +5,12 @@ import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.SeatStatusRepository;
 import com.barbenheimer.movieservice.exception.ResourceNotFoundException;
-import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -69,28 +67,24 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
      * @return
      * @throws StripeException
      */
-    public Map<String, Boolean> checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+    public PaymentIntentValidationDTO checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(ongoingPurchaseTokenDTO.getToken());
-
-        Map<String, Boolean> map = new HashMap<>();
-        map.put("validity", true);
 
         if(ongoingPurchase.getExpireTimeStamp().isBefore(LocalDateTime.now())){
             deleteOngoingPurchase(ongoingPurchaseTokenDTO.getToken());
-            map.put("validity", false);
             PaymentIntent paymentIntent = PaymentIntent.retrieve(ongoingPurchaseTokenDTO.getToken());
             paymentIntent.setCancellationReason("Token has expired.");
-
             try {
                 PaymentIntent updatedPaymentIntent = paymentIntent.cancel();
                 System.out.println("Token has expired, corresponding payment intent has been canceled.");
+                return PaymentIntentValidationDTO.builder().validity(false).build();
             } catch (Error e){
                 // An error is thrown by Stripe if the payment intent is already canceled or isn't in a cancelable state.
                 System.out.println(e.getMessage());
                 throw new RuntimeException("Payment Intent failed to cancel. " + e.getMessage());
             }
         }
-        return map;
+        return PaymentIntentValidationDTO.builder().validity(true).build();
     }
 
 
