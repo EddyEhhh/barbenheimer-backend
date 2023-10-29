@@ -18,4 +18,6 @@ public interface OngoingPurchaseRepository extends JpaRepository<OngoingPurchase
 
     public Optional<OngoingPurchase> findByToken(String purchaseToken);
 
+    public void deleteByToken(String token);
+
 }

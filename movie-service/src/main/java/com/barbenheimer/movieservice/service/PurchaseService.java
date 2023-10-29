@@ -1,6 +1,7 @@
 package com.barbenheimer.movieservice.service;
 
 
+import com.barbenheimer.movieservice.dto.OngoingPurchaseShortDTO;
 import com.barbenheimer.movieservice.dto.PurchaseDTO;
 import com.barbenheimer.movieservice.dto.PurchaseShortDTO;
 import com.barbenheimer.movieservice.model.Purchase;
@@ -12,11 +13,15 @@ import org.springframework.http.ResponseEntity;
 
 public interface PurchaseService{
 
-    public ResponseEntity<?> savePurchase(Session session);
+    public ResponseEntity<?> savePurchase(PaymentIntent paymentIntent);
 
     public void sendMail(Purchase purchase);
 
-    public PurchaseShortDTO getPurchaseByCheckoutSession(String checkoutSessionId) throws StripeException;
+     public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(String paymentIntentId) throws StripeException;
 
-    public ResponseEntity<?> checkoutSessionStatus(String payload, String sigHeader);
+     public ResponseEntity<?> paymentIntentStatus(String payload, String sigHeader);
+
+    public ResponseEntity<?> checkIfValidToken(String paymentIntentID) throws StripeException;
+
+    public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO);
 }

@@ -23,17 +23,19 @@ public class Purchase {
 //    @JoinColumn(name="customer_id")
 //    private Customer customer;
 
+    private String paymentIntentId;
+
     @OneToOne
     private CustomerDetail customerDetail;
 
-    private double paidAmount;
+    private Long paidAmount;
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<SeatStatus> seatStatuses;
 
     private LocalDateTime dateTime;
 
-    public Purchase(double paidAmount){
+    public Purchase(Long paidAmount){
         this.paidAmount = paidAmount;
     }
 

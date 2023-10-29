@@ -6,7 +6,6 @@ import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
 import com.barbenheimer.movieservice.service.PurchaseService;
 import com.stripe.exception.StripeException;
-import com.stripe.model.PaymentIntent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,31 +39,50 @@ public class PurchaseController {
         return ResponseEntity.ok(ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO));
     }
 
+    /**
+     * This method creates an ongoing purchase.
+     * @param ongoingPurchaseShortDTO
+     * @return ResponseEntity<?>
+     */
+    @PostMapping
+    public ResponseEntity<?> createOngoingPurchase(@RequestBody OngoingPurchaseShortDTO ongoingPurchaseShortDTO){
+        return purchaseService.createOngoingPurchase(ongoingPurchaseShortDTO);
+    }
+
 
     /**
-     * This method is called when the customer is directed the payment summary page after successful payment.
-     * It returns a PurchaseShortDTO containing necessary payment details to show as a post-payment summary.
-     * @param checkoutSessionId
+     * This method checks if an ongoing purchase is still valid.
+     * @param paymentIntentId
+     * @return ResponseEntity<?>
+     * @throws StripeException
+     */
+    @GetMapping("/checkToken")
+    public ResponseEntity<?> checkIfValidToken(@RequestBody String paymentIntentId) throws StripeException {
+        return purchaseService.checkIfValidToken(paymentIntentId);
+    }
+
+    /**
+     * This method gets the purchase linked to a payment intent id for the frontend to display its details on a payment summary page.
+     * @param paymentIntentId
      * @return ResponseEntity<PurchaseShortDTO>
      * @throws StripeException
      */
-    @GetMapping("/{checkoutSessionId}")
-    public ResponseEntity<PurchaseShortDTO> getPurchaseByCheckoutSession(@PathVariable("checkoutSessionId") String checkoutSessionId ) throws StripeException {
-        PurchaseShortDTO purchaseShortDTO = purchaseService.getPurchaseByCheckoutSession(checkoutSessionId);
-        return ResponseEntity.ok(purchaseShortDTO);
+    @GetMapping("/{paymentIntentId}")
+    public ResponseEntity<PurchaseShortDTO> getPurchaseByPaymentIntent(@PathVariable("paymentIntentId") String paymentIntentId) throws StripeException {
+        return purchaseService.getPurchaseByPaymentIntent(paymentIntentId);
     }
 
 
 
     /**
-     * This method is called by Stripe automatically when a checkout session is completed by a customer.
+     * This method is called by Stripe automatically when a payment is completed by a customer.
      * @param payload
      * @param sigHeader
      * @return ResponseEntity<?>
      */
     @PostMapping(value = "/webhook")
-    public ResponseEntity<?> checkoutSessionStatus(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
-        return purchaseService.checkoutSessionStatus(payload, sigHeader);
+    public ResponseEntity<?> paymentIntentStatus(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader) {
+        return purchaseService.paymentIntentStatus(payload, sigHeader);
     }
 
 

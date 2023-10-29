@@ -24,7 +24,6 @@ public class OngoingPurchase {
     @OneToMany(fetch = FetchType.EAGER, mappedBy="ongoingPurchase")
     private List<SeatStatus> seatStatus;
 
-
     @NotEmpty
     @Column(unique = true)
     private String token;
