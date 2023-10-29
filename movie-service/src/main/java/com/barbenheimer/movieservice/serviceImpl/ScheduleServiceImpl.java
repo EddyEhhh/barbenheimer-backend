@@ -91,14 +91,14 @@ public class ScheduleServiceImpl implements ScheduleService {
      * @return HallScheduleSeatDetailDTO
      */
     @Override
-    public OngoingPurchaseTokenDTO selectSeats(long showTimeId, List<SeatSelectDTO> seatSelectDTOs) throws AlreadyExistsException{ // haven't purchase, so status is 1 (temp reserve)
+    public OngoingPurchaseTokenDTO selectSeats(long showTimeId, OngoingPurchaseShortDTO ongoingPurchaseShortDTO) throws AlreadyExistsException{ // haven't purchase, so status is 1 (temp reserve)
         MovieScheduleTime movieScheduleTime = movieScheduleTimeRepository.findById(showTimeId);
         Hall hall = movieScheduleTime.getHall();
         Movie movie = movieScheduleTime.getMovieScheduleDate().getMovie();
 
         List<SeatStatus> seatStatuses = new ArrayList<>();
         OngoingPurchase ongoingPurchase = new OngoingPurchase();
-        for (SeatSelectDTO selected : seatSelectDTOs) {
+        for (SeatSelectDTO selected : ongoingPurchaseShortDTO.getSeatStatus()) {
             String rowCharacter = selected.getRowCharacter();
             int columnNumber = selected.getColumnNumber();
 
@@ -126,16 +126,14 @@ public class ScheduleServiceImpl implements ScheduleService {
             }
         }
 
-        int numberOfTicket = seatSelectDTOs.size();
+        int numberOfTicket = ongoingPurchaseShortDTO.getSeatStatus().size();
 
         ongoingPurchase.setSeatStatus(seatStatuses);
-        ongoingPurchase.setToken(ongoingPurchaseService.createCustomerIdentifyingToken());
+        ongoingPurchase.setToken(ongoingPurchaseShortDTO.getToken());
         ongoingPurchase.setExpireTimeStamp(LocalDateTime.now().plusMinutes(10));
         ongoingPurchase.setTotalPrice(movie.getBasePrice()*numberOfTicket);
         ongoingPurchaseRepository.save(ongoingPurchase);
         seatStatusRepository.saveAll(seatStatuses);
-
-
 
 
 //        HallScheduleSeatDetailDTO hallScheduleSeatDetailDTO = modelMapper.map(hall, HallScheduleSeatDetailDTO.class);

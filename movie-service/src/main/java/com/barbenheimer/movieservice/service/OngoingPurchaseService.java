@@ -16,9 +16,9 @@ public interface OngoingPurchaseService {
 
     public void invalidateAllExpiredPurchaseToken();
 
-   public ResponseEntity<OngoingPurchaseShortDTO> getOngoingPurchase(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO);
+//   public OngoingPurchaseShortDTO getOngoingPurchase(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO);
 
-    public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO);
+//    public ResponseEntity<?> createOngoingPurchase(OngoingPurchaseShortDTO ongoingPurchaseShortDTO);
 
     public ResponseEntity<?> checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException;
 }

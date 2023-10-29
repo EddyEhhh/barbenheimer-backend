@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 public class OngoingPurchaseShortDTO {
 
-    private List<SeatStatus> seatStatus;
+    private List<SeatSelectDTO> seatStatus;
 
     private String token;
 
