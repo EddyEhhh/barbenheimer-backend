@@ -4,14 +4,12 @@ services:
     image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     command:
-      - "start-dev"
+      - "start-dev --import-realm"
     environment:
-      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       JAVA_OPTS_APPEND: -Dkeycloak.migration.export.include-passwords=true
     volumes:
-      - ./imports/realm-export.json:/opt/jboss/keycloak/imports/realm-export.json
+      - ./imports/:/opt/keycloak/data/import:ro
     ports:
       - "8181:8080"
-

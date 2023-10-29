@@ -17,6 +17,7 @@
     <modules>
         <module>movie-service</module>
         <module>mailer-service</module>
+        <module>api-gateway</module>
         <module>discovery-server</module>
     </modules>
 

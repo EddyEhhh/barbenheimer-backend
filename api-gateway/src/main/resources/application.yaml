@@ -14,6 +14,13 @@ spring:
   application:
     name: api-gateway
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://${keycloak.host}:${keycloak.port}/realms/barbenheimer-realm
+          jwt-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
 #Eureka
 eureka:
   client:
