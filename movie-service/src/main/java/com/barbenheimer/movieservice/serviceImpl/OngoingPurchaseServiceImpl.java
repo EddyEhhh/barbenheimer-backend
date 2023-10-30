@@ -55,7 +55,7 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntentId);
 
         if(ongoingPurchase.getExpireTimeStamp().isBefore(LocalDateTime.now())){
-            deleteOngoingPurchase(paymentIntentId);
+            removeOngoingPurchase(ongoingPurchase);
             PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
             paymentIntent.setCancellationReason("Token has expired.");
             try {
@@ -145,9 +145,6 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
         return ongoingPurchase;
     }
 
-    public void deleteOngoingPurchase(String paymentIntentId){
-        ongoingPurchaseRepository.deleteByToken(paymentIntentId);
-    }
 
 
 }

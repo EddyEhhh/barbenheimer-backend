@@ -1,8 +1,6 @@
 package com.barbenheimer.movieservice.serviceImpl;
 
 
-import com.barbenheimer.movieservice.dto.OngoingPurchaseShortDTO;
-import com.barbenheimer.movieservice.dto.OngoingPurchaseTokenDTO;
 import com.barbenheimer.movieservice.dto.PurchaseShortDTO;
 import com.barbenheimer.movieservice.dto.TicketMailDetailDTO;
 import com.barbenheimer.movieservice.exception.ResourceNotFoundException;
@@ -10,6 +8,7 @@ import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.CustomerDetailRepository;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
 import com.barbenheimer.movieservice.repository.PurchaseRepository;
+import com.barbenheimer.movieservice.repository.SeatStatusRepository;
 import com.barbenheimer.movieservice.service.PurchaseService;
 import com.google.gson.JsonSyntaxException;
 import com.stripe.exception.SignatureVerificationException;
@@ -28,7 +27,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -45,15 +46,18 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     private OngoingPurchaseRepository ongoingPurchaseRepository;
 
+    private SeatStatusRepository seatStatusRepository;
+
     private final KafkaTemplate<String, TicketMailDetailDTO> kafkaTemplate;
 
 
     @Autowired
-    public PurchaseServiceImpl(KafkaTemplate kafkaTemplate, PurchaseRepository purchaseRepository, CustomerDetailRepository customerDetailRepository, OngoingPurchaseRepository ongoingPurchaseRepository){
+    public PurchaseServiceImpl(KafkaTemplate kafkaTemplate, PurchaseRepository purchaseRepository, CustomerDetailRepository customerDetailRepository, OngoingPurchaseRepository ongoingPurchaseRepository, SeatStatusRepository seatStatusRepository){
         this.kafkaTemplate = kafkaTemplate;
         this.purchaseRepository = purchaseRepository;
         this.customerDetailRepository = customerDetailRepository;
         this.ongoingPurchaseRepository = ongoingPurchaseRepository;
+        this.seatStatusRepository = seatStatusRepository;
     }
 
 
@@ -100,7 +104,8 @@ public class PurchaseServiceImpl implements PurchaseService {
                 saveCustomerDetailIfNotExists(paymentIntent.getMetadata().get("customerEmail"));
                 // saves the purchase into database and deletes the corresponding ongoing purchase
                 savePurchase(paymentIntent);
-                deleteOngoingPurchase(paymentIntent.getId());
+                removeOngoingPurchaseInSeatStatus(getOngoingPurchaseByPaymentIntent(paymentIntent.getId()));
+                ongoingPurchaseRepository.delete(getOngoingPurchaseByPaymentIntent(paymentIntent.getId()));
                 System.out.println("Payment intent with id: " + paymentIntent.getId() + " has succeeded and purchase is saved successfully");
                 break;
             }
@@ -219,15 +224,13 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Ongoing purchase with token: " + paymentIntentId + " does not exist."));
         return ongoingPurchase;
     }
-
-    public void deleteOngoingPurchase(String paymentIntentId){
-        ongoingPurchaseRepository.deleteByToken(paymentIntentId);
+    public void removeOngoingPurchaseInSeatStatus(OngoingPurchase ongoingPurchase){
+        List<SeatStatus> seatStatusList = ongoingPurchase.getSeatStatus();
+        for(SeatStatus seatStatus : seatStatusList){
+            seatStatus.setOngoingPurchase(null);
+            seatStatusRepository.save(seatStatus);
+        }
     }
-
-
-
-
-
 
 
 }

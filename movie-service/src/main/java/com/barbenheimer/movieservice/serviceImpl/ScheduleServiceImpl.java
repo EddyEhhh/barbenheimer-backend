@@ -130,7 +130,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         ongoingPurchase.setSeatStatus(seatStatuses);
         ongoingPurchase.setToken(ongoingPurchaseShortDTO.getToken());
-        ongoingPurchase.setExpireTimeStamp(LocalDateTime.now().plusMinutes(10));
+        ongoingPurchase.setExpireTimeStamp(LocalDateTime.now().plusMinutes(1));
         ongoingPurchase.setTotalPrice(movie.getBasePrice()*numberOfTicket);
         ongoingPurchaseRepository.save(ongoingPurchase);
         seatStatusRepository.saveAll(seatStatuses);
