@@ -15,7 +15,9 @@ import com.google.gson.JsonSyntaxException;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Event;
+import com.stripe.model.EventDataObjectDeserializer;
 import com.stripe.model.PaymentIntent;
+import com.stripe.model.StripeObject;
 import com.stripe.net.Webhook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,26 +73,41 @@ public class PurchaseServiceImpl implements PurchaseService {
             return ResponseEntity.status(400).body(e.getMessage());
         }
 
-        PaymentIntent paymentIntent = (PaymentIntent) event.getDataObjectDeserializer().getObject().get();
+        EventDataObjectDeserializer dataObjectDeserializer = event.getDataObjectDeserializer();
+        StripeObject stripeObject = null;
+        if (dataObjectDeserializer.getObject().isPresent()) {
+            stripeObject = dataObjectDeserializer.getObject().get();
+        } else {
+            // Deserialization failed, probably due to an API version mismatch.
+            // Refer to the Javadoc documentation on `EventDataObjectDeserializer` for
+            // instructions on how to handle this case, or return an error here.
+        }
 
         switch (event.getType()) {
 
             case "payment_intent.processing" : {
+                PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
                 System.out.println("Payment intent with id: " + paymentIntent.getId() + " submitted. Awaiting success/failure.");
+                break;
             }
             case "payment_intent.amount_capturable_updated" : {
                 System.out.println("Customer's payment is authorised and ready for capture.");
+                break;
             }
             case "payment_intent.succeeded": {
+                PaymentIntent paymentIntent = (PaymentIntent) stripeObject;
                 //creates and saves a new customer detail with email if it doesn't exist in the database
                 saveCustomerDetailIfNotExists(paymentIntent.getMetadata().get("customerEmail"));
-                //saves the purchase into database and deletes the corresponding ongoing purchase
+                // saves the purchase into database and deletes the corresponding ongoing purchase
                 savePurchase(paymentIntent);
                 deleteOngoingPurchase(paymentIntent.getId());
                 System.out.println("Payment intent with id: " + paymentIntent.getId() + " has succeeded and purchase is saved successfully");
+                break;
             }
             case "payment_intent.payment_failed": {
+                PaymentIntent paymentIntent = (PaymentIntent) event.getDataObjectDeserializer().getObject().get();
                 System.out.println("Payment intent with id: " + paymentIntent.getId() + " failed. Customer's payment was declined by a card network or otherwise expired.");
+                break;
             }
             default:
                 System.out.println("Unhandled event type: " + event.getType());

@@ -7,10 +7,13 @@ import com.barbenheimer.movieservice.repository.SeatStatusRepository;
 import com.barbenheimer.movieservice.exception.ResourceNotFoundException;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
+import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -18,7 +21,11 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@Transactional
 public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
+
+    @Value("${STRIPE_PRIVATE_KEY}")
+    private String stripeApiKey;
 
     private OngoingPurchaseRepository ongoingPurchaseRepository;
 
@@ -44,6 +51,7 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
      * @throws StripeException
      */
     public PaymentIntentValidationDTO checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+        Stripe.apiKey = stripeApiKey;
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(ongoingPurchaseTokenDTO.getToken());
 
         if(ongoingPurchase.getExpireTimeStamp().isBefore(LocalDateTime.now())){
