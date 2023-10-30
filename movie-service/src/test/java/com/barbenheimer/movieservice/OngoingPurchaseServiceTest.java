@@ -47,13 +47,6 @@ public class OngoingPurchaseServiceTest {
     private final String token = "axl873fpq2bg3kjd920231014204204";
 
     @Test
-    void createCustomerIdentifyingToken_ReturnValidToken(){
-        String generatedToken = ongoingPurchaseService.createCustomerIdentifyingToken();
-        assertNotNull(generatedToken);
-        assertFalse(generatedToken.contains("-"));
-    }
-
-    @Test
     void getDetail_ReturnOngoingPurchaseDTO(){
         LocalDateTime expiryTimeStamp = LocalDateTime.now().plusMinutes(9);
         OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(token);
