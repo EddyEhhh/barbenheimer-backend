@@ -120,15 +120,15 @@ public class PurchaseServiceImpl implements PurchaseService {
     /**
      * This method returns a purchase corresponding to a payment intent in the form of a purchaseShortDTO.
      * It is meant for the frontend to retrieve a purchase detail to be shown as a payment summary for the customer post-payment.
-     * @param ongoingPurchaseTokenDTO
+     * @param paymentIntentId
      * @return PurchaseShortDTO
      * @throws StripeException
      */
 
-    public PurchaseShortDTO getPurchaseByPaymentIntent(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+    public PurchaseShortDTO getPurchaseByPaymentIntent(String paymentIntentId) throws StripeException {
 
-        Purchase purchase = purchaseRepository.findByPaymentIntentId(ongoingPurchaseTokenDTO.getToken())
-                .orElseThrow(() -> new ResourceNotFoundException("Purchase with paymentIntentId: " + ongoingPurchaseTokenDTO.getToken() + " does not exist."));
+        Purchase purchase = purchaseRepository.findByPaymentIntentId(paymentIntentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Purchase with paymentIntentId: " + paymentIntentId + " does not exist."));
 
         return  PurchaseShortDTO.builder()
                 .customerDetail(purchase.getCustomerDetail())

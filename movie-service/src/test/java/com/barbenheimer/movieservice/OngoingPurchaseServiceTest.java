@@ -55,7 +55,7 @@ public class OngoingPurchaseServiceTest {
 
         when(ongoingPurchases.findByToken(token)).thenReturn(Optional.of(ongoingPurchase));
 
-        OngoingPurchaseDetailDTO actualOngoingPurchaseDetailDTO = ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO);
+        OngoingPurchaseDetailDTO actualOngoingPurchaseDetailDTO = ongoingPurchaseService.getDetail(token);
 
         assertNotNull(actualOngoingPurchaseDetailDTO);
         assertEquals(expectedOngoingPurchaseDetailDTO, actualOngoingPurchaseDetailDTO);
@@ -65,12 +65,11 @@ public class OngoingPurchaseServiceTest {
 
     @Test
     void getDetail_ThrowsException(){
-        OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(token);
 
         when(ongoingPurchases.findByToken(token)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
-            ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO);
+            ongoingPurchaseService.getDetail(token);
         });
 
         assertEquals("error.token.notFound", exception.getMessage());

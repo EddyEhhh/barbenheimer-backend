@@ -46,17 +46,17 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
      * This method will be called before a payment intent is confirmed. It checks to see if the token referring to an ongoing purchase
      * is still valid (within 10 mins). If it is not valid, the payment intent will be canceled.
      *
-     * @param ongoingPurchaseTokenDTO
+     * @param paymentIntentId
      * @return
      * @throws StripeException
      */
-    public PaymentIntentValidationDTO checkIfValidToken(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO) throws StripeException {
+    public PaymentIntentValidationDTO checkIfValidToken(String paymentIntentId) throws StripeException {
         Stripe.apiKey = stripeApiKey;
-        OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(ongoingPurchaseTokenDTO.getToken());
+        OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntentId);
 
         if(ongoingPurchase.getExpireTimeStamp().isBefore(LocalDateTime.now())){
-            deleteOngoingPurchase(ongoingPurchaseTokenDTO.getToken());
-            PaymentIntent paymentIntent = PaymentIntent.retrieve(ongoingPurchaseTokenDTO.getToken());
+            deleteOngoingPurchase(paymentIntentId);
+            PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
             paymentIntent.setCancellationReason("Token has expired.");
             try {
                 PaymentIntent updatedPaymentIntent = paymentIntent.cancel();
@@ -65,7 +65,6 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
             } catch (Error e){
                 // An error is thrown by Stripe if the payment intent is already canceled or isn't in a cancelable state.
                 System.out.println(e.getMessage());
-                throw new RuntimeException("Payment Intent failed to cancel. " + e.getMessage());
             }
         }
         return PaymentIntentValidationDTO.builder().validity(true).build();
@@ -74,13 +73,12 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
 
     /**
      *
-     * @param ongoingPurchaseTokenDTO
+     * @param paymentIntentId
      * @return ongoingPurchaseDetailDTO
      */
 
-    public OngoingPurchaseDetailDTO getDetail(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
-        String token = ongoingPurchaseTokenDTO.getToken();
-        Optional<OngoingPurchase> ongoingPurchaseOptional = ongoingPurchaseRepository.findByToken(token);
+    public OngoingPurchaseDetailDTO getDetail(String paymentIntentId){
+        Optional<OngoingPurchase> ongoingPurchaseOptional = ongoingPurchaseRepository.findByToken(paymentIntentId);
         if(ongoingPurchaseOptional.isEmpty()){
             throw new ResourceNotFoundException("error.token.notFound");
         }
