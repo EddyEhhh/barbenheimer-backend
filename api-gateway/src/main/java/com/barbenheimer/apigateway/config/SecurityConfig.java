@@ -20,12 +20,13 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 public class SecurityConfig {
 
 
+
     @Bean
     public SecurityWebFilterChain filterChain(ServerHttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/eureka/**")
+                        .pathMatchers("/eureka/**", "/api/v1/auth", "/api/v1/auth/**")
                         .permitAll()
                         .anyExchange()
                         .authenticated());
