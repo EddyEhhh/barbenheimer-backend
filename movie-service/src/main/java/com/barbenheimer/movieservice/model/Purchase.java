@@ -30,7 +30,7 @@ public class Purchase {
 
     private Long paidAmount;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "purchase")
     private List<SeatStatus> seatStatuses;
 
     private LocalDateTime dateTime;

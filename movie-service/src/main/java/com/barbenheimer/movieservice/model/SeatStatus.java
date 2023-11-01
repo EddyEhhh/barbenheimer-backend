@@ -27,11 +27,10 @@ public class SeatStatus {
     @ManyToOne
     private OngoingPurchase ongoingPurchase;
 
+    @ManyToOne
+    private Purchase purchase;
+
     // 2 for unavailable and 1 for pending confirmation
     private int state;
-
-
-
-
 
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,9 +17,18 @@ import java.util.List;
 @Builder
 public class PurchaseShortDTO {
 
-    private CustomerDetail customerDetail;
+    private CustomerDetailDTO customerDetail;
 
     private double paidAmount;
 
-    private List<SeatStatus> seatStatuses;
+    private MovieShortDTO movie;
+
+    private LocalTime movieTime;
+
+    private LocalDate movieDate;
+
+    private int hallNumber;
+
+    private List<SeatDetailDTO> seatDetails;
+
 }
