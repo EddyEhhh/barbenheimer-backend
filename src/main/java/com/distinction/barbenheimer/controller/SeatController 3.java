@@ -1,0 +1,57 @@
+package com.distinction.barbenheimer.controller;
+
+import java.time.*;
+import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.distinction.barbenheimer.DTO.SeatSelectDTO;
+import com.distinction.barbenheimer.DTO.SeatStatusDetailDTO;
+import com.distinction.barbenheimer.model.CustomerDetail;
+import com.distinction.barbenheimer.model.MovieScheduleTime;
+import com.distinction.barbenheimer.model.Seat;
+import com.distinction.barbenheimer.model.SeatStatus;
+import com.distinction.barbenheimer.service.SeatService;
+
+@RestController
+@RequestMapping("/api/v1/movies/{movieId}/showDates/{showDate}/showTimes/{showTime}")
+public class SeatController {
+    
+    private SeatService seatService;
+
+    @Autowired
+    public SeatController(SeatService seatService) {
+        this.seatService = seatService;
+    } 
+
+    
+   
+    // @PostMapping
+    // public ResponseEntity<List<SeatStatusDetailDTO>> getStatus(@PathVariable Long movieId, @PathVariable LocalDate showDate, @PathVariable LocalTime showTime) {
+    //     return ResponseEntity.ok(seatService.getStatus(movieId, showDate, showTime));
+    // }
+
+    /** 
+     * this method is a GET request handler
+     * receives details of a customer
+     * returns the seats that the customer selected during this purchase
+     * @return ResponseEntity<List<Seat>>
+     */
+    @GetMapping("/customer")
+    public ResponseEntity<List<Seat>> selectedBy(CustomerDetail customerDetail) {
+        return ResponseEntity.ok(seatService.selectedBy(customerDetail));
+    }
+
+    
+    @GetMapping
+    public ResponseEntity<MovieScheduleTime> getTime(@PathVariable("movieId") long movieId, @PathVariable("showDate") LocalDate showDate, @PathVariable("showTime") LocalTime showTime) {
+        return ResponseEntity.ok(seatService.getTime(movieId, showDate, showTime));
+    }
+}
