@@ -13,10 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import com.stripe.Stripe;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
-import com.stripe.model.Event;
-import com.stripe.model.EventDataObjectDeserializer;
-import com.stripe.model.PaymentIntent;
-import com.stripe.model.StripeObject;
+import com.stripe.model.*;
 import com.stripe.net.Webhook;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +104,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 //creates and saves a new customer detail with email if it doesn't exist in the database
                 saveCustomerDetailIfNotExists(paymentIntent.getMetadata().get("customerEmail"));
                 // saves the purchase into database and deletes the corresponding ongoing purchase
-                savePurchase(paymentIntent);
+                // savePurchase(paymentIntent);
                 // removeOngoingPurchaseInSeatStatus(getOngoingPurchaseByPaymentIntent(paymentIntent.getId()));
                 ongoingPurchaseRepository.delete(getOngoingPurchaseByPaymentIntent(paymentIntent.getId()));
                 System.out.println("Payment intent with id: " + paymentIntent.getId() + " has succeeded and purchase is saved successfully");
@@ -166,11 +163,13 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     public void savePurchaseIfNotExist(String paymentIntentId) throws StripeException {
         Stripe.apiKey = stripeApiKey;
+
         if(purchaseRepository.findByPaymentIntentId(paymentIntentId).isEmpty()) {
             PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
             if (paymentIntent.getStatus().equals("succeeded")) {
-                saveCustomerDetailIfNotExists(paymentIntent.getMetadata().get("customerEmail"));
-                savePurchase(paymentIntent);
+                Charge charge = Charge.retrieve(paymentIntent.getLatestCharge());
+                saveCustomerDetailIfNotExists(charge.getBillingDetails().getEmail());
+                savePurchase(paymentIntent, charge.getBillingDetails().getEmail());
             }
         }
     }
@@ -180,9 +179,10 @@ public class PurchaseServiceImpl implements PurchaseService {
      * @param paymentIntent
      *
      */
-    public void savePurchase(PaymentIntent paymentIntent) {
+    public void savePurchase(PaymentIntent paymentIntent, String email) {
 
-        CustomerDetail customerDetail = getCustomerDetailByPaymentIntent(paymentIntent);
+        CustomerDetail customerDetail = customerDetailRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer Email: " + email + " does not exists."));
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntent.getId());
 
         Purchase purchase = Purchase.builder()
