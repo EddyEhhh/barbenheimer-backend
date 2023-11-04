@@ -23,4 +23,6 @@ public class ScheduleSeatDetailDTO {
 
     private int state;
 
+    private double price;
+
 }

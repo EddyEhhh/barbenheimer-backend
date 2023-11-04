@@ -19,14 +19,10 @@ public class CustomerDetailServiceImpl implements CustomerDetailService {
         this.customerDetailRepository = customerDetailRepository;
     }
 
-    public void inputCustomerDetails(String email){
+    public CustomerDetail inputCustomerDetails(String email){
         CustomerDetail customerDetail = new CustomerDetail();
-        String regex = "^[A-Z0-9+_.-]+@[A-Z0-9.-]+$";
-        if (!email.matches(regex)) {
-            throw new IllegalArgumentException("Please enter a valid email address.");
-        }
         customerDetail.setEmail(email);
-        customerDetailRepository.save(customerDetail);
+        return customerDetailRepository.save(customerDetail);
     }
 
 }

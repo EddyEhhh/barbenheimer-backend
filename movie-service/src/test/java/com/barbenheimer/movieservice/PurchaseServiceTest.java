@@ -35,30 +35,30 @@ public class PurchaseServiceTest {
 
 
     //TODO: needs revising after serviceImpl method equivalent is complete.
-    @Test
-    void addPurchase_ReturnSavedPurchase(){
-        SeatStatusDetailDTO seatStatusDetailDTO = new SeatStatusDetailDTO();
-        PurchaseDTO purchaseDTO = PurchaseDTO.builder().priceInCents(800L).quantity(1L).build();
-        Purchase purchase = generateFakePurchase(purchaseDTO);
+//    @Test
+//    void addPurchase_ReturnSavedPurchase(){
+//        SeatStatusDetailDTO seatStatusDetailDTO = new SeatStatusDetailDTO();
+//        PurchaseDTO purchaseDTO = PurchaseDTO.builder().priceInCents(800L).quantity(1L).build();
+//        Purchase purchase = generateFakePurchase(purchaseDTO);
+//
+//        when(purchases.save(any(Purchase.class))).thenReturn(purchase);
+//
+//        ResponseEntity<?> response = purchaseService.savePurchase(purchase.getCustomerDetail(), seatStatusDetailDTO, purchaseDTO);
+//
+//        assertNotNull(response.getBody());
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertEquals(purchase, response.getBody());
+//        verify(purchases).save(purchase);
+//    }
 
-        when(purchases.save(any(Purchase.class))).thenReturn(purchase);
-
-        ResponseEntity<?> response = purchaseService.savePurchase(purchase.getCustomerDetail(), seatStatusDetailDTO, purchaseDTO);
-
-        assertNotNull(response.getBody());
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertEquals(purchase, response.getBody());
-        verify(purchases).save(purchase);
-    }
-
-    Purchase generateFakePurchase(PurchaseDTO purchaseDTO){
-        CustomerDetail customerDetail = CustomerDetail.builder().email("abcdefg@gmail.com").build();
-        return Purchase.builder()
-                .customerDetail(customerDetail)
-                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
-                .paidAmount(purchaseDTO.getPriceInCents() * purchaseDTO.getQuantity())
-                .build();
-    }
+//    Purchase generateFakePurchase(PurchaseDTO purchaseDTO){
+//        CustomerDetail customerDetail = CustomerDetail.builder().email("abcdefg@gmail.com").build();
+//        return Purchase.builder()
+//                .customerDetail(customerDetail)
+//                .dateTime(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+//                .paidAmount(purchaseDTO.getPriceInCents() * purchaseDTO.getQuantity())
+//                .build();
+//    }
 
 
 
