@@ -28,6 +28,9 @@ public class LoginService {
     @Value("${authentication.server.url.logout}")
     private String logoutUrl;
 
+    @Value("${authentication.server.url.register}")
+    private String registerUrl;
+
     @Value("${oauth2-client-credentials.client-id}")
     private String clientId;
 
@@ -72,6 +75,33 @@ public class LoginService {
 
     }
 
+    public RegisterResponseDTO login(RegisterCredentialDTO registerCredentialDTO){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("client_id", clientId);
+        map.add("client_secret", clientSecret);
+        map.add("grant_type", grantType);
+        map.add("username", registerCredentialDTO.getUsername());
+        map.add("password", registerCredentialDTO.getPassword());
+
+        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(map,headers);
+
+        ParameterizedTypeReference<Map<String, String>> responseType = new ParameterizedTypeReference<Map<String, String>>() {};
+        ResponseEntity<Map<String, String>> response = restTemplate.exchange(loginUrl, HttpMethod.POST, httpEntity, responseType);
+        LoginResponseDTO loginResponseDTO = LoginResponseDTO.builder()
+                .accessToken(response.getBody().get("access_token"))
+                .expiresIn(response.getBody().get("expires_in"))
+                .refreshExpiresIn(response.getBody().get("refresh_expires_in"))
+                .refreshToken(response.getBody().get("refresh_token"))
+                .tokenType(response.getBody().get("token_type"))
+                .build();
+
+        return loginResponseDTO;
+
+    }
+
     public LogoutResponseDTO logout(TokenDTO tokenDTO) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -93,4 +123,6 @@ public class LoginService {
 
         return logoutResponseDTO;
     }
+
+
 }

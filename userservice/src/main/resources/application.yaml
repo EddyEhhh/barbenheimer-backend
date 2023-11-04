@@ -6,7 +6,7 @@ authentication:
     url:
       token: http://${keycloak.host}:${keycloak.port}/realms/barbenheimer-realm/protocol/openid-connect/token
       logout: http://${keycloak.host}:${keycloak.port}/realms/barbenheimer-realm/protocol/openid-connect/logout
-
+      register: http://${keycloak.host}:${keycloak.port}/auth/admin/realms/barbenheimer-realm/users
 
 oauth2-client-credentials:
   scope: openid, profile, roles
