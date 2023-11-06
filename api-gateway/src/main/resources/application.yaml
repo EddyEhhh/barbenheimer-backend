@@ -16,10 +16,10 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowed-origins: "*"
+            allowed-origins: "http://localhost:3000"
             allowed-methods: "*"
             allowed-headers: "*"
-#            allow-credentials: true
+            allow-credentials: true
 
   application:
     name: api-gateway
