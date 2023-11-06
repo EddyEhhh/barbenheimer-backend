@@ -17,6 +17,7 @@ services:
     container_name: keycloak
     command:
       - "start-dev --import-realm"
+      - "--spi-theme-static-max-age=-1 --spi-theme-cache-themes=false --spi-theme-cache-templates=false"
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
@@ -29,6 +30,7 @@ services:
       JAVA_OPTS_APPEND: -Dkeycloak.migration.export.include-passwords=true
     volumes:
       - ./imports/:/opt/keycloak/data/import:ro
+      - ./keycloak/theme/:/opt/keycloak/themes/resource:ro
     ports:
       - "8181:8080"
     depends_on:
