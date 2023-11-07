@@ -548,7 +548,7 @@ public class PopulateSampleData {
                 Purchase purchase = Purchase.builder()
                                 .seatStatuses(toAddToPurchase)
                                 .customerDetail(customer)
-                                .paidAmount(paidAmount)
+                                .paidAmount((long) paidAmount)
                                 .dateTime(LocalDateTime.now())
                                 .build();
 
