@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/demo")
 @Slf4j

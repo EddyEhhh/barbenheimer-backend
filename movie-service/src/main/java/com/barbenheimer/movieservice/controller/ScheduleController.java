@@ -20,7 +20,7 @@ import com.barbenheimer.movieservice.service.ScheduleService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/schedules/{scheduleTimeId}")
 @Slf4j
