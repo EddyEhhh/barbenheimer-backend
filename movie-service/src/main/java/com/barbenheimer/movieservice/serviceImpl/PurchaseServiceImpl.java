@@ -15,6 +15,7 @@ import com.stripe.exception.SignatureVerificationException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.*;
 import com.stripe.net.Webhook;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class PurchaseServiceImpl implements PurchaseService {
 
     @Value("${STRIPE_PRIVATE_KEY}")
@@ -210,6 +212,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         purchase1.setSeatStatuses(seatStatuses);
 
+//        sendMail(pur)
+
         purchaseRepository.save(purchase1);
     }
 
@@ -241,6 +245,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .purchaseDetail(String.valueOf(ticketCount).concat(" x ticket(s)"))
                 .purchaseTotalPrice("$".concat(String.valueOf(purchase.getPaidAmount())))
                 .build();
+        log.info("KAFKA MAILS SEND");
         kafkaTemplate.send("mailerTopic", ticketMailDetailDTO);
 
     }

@@ -40,8 +40,10 @@ public class SecurityConfig {
                                 "/api/v1/movies/*",
                                 "/api/v1/movies",
                                 "/api/v1/payments",
+                                "/api/v1/payments/**",
                                 "/api/v1/schedules/*",
-                                "/api/v1/demo/movie")
+                                "/api/v1/demo/movie",
+                                "/api/v1/reserves/**")
 
                         .permitAll()
                         .anyExchange()
