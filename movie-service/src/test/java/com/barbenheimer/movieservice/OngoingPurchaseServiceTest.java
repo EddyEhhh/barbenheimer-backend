@@ -47,13 +47,6 @@ public class OngoingPurchaseServiceTest {
     private final String token = "axl873fpq2bg3kjd920231014204204";
 
     @Test
-    void createCustomerIdentifyingToken_ReturnValidToken(){
-        String generatedToken = ongoingPurchaseService.createCustomerIdentifyingToken();
-        assertNotNull(generatedToken);
-        assertFalse(generatedToken.contains("-"));
-    }
-
-    @Test
     void getDetail_ReturnOngoingPurchaseDTO(){
         LocalDateTime expiryTimeStamp = LocalDateTime.now().plusMinutes(9);
         OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(token);
@@ -62,7 +55,7 @@ public class OngoingPurchaseServiceTest {
 
         when(ongoingPurchases.findByToken(token)).thenReturn(Optional.of(ongoingPurchase));
 
-        OngoingPurchaseDetailDTO actualOngoingPurchaseDetailDTO = ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO);
+        OngoingPurchaseDetailDTO actualOngoingPurchaseDetailDTO = ongoingPurchaseService.getDetail(token);
 
         assertNotNull(actualOngoingPurchaseDetailDTO);
         assertEquals(expectedOngoingPurchaseDetailDTO, actualOngoingPurchaseDetailDTO);
@@ -72,12 +65,11 @@ public class OngoingPurchaseServiceTest {
 
     @Test
     void getDetail_ThrowsException(){
-        OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO = new OngoingPurchaseTokenDTO(token);
 
         when(ongoingPurchases.findByToken(token)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
-            ongoingPurchaseService.getDetail(ongoingPurchaseTokenDTO);
+            ongoingPurchaseService.getDetail(token);
         });
 
         assertEquals("error.token.notFound", exception.getMessage());

@@ -1,29 +1,31 @@
 package com.barbenheimer.movieservice.serviceImpl;
 
 
-import com.barbenheimer.movieservice.dto.MovieShortDTO;
-import com.barbenheimer.movieservice.dto.OngoingPurchaseDetailDTO;
-import com.barbenheimer.movieservice.dto.OngoingPurchaseTokenDTO;
-import com.barbenheimer.movieservice.dto.SeatDetailDTO;
+import com.barbenheimer.movieservice.dto.*;
 import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.SeatStatusRepository;
 import com.barbenheimer.movieservice.exception.ResourceNotFoundException;
-import com.barbenheimer.movieservice.model.*;
 import com.barbenheimer.movieservice.repository.OngoingPurchaseRepository;
 import com.barbenheimer.movieservice.service.OngoingPurchaseService;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.PaymentIntent;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
+@Transactional
 public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
+
+    @Value("${STRIPE_PRIVATE_KEY}")
+    private String stripeApiKey;
 
     private OngoingPurchaseRepository ongoingPurchaseRepository;
 
@@ -39,23 +41,44 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
         this.seatStatusRepository = seatStatusRepository;
     }
 
-    @Override
-    public String createCustomerIdentifyingToken(){
-        StringBuilder token = new StringBuilder();
-        long currentTimeInMillisecond = Instant.now().toEpochMilli();
-        token.append(currentTimeInMillisecond).append(UUID.randomUUID().toString());
-        return token.toString().replace("-","");
+
+    /**
+     * This method will be called before a payment intent is confirmed. It checks to see if the token referring to an ongoing purchase
+     * is still valid (within 10 mins). If it is not valid, the payment intent will be canceled.
+     *
+     * @param paymentIntentId
+     * @return
+     * @throws StripeException
+     */
+    public PaymentIntentValidationDTO checkIfValidToken(String paymentIntentId) throws StripeException {
+        Stripe.apiKey = stripeApiKey;
+        OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntentId);
+
+        if(ongoingPurchase.getExpireTimeStamp().isBefore(LocalDateTime.now())){
+            removeOngoingPurchase(ongoingPurchase);
+            PaymentIntent paymentIntent = PaymentIntent.retrieve(paymentIntentId);
+            paymentIntent.setCancellationReason("Token has expired.");
+            try {
+                PaymentIntent updatedPaymentIntent = paymentIntent.cancel();
+                System.out.println("Token has expired, corresponding payment intent has been canceled.");
+                return PaymentIntentValidationDTO.builder().validity(false).build();
+            } catch (Error e){
+                // An error is thrown by Stripe if the payment intent is already canceled or isn't in a cancelable state.
+                System.out.println(e.getMessage());
+            }
+        }
+        return PaymentIntentValidationDTO.builder().validity(true).build();
     }
+
 
     /**
      *
-     * @param ongoingPurchaseTokenDTO
+     * @param paymentIntentId
      * @return ongoingPurchaseDetailDTO
      */
 
-    public OngoingPurchaseDetailDTO getDetail(OngoingPurchaseTokenDTO ongoingPurchaseTokenDTO){
-        String token = ongoingPurchaseTokenDTO.getToken();
-        Optional<OngoingPurchase> ongoingPurchaseOptional = ongoingPurchaseRepository.findByToken(token);
+    public OngoingPurchaseDetailDTO getDetail(String paymentIntentId){
+        Optional<OngoingPurchase> ongoingPurchaseOptional = ongoingPurchaseRepository.findByToken(paymentIntentId);
         if(ongoingPurchaseOptional.isEmpty()){
             throw new ResourceNotFoundException("error.token.notFound");
         }
@@ -115,6 +138,13 @@ public class OngoingPurchaseServiceImpl implements OngoingPurchaseService {
             return true;
         }
     }
+
+    public OngoingPurchase getOngoingPurchaseByPaymentIntent(String paymentIntentId){
+        OngoingPurchase ongoingPurchase = ongoingPurchaseRepository.findByToken(paymentIntentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ongoing purchase with token: " + paymentIntentId + " does not exist."));
+        return ongoingPurchase;
+    }
+
 
 
 }
