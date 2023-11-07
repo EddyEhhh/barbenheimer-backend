@@ -1,0 +1,207 @@
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - kafka-network
+
+  broker:
+    image: confluentinc/cp-kafka:latest
+    container_name: broker
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_LOG_RETENTION_HOURS: "1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      KAFKA_CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+      # KAFKA_BROKER_ID: 1
+      # KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # KAFKA_LISTENERS: PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092
+      # KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka0:29092,PLAINTEXT_HOST://localhost:9092
+      # KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      # KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      # KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      # KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - kafka-network
+
+
+  # Zipkin
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+  
+  # Eureka server
+  discovery-server:
+    build: ./discovery-server
+    image: barbenheimer/discovery-server:latest
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    env_file:
+      - ./discovery-server/.env
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DISCOVERY_PASSWORD: ${DISCOVERY_PASSWORD}
+      DISCOVERY_USERNAME: ${DISCOVERY_USERNAME}
+    depends_on:
+      - zipkin
+
+  # mailer-service
+  mailer-service:
+    build: ./mailer-service
+    image: barbenheimer/mailer-service:latest
+    container_name: mailer-service
+    ports:
+      - "11000-11999:11000-11999"
+    env_file:
+      - ./mailer-service/.env
+    environment:
+      MAIL_EMAIL: ${MAIL_EMAIL}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_PORT: ${MAIL_PORT}
+      DISCOVERY_USERNAME: ${DISCOVERY_USERNAME}
+      DISCOVERY_PASSWORD: ${DISCOVERY_PASSWORD}
+      DISCOVERY_SERVER_HOST: ${DISCOVERY_SERVER_HOST}
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT}
+      KAFKA_SERVER_HOST: ${KAFKA_SERVER_HOST}
+      KAFKA_SERVER_PORT: ${KAFKA_SERVER_PORT}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:29092
+    depends_on:
+      - discovery-server
+      - broker
+    networks:
+      - kafka-network
+
+  # movie-service
+  movie-service:
+    build: ./movie-service
+    image: barbenheimer/movie-service:latest
+    container_name: movie-service
+    ports:
+      - "10000-10999:10000-10999"
+    env_file:
+      - ./movie-service/.env
+    environment:
+      AWS_BUCKET: ${AWS_BUCKET}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_SCHEMA: ${DATABASE_SCHEMA}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      STRIPE_PRIVATE_KEY: ${STRIPE_PRIVATE_KEY}
+      WEBHOOK_SECRET: ${WEBHOOK_SECRET}
+      DISCOVERY_USERNAME: ${DISCOVERY_USERNAME}
+      DISCOVERY_PASSWORD: ${DISCOVERY_PASSWORD}
+      DISCOVERY_SERVER_HOST: ${DISCOVERY_SERVER_HOST}
+      DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT}
+      DISCOVERY_SERVER_URL: ${DISCOVERY_SERVER_URL}
+      KAFKA_SERVER_HOST: ${KAFKA_SERVER_HOST}
+      KAFKA_SERVER_PORT: ${KAFKA_SERVER_PORT}
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:29092
+    depends_on:
+      - discovery-server
+      - broker
+    networks:
+      - kafka-network
+networks:
+    kafka-network:
+
+  # api-gateway
+  # api-gateway:
+  #   image: barbenheimer/api-gateway:latest
+  #   container_name: api-gateway
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     DISCOVERY_USERNAME: ${DISCOVERY_USERNAME}
+  #     DISCOVERY_PASSWORD: ${DISCOVERY_PASSWORD}
+  #     DISCOVERY_SERVER_HOST: host.docker.internal 
+  #     DISCOVERY_SERVER_PORT: ${DISCOVERY_SERVER_PORT}
+  #     DISCOVERY_SERVER_URL: ${DISCOVERY_SERVER_URL}
+  #   depends_on:
+  #     - discovery-server
+  #     - movie-service
+  #     - mailer-service
+
+    # mysql
+    # mysql:
+    #   image: mysql/mysql-server:8.0.32
+    #   container_name: mysql-server
+    #   restart: always
+    #   environment:
+    #     -
+    #   ports:
+    #     - 3306:3306
+      
+
+#  mysql:
+  #  image: mysql/mysql-server:8.0.32
+  #  restart: always
+  #  environment:
+  #    MYSQL_ROOT_PASSWORD: example
+#
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080
+#
+
+#
+#
+#  ## Eureka Server
+#  discovery-server:
+#    image: barbenheimer/discovery-server:latest
+#    container_name: discovery-server
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      - zipkin
+#
+#  api-gateway:
+#  image: barbenheimer/api-gateway:latest
+#  container_name: api-gateway
+#  ports:
+#    - "8080:8080"
+#  expose:
+#    - "8080"
+#  environment:
+#    - SPRING_PROFILES_ACTIVE=docker
+#    - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+#  depends_on:
+#    - zipkin
+#    - discovery-server
+#
+#
+#  ## Movie-Service Docker Compose Config
+#  movie-service:
+#    container_name: movie-service
+#    image: barbenheimer/movie-service:latest
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
+#    depends_on:
+#      - mysql
+#      - discovery-server
+#      - api-gateway
+
