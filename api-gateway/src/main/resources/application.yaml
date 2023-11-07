@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        secure: true
+
+
+spring:
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+#            allow-credentials: true
+
+  application:
+    name: api-gateway
+
+
+
+#Eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${discovery.username}:${discovery.password}@${discovery.server.host}:${discovery.server.port}/eureka
+
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        cloud:
+          gateway:
+            route:
+              RouteDefinitionLocator: INFO
+            '(root)': TRACE
+
+
+## Zipkin
+management:
+  zipkin:
+    tracing:
+      endpoint: http://127.0.0.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+
+
+
+
+
+
+
