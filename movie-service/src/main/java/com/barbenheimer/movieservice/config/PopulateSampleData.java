@@ -45,8 +45,8 @@ public class PopulateSampleData {
     private CustomerDetailRepository customerDetailRepository;
 
 
-    
-    /** 
+
+    /**
      * @param event
      */
     @EventListener
@@ -112,12 +112,12 @@ public class PopulateSampleData {
 
 
         int[][] seatLayout1 = {
-                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
-                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
-                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
-                                {1,1,0,1,1,0,1,1,0,1,0,1,1},
-                                {1,1,0,0,0,0,0,0,0,0,0,1,1}
-                              };
+                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                {1,1,0,1,1,0,1,1,0,1,0,1,1},
+                {1,1,0,0,0,0,0,0,0,0,0,1,1}
+        };
 
         int[][] seatLayout2 = {
                 {1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
@@ -546,11 +546,11 @@ public class PopulateSampleData {
                 CustomerDetail customer = CustomerDetail.builder().email("barbenheimer203@gmail.com").build();
                 customerDetailRepository.save(customer);
                 Purchase purchase = Purchase.builder()
-                                .seatStatuses(toAddToPurchase)
-                                .customerDetail(customer)
-                                .paidAmount((long) paidAmount)
-                                .dateTime(LocalDateTime.now())
-                                .build();
+                        .seatStatuses(toAddToPurchase)
+                        .customerDetail(customer)
+                        .paidAmount((long) paidAmount)
+                        .dateTime(LocalDateTime.now())
+                        .build();
 
                 seatStatusRepository.saveAll(toAddToPurchase);
                 purchaseRepository.save(purchase);
@@ -599,6 +599,5 @@ public class PopulateSampleData {
     }
 
 }
-
 
 

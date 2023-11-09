@@ -181,7 +181,7 @@ public class PurchaseServiceImpl implements PurchaseService {
      */
     public void savePurchase(PaymentIntent paymentIntent, String email) {
 
-        CustomerDetail customerDetail = customerDetailRepository.findByEmail(email)
+        CustomerDetail customerDetail = customerDetailRepository.findFirstByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Customer Email: " + email + " does not exists."));
         OngoingPurchase ongoingPurchase = getOngoingPurchaseByPaymentIntent(paymentIntent.getId());
 
@@ -209,7 +209,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .orElseThrow(() -> new ResourceNotFoundException("Purchase with payment intent id: " + paymentIntent.getId() + " does not exist."));
 
         purchase1.setSeatStatuses(seatStatuses);
-
+        sendMail(purchase1);
         purchaseRepository.save(purchase1);
     }
 
@@ -239,7 +239,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 .hallNumber(String.valueOf(movieScheduleTime.getHall().getNumber()))
                 .ticketSeats(ticketSeats.toString())
                 .purchaseDetail(String.valueOf(ticketCount).concat(" x ticket(s)"))
-                .purchaseTotalPrice("$".concat(String.valueOf(purchase.getPaidAmount())))
+                .purchaseTotalPrice("$".concat(String.valueOf(purchase.getPaidAmount()/100.0)))
                 .build();
         kafkaTemplate.send("mailerTopic", ticketMailDetailDTO);
 
@@ -249,18 +249,18 @@ public class PurchaseServiceImpl implements PurchaseService {
     /*
      * Below are all helper methods
      *
-    */
+     */
 
 
     public void saveCustomerDetailIfNotExists(String customerEmail){
-        Optional<CustomerDetail> customerDetail = customerDetailRepository.findByEmail(customerEmail);
+        Optional<CustomerDetail> customerDetail = customerDetailRepository.findFirstByEmail(customerEmail);
         if(customerDetail.isEmpty()) {
             customerDetailRepository.save(CustomerDetail.builder().email(customerEmail).build());
         }
     }
 
     public CustomerDetail getCustomerDetailByPaymentIntent(PaymentIntent paymentIntent){
-        CustomerDetail customerDetail = customerDetailRepository.findByEmail(paymentIntent.getMetadata().get("customerEmail"))
+        CustomerDetail customerDetail = customerDetailRepository.findFirstByEmail(paymentIntent.getMetadata().get("customerEmail"))
                 .orElseThrow(() -> new ResourceNotFoundException("CustomerDetail with email: " + paymentIntent.getMetadata().get("customerEmail") + " does not exist."));
         return customerDetail;
     }
