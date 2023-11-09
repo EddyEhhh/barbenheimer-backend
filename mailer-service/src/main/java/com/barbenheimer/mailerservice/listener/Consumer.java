@@ -26,6 +26,8 @@ public class Consumer {
 
     @KafkaListener(topics = "mailerTopic", id = "mailerId")
     public void handleMailer(String ticketMailDetail){
+
+        log.info("KAFKA: HELLO");
         try{
             TicketMailDetailDTO ticketMailDetailDTO = objectMapper.readValue(ticketMailDetail, TicketMailDetailDTO.class);
             mailService.sendEmailOnTickerPurchaseCompleteEvent(ticketMailDetailDTO);

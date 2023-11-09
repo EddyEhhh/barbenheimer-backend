@@ -15,7 +15,7 @@ import com.barbenheimer.movieservice.service.CustomerDetailService;
 import jakarta.validation.constraints.Email;
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/v1/customers")
 @Slf4j
