@@ -55,7 +55,7 @@ eureka:
 
 # Kafka properties
 kafka:
-  bootstrap-servers: ${kafka.bootstrap-server.host}:${kafka.bootstrap-server.port}
+  bootstrap-servers: ${spring.kafka.bootstrap-servers}
   template:
     default-topic: mailerTopic
   consumer:

@@ -11,7 +11,7 @@ services:
     image: confluentinc/cp-kafka:latest
     container_name: broker
     ports:
-      - 9092:9092
+      - "9092:9092"
     depends_on:
       - zookeeper
     environment:
@@ -22,7 +22,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_HOST
 
   # Zipkin
   zipkin:
@@ -35,51 +35,83 @@ services:
 #    image: mysql
 #    restart: always
 #    environment:
-#      MYSQL_ROOT_PASSWORD: example
-#
+#      MYSQL_ALLOW_EMPTY_PASSWORD: true
+#    env_file:
+#      - .env
+#    ports:
+#      - "3306:3306"
+#    healthcheck:
+#      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+#      timeout: 20s
+#      retries: 10
+
 #  adminer:
 #    image: adminer
 #    restart: always
 #    ports:
 #      - 8080:8080
 #
+#
+  api-gateway:
+    build: ./api-gateway
+    image: api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+    env_file:
+      - .env
+    depends_on:
+      - discovery-server
+      - movie-service
+      - mailer-service
 
-#
-#
-#  ## Eureka Server
-#  discovery-server:
-#    image: barbenheimer/discovery-server:latest
-#    container_name: discovery-server
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    depends_on:
-#      - zipkin
-#
-#  api-gateway:
-#    image: barbenheimer/api-gateway:latest
-#    container_name: api-gateway
-#    ports:
-#      - "8080:8080"
-#    expose:
-#      - "8080"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
-#    depends_on:
-#      - zipkin
-#      - discovery-server
-#
-#
-#  ## Movie-Service Docker Compose Config
-#  movie-service:
-#    container_name: movie-service
-#    image: barbenheimer/movie-service:latest
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    depends_on:
-#      - mysql
-#      - discovery-server
-#      - api-gateway
+  ## Eureka Server
+  discovery-server:
+    build: ./discovery-server
+    image: discovery-server:latest
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    env_file:
+      - .env
+    depends_on:
+      - zipkin
 
+  ## Movie-Service Docker Compose Config
+  movie-service:
+    build: ./movie-service
+    container_name: movie-service
+    image: movie-service:latest
+    environment:
+      - MYSQL_PORT=3306
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
+      - SPRING_KAFKA_CONSUMER_GROUP_ID=movie-group
+      - SPRING_DATASOURCE_URL=jdbc:mysql://barbenheimer.c0eioduvlh2s.ap-southeast-1.rds.amazonaws.com:3306/barbenheimer?autoReconnect=true&useSSL=false
+    env_file:
+      - .env
+    depends_on:
+      - broker
+
+
+  mailer-service:
+    build: ./mailer-service
+    image: mailer-service:latest
+    container_name: mailer-service
+    ports:
+      - "465:465"
+    env_file:
+      - .env
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=broker:29092
+      - SPRING_KAFKA_CONSUMER_GROUP_ID=mailer-group
+    depends_on:
+      - discovery-server
+      - broker

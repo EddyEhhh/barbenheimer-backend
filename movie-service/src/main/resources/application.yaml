@@ -34,7 +34,7 @@ spring:
 
 # Kafka properties
   kafka:
-    bootstrap-servers: ${kafka.bootstrap-server.host}:${kafka.bootstrap-server.port}
+    bootstrap-servers: ${spring.kafka.bootstrap-servers}
     template:
       default-topic: mailerTopic
     producer:
@@ -71,13 +71,3 @@ aws:
 stripe:
   api:
     key: ${stripe.api.key}
-
-##cloud:
-##  aws:
-##    credentials:
-##      access-key: ${aws.access_key}
-##      secret-key: ${aws.secret_key}
-##
-##AWS_ACCESS_KEY_ID: ${aws.access_key}
-##AWS_SECRET_ACCESS_KEY: ${aws.secret_key}
-##AWS_DEFAULT_REGION: ${aws.region}
