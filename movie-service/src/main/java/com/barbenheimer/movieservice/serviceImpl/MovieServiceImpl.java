@@ -1,18 +1,26 @@
 package com.barbenheimer.movieservice.serviceImpl;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.barbenheimer.movieservice.dto.MovieDetailsDTO;
+import com.barbenheimer.movieservice.dto.MovieScheduleDateDetailDTO;
+import com.barbenheimer.movieservice.dto.MovieScheduleDetailDTO;
+import com.barbenheimer.movieservice.dto.MovieScheduleTimeDetailDTO;
 import com.barbenheimer.movieservice.dto.MovieShortDTO;
 import com.barbenheimer.movieservice.dto.MovieTitleDTO;
 import com.barbenheimer.movieservice.s3.S3Buckets;
 import com.barbenheimer.movieservice.s3.S3Service;
+import com.barbenheimer.movieservice.exception.AlreadyExistsException;
 import com.barbenheimer.movieservice.exception.ResourceNotFoundException;
 import com.barbenheimer.movieservice.model.MovieImage;
+import com.barbenheimer.movieservice.model.MovieScheduleDate;
+import com.barbenheimer.movieservice.model.MovieScheduleTime;
 import com.barbenheimer.movieservice.repository.MovieImageRepository;
 import com.barbenheimer.movieservice.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +47,8 @@ public class MovieServiceImpl implements MovieService {
     private ModelMapper modelMapper;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, MovieImageRepository movieImageRepository, ModelMapper modelMapper, S3Service s3Service, S3Buckets s3Buckets){
+    public MovieServiceImpl(MovieRepository movieRepository, MovieImageRepository movieImageRepository,
+            ModelMapper modelMapper, S3Service s3Service, S3Buckets s3Buckets) {
         this.modelMapper = modelMapper;
         this.movieRepository = movieRepository;
         this.movieImageRepository = movieImageRepository;
@@ -47,9 +56,9 @@ public class MovieServiceImpl implements MovieService {
         this.s3Buckets = s3Buckets;
     }
 
-    
-    /** 
+    /**
      * method returns all movies now showing
+     * 
      * @return List<Movie>
      */
     @Override
@@ -63,13 +72,7 @@ public class MovieServiceImpl implements MovieService {
         return movieDTOList;
     }
 
-    
-
-
-    
-    
-    
-    /** 
+    /**
      * method returns current showing movies' title and id
      * 
      * @return List<MovieTitleDTO>
@@ -78,16 +81,13 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieTitleDTO> getAllTitleAndId() {
         List<Movie> movieList = movieRepository.findAll();
         List<MovieTitleDTO> movieTitleDTOList = new ArrayList<>();
-        for (Movie movie: movieList) {
+        for (Movie movie : movieList) {
             movieTitleDTOList.add(modelMapper.map(movie, MovieTitleDTO.class));
         }
         return movieTitleDTOList;
     }
 
-
-
-
-    /** 
+    /**
      * method returns all movies with names matching that of user input
      * 
      * @param movieName
@@ -98,21 +98,19 @@ public class MovieServiceImpl implements MovieService {
         List<Movie> matchingMovies = movieRepository.findByTitleContaining(movieTitle);
         if (matchingMovies == null) {
             throw new RuntimeException("Movie does not exist");
-        } 
+        }
         List<MovieShortDTO> matchingDTOs = matchingMovies
                 .stream()
                 .map(eachMovie -> modelMapper.map(eachMovie, MovieShortDTO.class))
                 .collect(Collectors.toList());
 
         return matchingDTOs;
-    
+
     }
 
-    
-
-
-    /** 
+    /**
      * returns details of movie when user selects it
+     * 
      * @param movieId the id of the movie to retrieve
      * @return MovieDetailsDTO the DTO of the retrieved movie
      */
@@ -122,9 +120,6 @@ public class MovieServiceImpl implements MovieService {
         MovieDetailsDTO movieDetailsDTO = modelMapper.map(movie, MovieDetailsDTO.class);
         return movieDetailsDTO;
     }
-
-
-
 
     /**
      * @param movie
@@ -139,21 +134,21 @@ public class MovieServiceImpl implements MovieService {
     /**
      *
      * @param movieId the id of the movie to upload image for
-     * @param file the image file you wish to upload
+     * @param file    the image file you wish to upload
      * @return String the result message upon successfully upload
      * @throws IOException
      */
 
-    public String uploadMovieImage(Long movieId, MultipartFile file)throws IOException {
+    public String uploadMovieImage(Long movieId, MultipartFile file) throws IOException {
 
         Movie movie = movieRepository.findById(movieId).get();
-        if(movie == null){
+        if (movie == null) {
             throw new ResourceNotFoundException("Movie with id" + movieId + "does not exist.");
         }
         String movieTitle = movie.getTitle();
         String movieImageId = "img" + movieId;
         List<MovieImage> movieImages = movie.getMovieImages();
-        if(movieImages != null && !movieImages.isEmpty()){
+        if (movieImages != null && !movieImages.isEmpty()) {
             int imageCount = movieImages.size();
             movieImageId += "_" + imageCount;
         }
@@ -161,8 +156,7 @@ public class MovieServiceImpl implements MovieService {
         // saves the imageUrl into database
         saveMovieImage(movie, movieImages, movieTitle, movieImageId);
 
-
-        //puts into aws
+        // puts into aws
         try {
             s3Service.putObject(
                     s3Buckets.getAccount(),
@@ -174,8 +168,9 @@ public class MovieServiceImpl implements MovieService {
         }
     }
 
-    public void saveMovieImage(Movie movie, List<MovieImage> movieImages, String movieTitle, String movieImageId){
-        String imageUrl = "https://barbenheimer-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movieTitle + "/" + movieImageId;
+    public void saveMovieImage(Movie movie, List<MovieImage> movieImages, String movieTitle, String movieImageId) {
+        String imageUrl = "https://barbenheimer-movies.s3.ap-southeast-1.amazonaws.com/movie-images/" + movieTitle + "/"
+                + movieImageId;
         MovieImage movieImage = new MovieImage();
         movieImage.setMovie(movie);
         movieImage.setImageUrl(imageUrl);
@@ -185,13 +180,65 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.save(movie);
     }
 
+    @Override
+    public String createMovies(List<MovieDetailsDTO> movies) {
+        try {
+            String feedback = "";
+            for (MovieDetailsDTO movieDetail : movies) {
+            Movie movie = modelMapper.map(movieDetail, Movie.class);
+            movieRepository.save(movie);
+            feedback += "Movie Title:" + movie.getTitle() + ", Movie ID: " + movie.getId() + "\n";
+            }
+            feedback += "has been created.";
+            return feedback;
+        } catch (Exception e) {
+            throw new AlreadyExistsException("Something went wrong, please make sure to fill in all the appropriate details for each movie.");
+        }
+    }
+
+    @Override
+    public String setMovieSchedules(MovieTitleDTO movieDesc, List<MovieScheduleDateDetailDTO> movieSchedules) {
+        Movie movie = modelMapper.map(movieRepository.findById(movieDesc.getId()), Movie.class);
+        List<MovieScheduleDate> dateList = movie.getMovieScheduleDates();
+        List<LocalDate> showDates = null;
+        for (MovieScheduleDate date : dateList) {
+            showDates.add(date.getShowDate());
+
+        }
+
+        // adding new showDates to the movie
+        for (MovieScheduleDateDetailDTO schedule : movieSchedules) {
+            LocalDate date = schedule.getShowDate();
+            if (!showDates.contains(date)) {
+                List<MovieScheduleTimeDetailDTO> timings = schedule.getMovieScheduleTimes();
+                List<MovieScheduleTime> showTimes = null;
+                for (MovieScheduleTimeDetailDTO showTime : timings) {
+                    MovieScheduleTime time = modelMapper.map(showTime, MovieScheduleTime.class);
+                    showTimes.add(time);
+                }
+                MovieScheduleDate movieDate = MovieScheduleDate.builder()
+                .movie(movie)
+                .showDate(date)
+                .movieScheduleTimes(showTimes)
+                .build();
+                dateList.add(movieDate);
+            } else {
+                for (MovieScheduleDate showDate : dateList) {
+                    if (showDate.getShowDate().equals(date)) {
+                        for (MovieScheduleTimeDetailDTO timeDetailDTO : schedule.getMovieScheduleTimes()) {
+                            showDate.getMovieScheduleTimes()
+                            .add(modelMapper.map(timeDetailDTO, MovieScheduleTime.class));
+                        }
+                    }
+                }
+            }
+        }
+
+        movie.setMovieScheduleDates(dateList);
+        movieRepository.save(movie);
+        return "success!";
+
+    }
 
 
-
-
-
-
-
-
-    
 }

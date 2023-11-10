@@ -1,7 +1,10 @@
 package com.barbenheimer.movieservice.controller;
 
 import com.barbenheimer.movieservice.dto.MovieDetailsDTO;
+import com.barbenheimer.movieservice.dto.MovieScheduleDateDetailDTO;
+import com.barbenheimer.movieservice.dto.MovieScheduleDetailDTO;
 import com.barbenheimer.movieservice.dto.MovieShortDTO;
+import com.barbenheimer.movieservice.dto.MovieTitleDTO;
 import com.barbenheimer.movieservice.service.MovieService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -86,6 +89,23 @@ public class MovieController {
         String uploadImageResponse = movieService.uploadMovieImage(movieId, file);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImageResponse);
+    }
+
+    
+    /** 
+     * method is a POST request handler
+     * method receives list of MovieDetailsDTOs and adds these movies to the MovieRepository
+     * @param movies
+     * @return ResponseEntity<?>
+     */
+    @PostMapping
+    public ResponseEntity<?> createMovies(List<MovieDetailsDTO> movies) {
+        return ResponseEntity.ok(movieService.createMovies(movies));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> setMovieSchedule(MovieTitleDTO movie, List<MovieScheduleDateDetailDTO> movieSchedules) {
+        return ResponseEntity.ok(movieService.setMovieSchedules(movie, movieSchedules));
     }
 
 }
