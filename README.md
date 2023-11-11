@@ -127,3 +127,12 @@ Allow mvnw to be executable using the following command
 ```shell
 chmod +x mvnw
 ```
+
+## Deployment
+
+### Amazon EC2
+The dockerized backend has been deployed onto a t2.large instance on EC2. Attached is a picture of the results returned when calling the endpoint /api/v1/movies.
+
+![image](https://github.com/EddyEhhh/barbenheimer-backend/assets/120258509/1a80bc58-3eec-46f9-9055-8c455538491a)
+
+Due to budget restrictions, the instance will not be up 24/7. 
